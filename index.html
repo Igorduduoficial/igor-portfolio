@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Igor — Video Editor & Motion Designer</title>
+    <title>Igor — Video Editor</title>
 
     <meta
         name="description"
-        content="Video Editor & Motion Designer specialized in Suspense, Storytelling and Documentary."
+        content="Video editor specializing in suspense, storytelling and documentary content."
     >
 
     <link rel="stylesheet" href="style.css">
@@ -16,32 +16,30 @@
 
 <body>
 
-    <!-- =========================
-         NAVIGATION
-    ========================== -->
+    <!-- NAVIGATION -->
 
     <header class="navbar">
 
         <a href="#" class="logo">
-            IGOR<span>.</span>
+            Igor<span>.</span>
         </a>
 
         <nav>
             <a href="#work">WORK</a>
+            <a href="#shorts">SHORTS</a>
             <a href="#about">ABOUT</a>
             <a href="#contact">CONTACT</a>
         </nav>
 
         <div class="status">
-            <span></span> AVAILABLE FOR WORK
+            <span></span>
+            AVAILABLE FOR WORK
         </div>
 
     </header>
 
 
-    <!-- =========================
-         HERO
-    ========================== -->
+    <!-- HERO -->
 
     <main>
 
@@ -59,43 +57,52 @@
                 </h1>
 
                 <p class="hero-description">
-                    Cinematic editing and motion design for
-                    suspense, storytelling and documentary content.
+                    I edit suspense-driven stories, documentaries and
+                    narrative videos — focusing on pacing, atmosphere,
+                    sound design and visual storytelling.
                 </p>
 
                 <a href="#work" class="hero-button">
-                    EXPLORE WORK
+                    VIEW MY WORK
                     <span>↘</span>
                 </a>
 
             </div>
 
 
-            <!-- Showcase -->
+            <!-- SHOWCASE -->
 
             <div class="showcase">
 
                 <div class="showcase-label">
-                    <span>FEATURED WORK</span>
+                    <span>SHOWCASE</span>
                     <span>01 / 03</span>
                 </div>
 
                 <div class="featured-video">
 
-                    <!-- TROQUE PELO SEU VÍDEO -->
+                    <!--
+                        COLOQUE SEU VÍDEO AQUI DEPOIS.
+
+                        Exemplo:
+                        assets/videos/showcase.mp4
+                    -->
+
                     <video
                         id="featuredVideo"
                         muted
                         loop
                         playsinline
-                        poster="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1600&q=80"
+                        preload="metadata"
                     >
-                        <source src="" type="video/mp4">
+                        <source
+                            src=""
+                            type="video/mp4"
+                        >
                     </video>
 
-                    <div class="video-placeholder">
-                        <span>PLAY</span>
-                        <div class="play-icon">▶</div>
+                    <div class="showcase-placeholder">
+                        SHOWCASE VIDEO
                     </div>
 
                 </div>
@@ -103,8 +110,13 @@
                 <div class="showcase-footer">
 
                     <div>
-                        <small>PROJECT 01</small>
-                        <h2>ANOMALY DETECTED</h2>
+
+                        <small>FEATURED PROJECT</small>
+
+                        <h2>
+                            ANOMALY DETECTED
+                        </h2>
+
                     </div>
 
                     <div class="project-type">
@@ -113,64 +125,75 @@
 
                 </div>
 
+                <a
+                    href="#work"
+                    class="showcase-button"
+                >
+                    VIEW PROJECT
+                    <span>↗</span>
+                </a>
+
             </div>
 
         </section>
 
 
-        <!-- =========================
-             WORK
-        ========================== -->
+        <!-- WORK -->
 
         <section id="work" class="work-section">
 
             <div class="section-heading">
 
                 <div>
-                    <p class="eyebrow">SELECTED WORK</p>
+
+                    <p class="eyebrow">
+                        SELECTED WORK
+                    </p>
 
                     <h2>
                         THE<br>
                         <span>ARCHIVE.</span>
                     </h2>
+
                 </div>
 
                 <p class="section-description">
-                    A selection of projects focused on narrative,
-                    atmosphere and visual storytelling.
+                    Selected edits built around pacing, tension,
+                    atmosphere and narrative structure.
                 </p>
 
             </div>
 
 
-            <!-- FILTERS -->
+            <!-- ONLY 3 CATEGORIES -->
 
             <div class="filters">
 
-                <button class="filter active" data-filter="all">
-                    ALL
-                </button>
-
-                <button class="filter" data-filter="suspense">
+                <button
+                    class="filter active"
+                    data-filter="suspense"
+                >
                     SUSPENSE
                 </button>
 
-                <button class="filter" data-filter="storytelling">
+                <button
+                    class="filter"
+                    data-filter="storytelling"
+                >
                     STORYTELLING
                 </button>
 
-                <button class="filter" data-filter="documentary">
+                <button
+                    class="filter"
+                    data-filter="documentary"
+                >
                     DOCUMENTARY
-                </button>
-
-                <button class="filter" data-filter="short">
-                    SHORT FORM
                 </button>
 
             </div>
 
 
-            <!-- PROJECTS -->
+            <!-- LANDSCAPE PROJECTS -->
 
             <div class="projects">
 
@@ -181,14 +204,14 @@
                     class="project"
                     data-category="suspense"
                     data-title="The Last Signal"
-                    data-type="Suspense / Storytelling"
+                    data-type="Suspense"
                 >
 
                     <div class="project-image">
 
                         <img
                             src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80"
-                            alt="Suspense project"
+                            alt="The Last Signal"
                         >
 
                         <div class="project-overlay">
@@ -201,6 +224,7 @@
                     <div class="project-info">
 
                         <div>
+
                             <span class="project-number">
                                 01
                             </span>
@@ -208,6 +232,7 @@
                             <h3>
                                 THE LAST SIGNAL
                             </h3>
+
                         </div>
 
                         <span>
@@ -224,7 +249,7 @@
                 <article
                     class="project"
                     data-category="storytelling"
-                    data-title="Unknown Story"
+                    data-title="Unknown Call"
                     data-type="Storytelling"
                 >
 
@@ -232,7 +257,7 @@
 
                         <img
                             src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=80"
-                            alt="Storytelling project"
+                            alt="Unknown Call"
                         >
 
                         <div class="project-overlay">
@@ -245,13 +270,15 @@
                     <div class="project-info">
 
                         <div>
+
                             <span class="project-number">
                                 02
                             </span>
 
                             <h3>
-                                UNKNOWN STORY
+                                UNKNOWN CALL
                             </h3>
+
                         </div>
 
                         <span>
@@ -276,7 +303,7 @@
 
                         <img
                             src="https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&w=1200&q=80"
-                            alt="Documentary project"
+                            alt="The Investigation"
                         >
 
                         <div class="project-overlay">
@@ -289,6 +316,7 @@
                     <div class="project-info">
 
                         <div>
+
                             <span class="project-number">
                                 03
                             </span>
@@ -296,6 +324,7 @@
                             <h3>
                                 THE INVESTIGATION
                             </h3>
+
                         </div>
 
                         <span>
@@ -307,39 +336,77 @@
                 </article>
 
 
-                <!-- PROJECT 04 -->
+            </div>
+
+        </section>
+
+
+        <!-- SHORT FORM -->
+
+        <section
+            id="shorts"
+            class="shorts-section"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="eyebrow">
+                        SHORT FORM
+                    </p>
+
+                    <h2>
+                        SHORT<br>
+                        <span>EDITS.</span>
+                    </h2>
+
+                </div>
+
+                <p class="section-description">
+                    Vertical edits designed for short-form platforms,
+                    with fast pacing, strong hooks and retention-focused editing.
+                </p>
+
+            </div>
+
+
+            <div class="shorts-grid">
+
+
+                <!-- SHORT 01 -->
 
                 <article
-                    class="project"
-                    data-category="short"
-                    data-title="Short 01"
+                    class="short-project"
+                    data-title="Night Drive"
                     data-type="Short Form"
                 >
 
-                    <div class="project-image vertical">
+                    <div class="short-image">
 
                         <img
                             src="https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=900&q=80"
-                            alt="Short form project"
+                            alt="Night Drive"
                         >
 
-                        <div class="project-overlay">
-                            <span>VIEW PROJECT</span>
-                            <strong>↗</strong>
+                        <div class="short-overlay">
+                            VIEW SHORT ↗
                         </div>
 
                     </div>
 
-                    <div class="project-info">
+                    <div class="short-info">
 
                         <div>
-                            <span class="project-number">
-                                04
+
+                            <span>
+                                01
                             </span>
 
                             <h3>
-                                SHORT 01
+                                NIGHT DRIVE
                             </h3>
+
                         </div>
 
                         <span>
@@ -350,16 +417,106 @@
 
                 </article>
 
+
+                <!-- SHORT 02 -->
+
+                <article
+                    class="short-project"
+                    data-title="Unknown"
+                    data-type="Short Form"
+                >
+
+                    <div class="short-image">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=900&q=80"
+                            alt="Short edit"
+                        >
+
+                        <div class="short-overlay">
+                            VIEW SHORT ↗
+                        </div>
+
+                    </div>
+
+                    <div class="short-info">
+
+                        <div>
+
+                            <span>
+                                02
+                            </span>
+
+                            <h3>
+                                UNKNOWN
+                            </h3>
+
+                        </div>
+
+                        <span>
+                            SHORT FORM
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <!-- SHORT 03 -->
+
+                <article
+                    class="short-project"
+                    data-title="The Moment"
+                    data-type="Short Form"
+                >
+
+                    <div class="short-image">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1533928298208-27ff66555d8d?auto=format&fit=crop&w=900&q=80"
+                            alt="Short edit"
+                        >
+
+                        <div class="short-overlay">
+                            VIEW SHORT ↗
+                        </div>
+
+                    </div>
+
+                    <div class="short-info">
+
+                        <div>
+
+                            <span>
+                                03
+                            </span>
+
+                            <h3>
+                                THE MOMENT
+                            </h3>
+
+                        </div>
+
+                        <span>
+                            SHORT FORM
+                        </span>
+
+                    </div>
+
+                </article>
+
+
             </div>
 
         </section>
 
 
-        <!-- =========================
-             ABOUT
-        ========================== -->
+        <!-- ABOUT -->
 
-        <section id="about" class="about-section">
+        <section
+            id="about"
+            class="about-section"
+        >
 
             <div class="about-number">
                 02
@@ -377,27 +534,42 @@
                 </h2>
 
                 <p>
-                    I'm a video editor and motion designer focused on
-                    narrative-driven content. I work with suspense,
-                    storytelling and documentary-style videos, combining
-                    editing, motion and sound to keep the viewer engaged.
+                    I focus on editing videos where pacing and atmosphere
+                    matter. My work combines narrative editing, sound design,
+                    motion graphics and visual rhythm to keep the audience
+                    watching.
                 </p>
 
                 <div class="skills">
 
                     <div>
-                        <small>EDITING</small>
-                        <strong>PREMIERE PRO</strong>
+                        <small>
+                            EDITING
+                        </small>
+
+                        <strong>
+                            PREMIERE PRO
+                        </strong>
                     </div>
 
                     <div>
-                        <small>MOTION</small>
-                        <strong>AFTER EFFECTS</strong>
+                        <small>
+                            MOTION
+                        </small>
+
+                        <strong>
+                            AFTER EFFECTS
+                        </strong>
                     </div>
 
                     <div>
-                        <small>STYLE</small>
-                        <strong>CINEMATIC / ANALOG</strong>
+                        <small>
+                            SPECIALTY
+                        </small>
+
+                        <strong>
+                            SUSPENSE / STORY
+                        </strong>
                     </div>
 
                 </div>
@@ -407,45 +579,68 @@
         </section>
 
 
-        <!-- =========================
-             CONTACT
-        ========================== -->
+        <!-- CONTACT -->
 
-        <section id="contact" class="contact-section">
+        <section
+            id="contact"
+            class="contact-section"
+        >
 
             <p class="eyebrow">
-                HAVE A PROJECT?
+                HAVE A PROJECT IN MIND?
             </p>
 
             <h2>
-                LET'S MAKE<br>
+                LET'S CREATE<br>
                 <span>SOMETHING.</span>
             </h2>
 
             <a
-                href="mailto:seuemail@email.com"
+                href="mailto:igoreditor.contact@gmail.com"
                 class="contact-button"
             >
-                START A PROJECT
+                CONTACT ME
                 <span>↗</span>
             </a>
 
 
             <div class="contact-links">
 
-                <a href="https://instagram.com/" target="_blank">
-                    INSTAGRAM
+                <a href="mailto:igoreditor.contact@gmail.com">
+
+                    <div>
+                        <small>
+                            EMAIL
+                        </small>
+
+                        <strong>
+                            igoreditor.contact@gmail.com
+                        </strong>
+                    </div>
+
                     <span>↗</span>
+
                 </a>
 
-                <a href="#" target="_blank">
-                    DISCORD
-                    <span>↗</span>
-                </a>
 
-                <a href="mailto:seuemail@email.com">
-                    EMAIL
+                <a
+                    href="https://www.instagram.com/igoroeditor/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+
+                    <div>
+                        <small>
+                            INSTAGRAM
+                        </small>
+
+                        <strong>
+                            @igoroeditor
+                        </strong>
+                    </div>
+
                     <span>↗</span>
+
                 </a>
 
             </div>
@@ -455,9 +650,7 @@
     </main>
 
 
-    <!-- =========================
-         PROJECT MODAL
-    ========================== -->
+    <!-- PROJECT MODAL -->
 
     <div class="project-modal">
 
@@ -482,7 +675,7 @@
             <div class="modal-video">
 
                 <div class="modal-video-placeholder">
-                    VIDEO PREVIEW
+                    PROJECT VIDEO
                 </div>
 
             </div>
@@ -490,18 +683,36 @@
             <div class="modal-details">
 
                 <div>
-                    <small>ROLE</small>
-                    <p>Video Editing<br>Motion Design</p>
+                    <small>
+                        ROLE
+                    </small>
+
+                    <p>
+                        Video Editing<br>
+                        Motion Design
+                    </p>
                 </div>
 
                 <div>
-                    <small>SOFTWARE</small>
-                    <p>Premiere Pro<br>After Effects</p>
+                    <small>
+                        SOFTWARE
+                    </small>
+
+                    <p>
+                        Premiere Pro<br>
+                        After Effects
+                    </p>
                 </div>
 
                 <div>
-                    <small>STYLE</small>
-                    <p>Cinematic<br>Storytelling</p>
+                    <small>
+                        FOCUS
+                    </small>
+
+                    <p>
+                        Pacing<br>
+                        Sound Design
+                    </p>
                 </div>
 
             </div>
@@ -513,7 +724,9 @@
 
     <footer>
 
-        <span>IGOR — VIDEO EDITOR / MOTION DESIGNER</span>
+        <span>
+            IGOR — VIDEO EDITOR / MOTION DESIGNER
+        </span>
 
         <span>
             © 2026
@@ -525,4 +738,4 @@
     <script src="script.js"></script>
 
 </body>
-</html>D
+</html>
