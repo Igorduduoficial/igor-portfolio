@@ -14,14 +14,6 @@
     :root { --bg: #070707; --panel: #0d0d0d; --card: #111111; --line: #242424; --muted: #7a7a7a; --text: #f1f1ef; --acid: #d8ff00; --f-mono: "DM Mono", monospace; --f-sans: "Inter", sans-serif; --container: 1200px; }
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: var(--f-sans); overflow-x: hidden; }
-    
-    body.cursor-ready { cursor: none; }
-    @media (pointer: coarse) { body.cursor-ready { cursor: auto; } .cursor-dot, .cursor-ring { display: none !important; } }
-    .cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; border-radius: 50%; opacity: 0; transition: opacity 0.3s; }
-    body.cursor-ready .cursor-dot, body.cursor-ready .cursor-ring { opacity: 1; }
-    .cursor-dot { width: 6px; height: 6px; background: var(--acid); margin-top: -3px; margin-left: -3px; }
-    .cursor-ring { width: 36px; height: 36px; border: 1px solid rgba(216,255,0,0.5); margin-top: -18px; margin-left: -18px; transition: width 0.2s, height 0.2s, margin 0.2s, opacity 0.3s; }
-    .cursor-ring.hovering { width: 56px; height: 56px; margin-top: -28px; margin-left: -28px; background: rgba(216,255,0,0.05); }
 
     a { text-decoration: none; color: inherit; }
     button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
@@ -116,9 +108,6 @@
   </style>
 </head>
 <body>
-  
-  <div class="cursor-dot"></div>
-  <div class="cursor-ring"></div>
 
   <header class="nav">
     <a class="brand" href="#top">IGOR<span>.</span></a>
@@ -145,14 +134,14 @@
       </div>
     </section>
 
-    <!-- Showcase Section -->
+    <!-- Showcase Section (Independente) -->
     <section class="showcase" id="showcase">
       <p class="section-label mono">FEATURED PROJECT</p>
       <div class="showcase-box">
         <div class="showcase-content">
           <h2 id="showcaseTitle"></h2>
           <p class="showcase-desc" id="showcaseNote"></p>
-          <button class="btn-outline mono" id="btnShowcase">OPEN FEATURED PROJECT ↗</button>
+          <button class="btn-outline mono" id="btnShowcase">SHOWCASE ↗</button>
         </div>
       </div>
     </section>
@@ -210,27 +199,27 @@
   <script>
     /* =======================================================
        ÁREA DE CONFIGURAÇÃO DOS SEUS VÍDEOS E TEXTOS
-       (Modifique os textos entre aspas abaixo)
+       Modifique apenas o que está entre as aspas duplas (" ")
     ======================================================== */
 
-    // 1. SEU VÍDEO PRINCIPAL (SHOWCASE)
+    // 1. SEU SHOWCASE (VÍDEO PRINCIPAL ISOLADO)
     const SHOWCASE_VIDEO = { 
       id: "showcase-main", 
-      title: "TÍTULO DO SEU MELHOR PROJETO", // <--- MUDE AQUI
-      description: "Descrição completa do seu projeto em destaque.", // <--- MUDE AQUI
+      title: "DIGITE O NOME DO SHOWCASE AQUI", // <--- MUDE O TÍTULO AQUI
+      description: "Escreva a descrição do Showcase. Fale sobre a edição, ritmo, etc.", // <--- MUDE A DESCRIÇÃO AQUI
       source: { type: "youtube", videoId: "ID_DO_YOUTUBE_AQUI" }, 
       services: ["Motion Design", "Sound Design"], 
       software: ["Blender", "After Effects"] 
     };
 
-    // 2. PROJETOS DAS ABAS (16:9)
+    // 2. SEUS PROJETOS NAS ABAS (16:9)
     const WORK = [
       { 
         id: "proj-01", 
         category: "suspense", 
-        placeholder: true, // <--- Mude para false quando colocar um vídeo
-        title: "TÍTULO DO VÍDEO 1", // <--- MUDE AQUI
-        description: "Descrição do projeto.", 
+        placeholder: true, // <--- MUDE PARA false QUANDO COLOCAR UM VÍDEO
+        title: "TÍTULO DO VÍDEO 1", // <--- MUDE O TÍTULO AQUI
+        description: "Descrição do projeto de suspense.", // <--- MUDE A DESCRIÇÃO AQUI
         tag: "CASE_01", 
         source: { type: "youtube", videoId: "ID_DO_YOUTUBE_AQUI" }, 
         thumbnail: null, 
@@ -242,16 +231,18 @@
         tag: "CASE_02", description: "", source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] 
       },
       { 
-        id: "proj-03", category: "storytelling", placeholder: true, title: "TÍTULO STORYTELLING", 
-        tag: "CASE_03", description: "Descrição storytelling", source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] 
+        id: "proj-03", category: "storytelling", placeholder: true, title: "TÍTULO STORYTELLING", // <--- MUDE O TÍTULO AQUI
+        tag: "CASE_03", description: "Descrição storytelling.", // <--- MUDE A DESCRIÇÃO AQUI
+        source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] 
       },
       { 
         id: "proj-04", category: "storytelling", placeholder: true, title: "Work in progress", 
         tag: "CASE_04", description: "", source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] 
       },
       { 
-        id: "proj-05", category: "documentary", placeholder: true, title: "TÍTULO DOC", 
-        tag: "CASE_05", description: "Descrição doc", source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] 
+        id: "proj-05", category: "documentary", placeholder: true, title: "TÍTULO DOC", // <--- MUDE O TÍTULO AQUI
+        tag: "CASE_05", description: "Descrição do documentário.", // <--- MUDE A DESCRIÇÃO AQUI
+        source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] 
       },
       { 
         id: "proj-06", category: "documentary", placeholder: true, title: "Work in progress", 
@@ -261,7 +252,7 @@
 
     // 3. SEUS SHORTS (9:16)
     const SHORTS = [
-      { id: "short-01", title: "TÍTULO DO SHORT 1", tag: "CLIP_01", placeholder: true, description: "Descrição", source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] },
+      { id: "short-01", title: "NOME DO SHORT 1", tag: "CLIP_01", placeholder: true, description: "Descrição do short.", source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] }, // <--- EDITE AQUI
       { id: "short-02", title: "Work in progress", tag: "CLIP_02", placeholder: true, description: "", source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] },
       { id: "short-03", title: "Work in progress", tag: "CLIP_03", placeholder: true, description: "", source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] },
       { id: "short-04", title: "Work in progress", tag: "CLIP_04", placeholder: true, description: "", source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] }
@@ -274,7 +265,7 @@
     };
 
     /* =======================================================
-       FIM DA ÁREA DE CONFIGURAÇÃO (NÃO PRECISA MEXER ABAIXO)
+       FIM DA ÁREA DE CONFIGURAÇÃO (O CÓDIGO ABAIXO FAZ TUDO FUNCIONAR)
     ======================================================== */
 
     document.getElementById("showcaseTitle").textContent = SHOWCASE_VIDEO.title;
@@ -377,19 +368,6 @@
       </a>
     `).join("");
 
-    const cursorDot = document.querySelector(".cursor-dot");
-    const cursorRing = document.querySelector(".cursor-ring");
-    if (window.matchMedia("(pointer: fine)").matches) {
-      document.body.classList.add("cursor-ready");
-      window.addEventListener("mousemove", (e) => {
-        cursorDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-        cursorRing.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-      });
-      document.querySelectorAll("a, button, .card").forEach(el => {
-        el.addEventListener("mouseenter", () => cursorRing.classList.add("hovering"));
-        el.addEventListener("mouseleave", () => cursorRing.classList.remove("hovering"));
-      });
-    }
   </script>
 </body>
 </html>
