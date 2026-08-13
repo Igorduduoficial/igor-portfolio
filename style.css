@@ -19,10 +19,10 @@ body{
   color: var(--text);
   font-family: var(--f-sans);
   overflow-x: hidden;
-  cursor: none;
 }
-@media (pointer: coarse){ body{ cursor: auto; } .cursor-dot, .cursor-ring{ display:none !important; } }
-@media (prefers-reduced-motion: reduce){ *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } body{ cursor:auto; } .cursor-dot,.cursor-ring{ display:none !important; } }
+body.cursor-ready{ cursor: none; }
+@media (pointer: coarse){ .cursor-dot, .cursor-ring{ display:none !important; } }
+@media (prefers-reduced-motion: reduce){ *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } .cursor-dot,.cursor-ring{ display:none !important; } }
 
 a{ text-decoration:none; color:inherit; }
 button{ font:inherit; color:inherit; background:none; border:none; cursor: inherit; }
@@ -34,7 +34,8 @@ ul{ list-style:none; }
 /* ============================================================
    CURSOR + GRAIN
    ============================================================ */
-.cursor-dot, .cursor-ring{ position:fixed; top:0; left:0; pointer-events:none; z-index:9999; border-radius:50%; }
+.cursor-dot, .cursor-ring{ position:fixed; top:0; left:0; pointer-events:none; z-index:9999; border-radius:50%; opacity:0; }
+body.cursor-ready .cursor-dot, body.cursor-ready .cursor-ring{ opacity:1; }
 .cursor-dot{ width:5px; height:5px; background: var(--acid); transform: translate(-50%,-50%); }
 .cursor-ring{ width:32px; height:32px; border:1px solid rgba(216,255,0,0.4); transform: translate(-50%,-50%); transition: width .2s, height .2s, opacity .2s; }
 .grain{
@@ -43,7 +44,7 @@ ul{ list-style:none; }
 }
 
 /* ============================================================
-   NAV — logo fica colado no topo, sem espaço perdido
+   NAV
    ============================================================ */
 .nav{
   position: sticky; top:0; z-index:500;
@@ -63,7 +64,7 @@ ul{ list-style:none; }
 @media (max-width:760px){ .nav-links{ display:none; } }
 
 /* ============================================================
-   HERO — título logo abaixo da nav, sem vão gigante
+   HERO
    ============================================================ */
 .hero{ padding: 4.5rem clamp(1.2rem,4vw,3.5rem) 3.5rem; max-width: var(--container); margin: 0 auto; }
 .kicker{ font-size:0.72rem; color: var(--acid); margin-bottom:1.2rem; }
