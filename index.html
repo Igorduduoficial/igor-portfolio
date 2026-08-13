@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IGOR. — Video Editor</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&amp;family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
   
   <style>
     /* =======================================================
@@ -124,12 +124,10 @@
     <section class="hero">
       <p class="kicker mono">VIDEO EDITOR / MOTION DESIGNER</p>
       <h1 class="hero-title">
-        <span id="el-hero-name">IGOR.</span><br>
-        <span class="accent" id="el-hero-highlight">STORIES THAT STAY.</span>
+        <span id="el-hero-name"></span><br>
+        <span class="accent" id="el-hero-highlight"></span>
       </h1>
-      <p class="hero-text" id="el-hero-desc">
-        I turn raw footage into tension-driven stories — with precise pacing, sound design, motion, and atmosphere. Built for creators and channels that need the viewer locked in from the first second.
-      </p>
+      <p class="hero-text" id="el-hero-desc"></p>
       <div class="hero-meta mono">
         <span>SUSPENSE</span><span>/</span><span>STORYTELLING</span><span>/</span><span>DOCUMENTARY</span>
       </div>
@@ -140,8 +138,8 @@
       <p class="section-label mono">FEATURED PROJECT</p>
       <div class="showcase-box">
         <div class="showcase-content">
-          <h2 id="showcaseTitle"></h2>
-          <p class="showcase-desc" id="showcaseNote"></p>
+          <h2 id="showcaseTitle">NOME DO SHOWCASE AQUI</h2>
+          <p class="showcase-desc" id="showcaseNote">Descrição completa do seu projeto em destaque.</p>
           <button class="btn-outline mono" id="btnShowcase">SHOWCASE ↗</button>
         </div>
       </div>
@@ -154,7 +152,7 @@
         <h2>PROJECTS</h2>
       </div>
       <div class="tabs mono" role="tablist">
-        <button class="tab active" data-cat="suspense">SUSPENSE</button>
+        <button class="tab" data-cat="suspense">SUSPENSE</button>
         <button class="tab" data-cat="storytelling">STORYTELLING</button>
         <button class="tab" data-cat="documentary">DOCUMENTARY</button>
       </div>
@@ -174,9 +172,7 @@
     <section class="about" id="about">
       <p class="section-label mono">PROFILE</p>
       <div class="about-grid">
-        <p class="about-text" id="el-about-desc">
-          I'm Igor, a video editor and motion designer. I don't just cut clips together; I build narratives. Whether it's a suspenseful storytime, a documentary-style breakdown, or a fully 3D-animated intro, my focus is on flow, rhythm, and keeping the audience hooked.
-        </p>
+        <p class="about-text" id="el-about-desc"></p>
         <div class="about-cols">
           <div>
             <p class="mono label">SERVICES</p>
@@ -206,15 +202,15 @@
     </div>
   </div>
 
-  <footer class="footer mono" id="el-footer">© 2024 IGOR — VIDEO EDITOR / MOTION DESIGNER</footer>
+  <footer class="footer mono" id="el-footer"></footer>
 
   <!-- =======================================================
        DADOS DO SITE: O CÓDIGO VAI ALTERAR ISSO AQUI
   ======================================================== -->
   <script id="data-script">
 const SITE_CONTENT = {
-  "heroName": "IGOR.",
-  "heroHighlight": "STORIES THAT STAY.",
+  "heroName": "IGOR",
+  "heroHighlight": "STORIES THAT STAY!",
   "heroDesc": "I turn raw footage into tension-driven stories — with precise pacing, sound design, motion, and atmosphere. Built for creators and channels that need the viewer locked in from the first second.",
   "aboutDesc": "I'm Igor, a video editor and motion designer. I don't just cut clips together; I build narratives. Whether it's a suspenseful storytime, a documentary-style breakdown, or a fully 3D-animated intro, my focus is on flow, rhythm, and keeping the audience hooked.",
   "services": [
@@ -232,8 +228,8 @@ const SITE_CONTENT = {
 };
 const SHOWCASE_VIDEO = {
   "id": "showcase-main",
-  "title": "NOME DO SHOWCASE AQUI",
-  "description": "Descrição completa do seu projeto em destaque.",
+  "title": "WHAT I DO IN PRACTICE",
+  "description": "A visual showcase of my motion design, 3D animation and visual effects.",
   "source": {
     "type": "youtube",
     "videoId": ""
@@ -251,13 +247,13 @@ const WORK = [
   {
     "id": "proj-01",
     "category": "suspense",
-    "placeholder": true,
-    "title": "TÍTULO DO VÍDEO 1",
-    "description": "Descrição do projeto de suspense.",
+    "placeholder": false,
+    "title": "No Dogs in house.",
+    "description": "Utilizando motion design e uma versão digitalmente recriada do rosto do criador, construí o cenário para estabelecer uma atmosfera tensa e de suspense.",
     "tag": "CASE_01",
     "source": {
       "type": "youtube",
-      "videoId": ""
+      "videoId": "z7F1Hm7_4lU"
     },
     "thumbnail": null,
     "services": [
@@ -288,8 +284,8 @@ const WORK = [
     "id": "proj-03",
     "category": "storytelling",
     "placeholder": true,
-    "title": "TÍTULO STORYTELLING",
-    "description": "Descrição storytelling.",
+    "title": "Work in progress",
+    "description": "",
     "tag": "CASE_03",
     "source": {
       "type": "youtube",
@@ -318,8 +314,8 @@ const WORK = [
     "id": "proj-05",
     "category": "documentary",
     "placeholder": true,
-    "title": "TÍTULO DOC",
-    "description": "Descrição do documentário.",
+    "title": "Work in progress",
+    "description": "",
     "tag": "CASE_05",
     "source": {
       "type": "youtube",
@@ -348,10 +344,10 @@ const WORK = [
 const SHORTS = [
   {
     "id": "short-01",
-    "title": "NOME DO SHORT 1",
+    "title": "Work in progress",
     "tag": "CLIP_01",
     "placeholder": true,
-    "description": "Descrição do short.",
+    "description": "",
     "source": {
       "type": "youtube",
       "videoId": ""
@@ -407,7 +403,7 @@ const CONTACT = {
   "email": "igoreditor.contact@gmail.com",
   "instagram": "https://www.instagram.com/igoroeditor/"
 };
-  </script>
+</script>
 
   <!-- =======================================================
        LÓGICA DO SITE E MONTAGEM DOS TEXTOS
@@ -717,5 +713,21 @@ const CONTACT = ${JSON.stringify(newContact, null, 2)};
       });
     })();
   </script>
-</body>
+
+
+<audio class="audio-output" style="display: none;"></audio><div id="volume-booster-visusalizer">
+                    <div class="sound">
+                        <div class="sound-icon"></div>
+                        <div class="sound-wave sound-wave_one"></div>
+                        <div class="sound-wave sound-wave_two"></div>
+                        <div class="sound-wave sound-wave_three"></div>
+                    </div>
+                    <div class="segments-box">
+                        <div data-range="1-20" class="segment"><span></span></div>
+                        <div data-range="21-40" class="segment"><span></span></div>
+                        <div data-range="41-60" class="segment"><span></span></div>
+                        <div data-range="61-80" class="segment"><span></span></div>
+                        <div data-range="81-100" class="segment"><span></span></div>
+                    </div>
+                </div></body>
 </html>
