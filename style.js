@@ -155,14 +155,19 @@ contactLinks.innerHTML = links.map(l => `
   </a>`).join("");
 
 // ============================================================
-// CURSOR CUSTOMIZADO (só em desktop / mouse)
+// CURSOR CUSTOMIZADO — só esconde o cursor do sistema DEPOIS
+// que o cursor falso já está de fato seguindo o mouse.
+// Assim, se o JS falhar por qualquer motivo, o cursor normal
+// do navegador continua visível em vez de sumir.
 // ============================================================
 const cursorDot = document.querySelector(".cursor-dot");
 const cursorRing = document.querySelector(".cursor-ring");
 if (window.matchMedia("(pointer: fine)").matches){
+  let started = false;
   window.addEventListener("mousemove", (e) => {
     cursorDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%,-50%)`;
     cursorRing.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%,-50%)`;
+    if (!started){ started = true; document.body.classList.add("cursor-ready"); }
   });
   document.querySelectorAll("a, button, .card").forEach(el => {
     el.addEventListener("mouseenter", () => { cursorRing.style.width = "48px"; cursorRing.style.height = "48px"; });
