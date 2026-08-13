@@ -134,7 +134,7 @@
       </div>
     </section>
 
-    <!-- Showcase Section (Independente) -->
+    <!-- Showcase Section -->
     <section class="showcase" id="showcase">
       <p class="section-label mono">FEATURED PROJECT</p>
       <div class="showcase-box">
@@ -196,78 +196,193 @@
 
   <footer class="footer mono">© 2024 IGOR — VIDEO EDITOR / MOTION DESIGNER</footer>
 
-  <script>
-    /* =======================================================
-       ÁREA DE CONFIGURAÇÃO DOS SEUS VÍDEOS E TEXTOS
-       Modifique apenas o que está entre as aspas duplas (" ")
-    ======================================================== */
+  <!-- =======================================================
+       SCRIPT DOS DADOS: O Gerador vai ler e alterar APENAS isso.
+  ======================================================== -->
+  <script id="data-script">
+const SHOWCASE_VIDEO = {
+  "id": "showcase-main",
+  "title": "TÍTULO DO SEU MELHOR PROJETO",
+  "description": "Descrição completa do seu projeto em destaque.",
+  "source": {
+    "type": "youtube",
+    "videoId": ""
+  },
+  "services": [
+    "Motion Design",
+    "Sound Design"
+  ],
+  "software": [
+    "Blender",
+    "After Effects"
+  ]
+};
+const WORK = [
+  {
+    "id": "proj-01",
+    "category": "suspense",
+    "placeholder": true,
+    "title": "TÍTULO DO VÍDEO 1",
+    "description": "Descrição do projeto de suspense.",
+    "tag": "CASE_01",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null,
+    "services": [
+      "Video Editing",
+      "Motion Design"
+    ],
+    "software": [
+      "Premiere Pro",
+      "After Effects"
+    ]
+  },
+  {
+    "id": "proj-02",
+    "category": "suspense",
+    "placeholder": true,
+    "title": "Work in progress",
+    "description": "",
+    "tag": "CASE_02",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null,
+    "services": [],
+    "software": []
+  },
+  {
+    "id": "proj-03",
+    "category": "storytelling",
+    "placeholder": true,
+    "title": "TÍTULO STORYTELLING",
+    "description": "Descrição storytelling.",
+    "tag": "CASE_03",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null,
+    "services": [],
+    "software": []
+  },
+  {
+    "id": "proj-04",
+    "category": "storytelling",
+    "placeholder": true,
+    "title": "Work in progress",
+    "description": "",
+    "tag": "CASE_04",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null,
+    "services": [],
+    "software": []
+  },
+  {
+    "id": "proj-05",
+    "category": "documentary",
+    "placeholder": true,
+    "title": "TÍTULO DOC",
+    "description": "Descrição do documentário.",
+    "tag": "CASE_05",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null,
+    "services": [],
+    "software": []
+  },
+  {
+    "id": "proj-06",
+    "category": "documentary",
+    "placeholder": true,
+    "title": "Work in progress",
+    "description": "",
+    "tag": "CASE_06",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null,
+    "services": [],
+    "software": []
+  }
+];
+const SHORTS = [
+  {
+    "id": "short-01",
+    "title": "NOME DO SHORT 1",
+    "tag": "CLIP_01",
+    "placeholder": true,
+    "description": "Descrição do short.",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null,
+    "services": [],
+    "software": []
+  },
+  {
+    "id": "short-02",
+    "title": "Work in progress",
+    "tag": "CLIP_02",
+    "placeholder": true,
+    "description": "",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null,
+    "services": [],
+    "software": []
+  },
+  {
+    "id": "short-03",
+    "title": "Work in progress",
+    "tag": "CLIP_03",
+    "placeholder": true,
+    "description": "",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null,
+    "services": [],
+    "software": []
+  },
+  {
+    "id": "short-04",
+    "title": "Work in progress",
+    "tag": "CLIP_04",
+    "placeholder": true,
+    "description": "",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null,
+    "services": [],
+    "software": []
+  }
+];
+const CONTACT = {
+  "email": "igoreditor.contact@gmail.com",
+  "instagram": "https://www.instagram.com/igoroeditor/"
+};
+  </script>
 
-    // 1. SEU SHOWCASE (VÍDEO PRINCIPAL ISOLADO)
-    const SHOWCASE_VIDEO = { 
-      id: "showcase-main", 
-      title: "DIGITE O NOME DO SHOWCASE AQUI", // <--- MUDE O TÍTULO AQUI
-      description: "Escreva a descrição do Showcase. Fale sobre a edição, ritmo, etc.", // <--- MUDE A DESCRIÇÃO AQUI
-      source: { type: "youtube", videoId: "ID_DO_YOUTUBE_AQUI" }, 
-      services: ["Motion Design", "Sound Design","Animation 3D and 2D"], 
-      software: ["Blender", "After Effects" , "Premiere Pro"]/  
-    };
-
-    // 2. SEUS PROJETOS NAS ABAS (16:9)
-    const WORK = [
-      { 
-        id: "proj-01", 
-        category: "suspense", 
-        placeholder: true, // <--- MUDE PARA false QUANDO COLOCAR UM VÍDEO
-        title: "TÍTULO DO VÍDEO 1", // <--- MUDE O TÍTULO AQUI
-        description: "Descrição do projeto de suspense.", // <--- MUDE A DESCRIÇÃO AQUI
-        tag: "CASE_01", 
-        source: { type: "youtube", videoId: "ID_DO_YOUTUBE_AQUI" }, 
-        thumbnail: null, 
-        services: ["Video Editing", "Motion Design"], 
-        software: ["Premiere Pro", "After Effects"] 
-      },
-      { 
-        id: "proj-02", category: "suspense", placeholder: true, title: "Work in progress", 
-        tag: "CASE_02", description: "", source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] 
-      },
-      { 
-        id: "proj-03", category: "storytelling", placeholder: true, title: "TÍTULO STORYTELLING", // <--- MUDE O TÍTULO AQUI
-        tag: "CASE_03", description: "Descrição storytelling.", // <--- MUDE A DESCRIÇÃO AQUI
-        source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] 
-      },
-      { 
-        id: "proj-04", category: "storytelling", placeholder: true, title: "Work in progress", 
-        tag: "CASE_04", description: "", source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] 
-      },
-      { 
-        id: "proj-05", category: "documentary", placeholder: true, title: "TÍTULO DOC", // <--- MUDE O TÍTULO AQUI
-        tag: "CASE_05", description: "Descrição do documentário.", // <--- MUDE A DESCRIÇÃO AQUI
-        source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] 
-      },
-      { 
-        id: "proj-06", category: "documentary", placeholder: true, title: "Work in progress", 
-        tag: "CASE_06", description: "", source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] 
-      }
-    ];
-
-    // 3. SEUS SHORTS (9:16)
-    const SHORTS = [
-      { id: "short-01", title: "NOME DO SHORT 1", tag: "CLIP_01", placeholder: true, description: "Descrição do short.", source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] }, // <--- EDITE AQUI
-      { id: "short-02", title: "Work in progress", tag: "CLIP_02", placeholder: true, description: "", source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] },
-      { id: "short-03", title: "Work in progress", tag: "CLIP_03", placeholder: true, description: "", source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] },
-      { id: "short-04", title: "Work in progress", tag: "CLIP_04", placeholder: true, description: "", source: { type: "youtube", videoId: "" }, thumbnail: null, services: [], software: [] }
-    ];
-
-    // 4. SEUS CONTATOS
-    const CONTACT = {
-      email: "igoreditor.contact@gmail.com",
-      instagram: "https://www.instagram.com/igoroeditor/"
-    };
-
-    /* =======================================================
-       FIM DA ÁREA DE CONFIGURAÇÃO (O CÓDIGO ABAIXO FAZ TUDO FUNCIONAR)
-    ======================================================== */
-
+  <!-- =======================================================
+       SCRIPT DA LÓGICA DO SITE
+  ======================================================== -->
+  <script id="logic-script">
     document.getElementById("showcaseTitle").textContent = SHOWCASE_VIDEO.title;
     document.getElementById("showcaseNote").textContent = SHOWCASE_VIDEO.description;
 
@@ -367,7 +482,158 @@
         <span class="arrow">${l.value} →</span>
       </a>
     `).join("");
+  </script>
 
+  <!-- =======================================================
+       O CEREBRO: PAINEL GERADOR DE CÓDIGO (MEGA BRAIN)
+  ======================================================== -->
+  <script id="admin-script">
+    (function() {
+      // Cria o botão de Admin
+      const btn = document.createElement("button");
+      btn.innerHTML = "⚙️ CONFIGURAR SITE";
+      btn.className = "admin-ui-element";
+      btn.style.cssText = "position:fixed; bottom:20px; left:20px; background:#d8ff00; color:#000; font-family:'DM Mono', monospace; font-size:12px; font-weight:bold; padding:10px 15px; border-radius:5px; z-index:9999; cursor:pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5);";
+      document.body.appendChild(btn);
+
+      // Cria o Painel de Controle (Overlay)
+      const overlay = document.createElement("div");
+      overlay.id = "mega-admin-panel";
+      overlay.className = "admin-ui-element";
+      overlay.style.cssText = "position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:10000; display:none; padding:40px; overflow-y:auto; color:#fff; font-family:sans-serif;";
+      
+      let html = `<div style="max-width:800px; margin:0 auto;">`;
+      html += `<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #333; padding-bottom:20px; margin-bottom:20px;">
+                 <h2>⚙️ PAINEL DE CONTROLE IGOR.</h2>
+                 <button id="close-admin" style="background:transparent; color:#fff; border:1px solid #555; padding:8px 12px; cursor:pointer;">FECHAR ✕</button>
+               </div>`;
+      html += `<p style="color:#aaa; font-size:14px; margin-bottom:20px;">Preencha os dados abaixo. Se você colocar um ID do YouTube, o vídeo sairá de "Work in progress" automaticamente!</p>`;
+
+      const inputStyle = "width:100%; padding:10px; margin-top:5px; margin-bottom:15px; background:#111; border:1px solid #333; color:#fff; font-family:monospace;";
+
+      // --- SHOWCASE ---
+      html += `<div style="background:#1a1a1a; padding:20px; border-left:4px solid #d8ff00; margin-bottom:30px;">
+                 <h3>🎬 VÍDEO PRINCIPAL (SHOWCASE)</h3>
+                 <label>Título:</label><input id="adm-shw-title" value="${SHOWCASE_VIDEO.title}" style="${inputStyle}">
+                 <label>Descrição:</label><textarea id="adm-shw-desc" style="${inputStyle} height:60px;">${SHOWCASE_VIDEO.description}</textarea>
+                 <label>ID do YouTube (Ex: kYV3Vl_WXYM):</label><input id="adm-shw-id" value="${SHOWCASE_VIDEO.source.videoId}" style="${inputStyle}">
+               </div>`;
+
+      // --- WORK ---
+      html += `<h3 style="margin-top:30px; border-bottom:1px solid #333; padding-bottom:10px;">📁 PROJETOS DAS ABAS (16:9)</h3>`;
+      WORK.forEach((w, i) => {
+        html += `<div style="background:#111; padding:15px; border:1px solid #222; margin-bottom:15px;">
+                   <strong style="color:#d8ff00; text-transform:uppercase;">${w.category} - Projeto ${i+1}</strong><br><br>
+                   <label>Título:</label><input id="adm-wk-title-${i}" value="${w.title}" style="${inputStyle}">
+                   <label>Descrição:</label><input id="adm-wk-desc-${i}" value="${w.description}" style="${inputStyle}">
+                   <label>ID do YouTube:</label><input id="adm-wk-id-${i}" value="${w.source.videoId}" placeholder="Deixe em branco para 'Work in progress'" style="${inputStyle}">
+                 </div>`;
+      });
+
+      // --- SHORTS ---
+      html += `<h3 style="margin-top:30px; border-bottom:1px solid #333; padding-bottom:10px;">📱 SHORTS (VERTICAL 9:16)</h3>`;
+      SHORTS.forEach((s, i) => {
+        html += `<div style="background:#111; padding:15px; border:1px solid #222; margin-bottom:15px;">
+                   <strong style="color:#d8ff00;">Short ${i+1}</strong><br><br>
+                   <label>Título:</label><input id="adm-sh-title-${i}" value="${s.title}" style="${inputStyle}">
+                   <label>Descrição:</label><input id="adm-sh-desc-${i}" value="${s.description}" style="${inputStyle}">
+                   <label>ID do YouTube:</label><input id="adm-sh-id-${i}" value="${s.source.videoId}" placeholder="Deixe em branco para 'Work in progress'" style="${inputStyle}">
+                 </div>`;
+      });
+
+      // --- CONTATOS ---
+      html += `<h3 style="margin-top:30px; border-bottom:1px solid #333; padding-bottom:10px;">✉️ CONTATOS</h3>`;
+      html += `<label>Email:</label><input id="adm-email" value="${CONTACT.email}" style="${inputStyle}">`;
+      html += `<label>Instagram Link:</label><input id="adm-insta" value="${CONTACT.instagram}" style="${inputStyle}">`;
+
+      // --- GERADOR ---
+      html += `<button id="btn-generate" style="width:100%; padding:20px; background:#d8ff00; color:#000; font-weight:bold; font-size:18px; margin-top:30px; border:none; cursor:pointer;">💾 GERAR NOVO CÓDIGO</button>`;
+      html += `<textarea id="adm-output" readonly style="width:100%; height:200px; margin-top:20px; background:#000; color:#0f0; border:1px solid #333; padding:15px; font-family:monospace; display:none;"></textarea>`;
+      html += `<p id="adm-msg" style="color:#d8ff00; text-align:center; margin-top:10px; font-weight:bold; display:none;">↑ CÓDIGO GERADO! Copie todo o texto acima, vá no GitHub, apague o antigo e cole o novo.</p>`;
+
+      html += `</div>`;
+      overlay.innerHTML = html;
+      document.body.appendChild(overlay);
+
+      // Eventos
+      btn.addEventListener("click", () => overlay.style.display = "block");
+      document.getElementById("close-admin").addEventListener("click", () => overlay.style.display = "none");
+
+      document.getElementById("btn-generate").addEventListener("click", () => {
+        // Coleta dados do Showcase
+        const newShowcase = {
+          ...SHOWCASE_VIDEO,
+          title: document.getElementById("adm-shw-title").value.trim(),
+          description: document.getElementById("adm-shw-desc").value.trim(),
+          source: { type: "youtube", videoId: document.getElementById("adm-shw-id").value.trim() }
+        };
+
+        // Coleta dados dos Projects
+        const newWork = WORK.map((w, i) => {
+          const id = document.getElementById(`adm-wk-id-${i}`).value.trim();
+          return {
+            ...w,
+            title: document.getElementById(`adm-wk-title-${i}`).value.trim(),
+            description: document.getElementById(`adm-wk-desc-${i}`).value.trim(),
+            source: { type: "youtube", videoId: id },
+            placeholder: id === "" // Se não tem ID, vira Work in progress!
+          };
+        });
+
+        // Coleta dados dos Shorts
+        const newShorts = SHORTS.map((s, i) => {
+          const id = document.getElementById(`adm-sh-id-${i}`).value.trim();
+          return {
+            ...s,
+            title: document.getElementById(`adm-sh-title-${i}`).value.trim(),
+            description: document.getElementById(`adm-sh-desc-${i}`).value.trim(),
+            source: { type: "youtube", videoId: id },
+            placeholder: id === ""
+          };
+        });
+
+        const newContact = {
+          email: document.getElementById("adm-email").value.trim(),
+          instagram: document.getElementById("adm-insta").value.trim()
+        };
+
+        // Monta o novo script de dados
+        const newDataScript = `
+const SHOWCASE_VIDEO = ${JSON.stringify(newShowcase, null, 2)};
+const WORK = ${JSON.stringify(newWork, null, 2)};
+const SHORTS = ${JSON.stringify(newShorts, null, 2)};
+const CONTACT = ${JSON.stringify(newContact, null, 2)};
+`;
+
+        // Prepara para clonar e extrair o HTML
+        const clone = document.documentElement.cloneNode(true);
+        
+        // Limpa o lixo que o JS injetou ao renderizar a página (pra não duplicar as divs)
+        clone.querySelector('#grid').innerHTML = "";
+        clone.querySelector('#shortsGrid').innerHTML = "";
+        clone.querySelector('#panelBody').innerHTML = "";
+        clone.querySelector('#contactLinks').innerHTML = "";
+        clone.querySelectorAll('.active, .open').forEach(el => el.classList.remove('active', 'open'));
+        clone.querySelector('body').removeAttribute('style');
+
+        // Remove o próprio painel de admin do clone, para que ele seja gerado fresco na próxima vez
+        clone.querySelectorAll('.admin-ui-element').forEach(el => el.remove());
+
+        // Injeta os dados novos no script
+        clone.querySelector('#data-script').textContent = newDataScript;
+
+        // Gera a string final
+        const finalHTML = "<!DOCTYPE html>\n<html lang=\"en\">\n" + clone.innerHTML + "\n</html>";
+        
+        const outBox = document.getElementById("adm-output");
+        outBox.value = finalHTML;
+        outBox.style.display = "block";
+        document.getElementById("adm-msg").style.display = "block";
+        outBox.select();
+        document.execCommand('copy');
+        document.getElementById("btn-generate").textContent = "CÓDIGO COPIADO PARA ÁREA DE TRANSFERÊNCIA! 📋";
+      });
+    })();
   </script>
 </body>
 </html>
