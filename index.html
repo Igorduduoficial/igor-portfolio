@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IGOR. — Video Editor</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* =======================================================
+       CSS (ESTILOS VISUAIS)
+    ======================================================== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #070707; --panel: #0d0d0d; --card: #111111; --line: #242424; --muted: #7a7a7a; --text: #f1f1ef; --acid: #d8ff00; --f-mono: "DM Mono", monospace; --f-sans: "Inter", sans-serif; --container: 1200px; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--f-sans); overflow-x: hidden; }
+    
+    /* Cursor */
+    body.cursor-ready { cursor: none; }
+    @media (pointer: coarse) { body.cursor-ready { cursor: auto; } .cursor-dot, .cursor-ring { display: none !important; } }
+    .cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; border-radius: 50%; opacity: 0; transition: opacity 0.3s; }
+    body.cursor-ready .cursor-dot, body.cursor-ready .cursor-ring { opacity: 1; }
+    .cursor-dot { width: 6px; height: 6px; background: var(--acid); margin-top: -3px; margin-left: -3px; }
+    .cursor-ring { width: 36px; height: 36px; border: 1px solid rgba(216,255,0,0.5); margin-top: -18px; margin-left: -18px; transition: width 0.2s, height 0.2s, margin 0.2s, opacity 0.3s; }
+    .cursor-ring.hovering { width: 56px; height: 56px; margin-top: -28px; margin-left: -28px; background: rgba(216,255,0,0.05); }
+
+    a { text-decoration: none; color: inherit; }
+    button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+    ul { list-style: none; }
+    ::selection { background: var(--acid); color: #000; }
+    .mono { font-family: var(--f-mono); letter-spacing: 0.06em; }
+
+    /* Nav */
+    .nav { position: sticky; top: 0; z-index: 500; display: flex; align-items: center; justify-content: space-between; padding: 1.3rem clamp(1.2rem, 4vw, 3.5rem); background: rgba(7,7,7,0.85); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
+    .brand { font-weight: 800; font-size: 1.1rem; letter-spacing: 0.02em; }
+    .brand span { color: var(--acid); }
+    .nav-links { display: flex; gap: 2rem; font-size: 0.72rem; color: var(--muted); }
+    .nav-links a:hover { color: var(--text); }
+    @media (max-width: 760px) { .nav-links { display: none; } }
+
+    /* Hero */
+    .hero { padding: 4rem clamp(1.2rem, 4vw, 3.5rem) 3.5rem; max-width: var(--container); margin: 0 auto; }
+    .kicker { font-size: 0.72rem; color: var(--acid); margin-bottom: 1.2rem; }
+    .hero-title { font-size: clamp(2.6rem, 6.4vw, 5.2rem); font-weight: 800; line-height: 1.02; letter-spacing: -0.01em; margin-bottom: 1.8rem; text-transform: uppercase; }
+    .hero-title .accent { color: var(--acid); }
+    .hero-text { max-width: 560px; color: var(--muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.8rem; }
+    .hero-meta { display: flex; gap: 0.6rem; font-size: 0.68rem; color: var(--muted); }
+    .hero-meta span:nth-child(even) { color: var(--acid); }
+
+    /* Showcase */
+    .showcase { padding: 1rem clamp(1.2rem, 4vw, 3.5rem) 4rem; max-width: var(--container); margin: 0 auto; }
+    .section-label { font-size: 0.68rem; color: var(--acid); margin-bottom: 1rem; }
+    .showcase-box { background: var(--panel); border: 1px solid var(--line); padding: 3.5rem 2.5rem; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+    .showcase-content h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 0.8rem; text-transform: uppercase; font-weight: 800; }
+    .showcase-desc { color: var(--muted); margin-bottom: 2rem; max-width: 500px; font-size: 0.95rem; line-height: 1.6; }
+    .btn-outline { border: 1px solid var(--acid); color: var(--acid); padding: 0.9rem 1.6rem; font-size: 0.75rem; letter-spacing: 0.08em; transition: background 0.25s, color 0.25s; cursor: pointer; display: inline-block; }
+    .btn-outline:hover { background: var(--acid); color: #000; }
+
+    /* Work / Tabs */
+    .section-head { max-width: var(--container); margin: 0 auto; padding: 4rem clamp(1.2rem, 4vw, 3.5rem) 0; }
+    .section-head h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; }
+    .tabs { max-width: var(--container); margin: 2.2rem auto 0; padding: 0 clamp(1.2rem, 4vw, 3.5rem); display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .tab { padding: 0.6rem 1.1rem; font-size: 0.7rem; color: var(--muted); border: 1px solid var(--line); cursor: pointer; transition: 0.2s; }
+    .tab.active { color: #000; background: var(--acid); border-color: var(--acid); }
+    .tab:not(.active):hover { border-color: var(--muted); color: var(--text); }
+
+    .grid { max-width: var(--container); margin: 2rem auto 0; padding: 0 clamp(1.2rem, 4vw, 3.5rem) 5.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; }
+    @media (max-width: 980px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 620px) { .grid { grid-template-columns: 1fr; } }
+
+    /* Cards */
+    .card { border: 1px solid var(--line); background: var(--card); cursor: pointer; transition: border-color 0.25s, transform 0.25s; overflow: hidden; }
+    .card:hover { border-color: var(--acid); transform: translateY(-3px); }
+    .card-media { position: relative; aspect-ratio: 16/9; background: radial-gradient(circle at 50% 35%, #161616, #0a0a0a); overflow: hidden; }
+    .card-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+    .card-tag { position: absolute; top: 0.6rem; left: 0.6rem; z-index: 2; font-size: 0.58rem; color: var(--acid); font-family: var(--f-mono); }
+    .card-body { padding: 1rem 1.1rem 1.2rem; }
+    .card-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .card-sub { font-size: 0.72rem; color: var(--muted); }
+    .card.placeholder { opacity: 0.5; cursor: default; }
+    .card.placeholder:hover { transform: none; border-color: var(--line); }
+    .card.placeholder .card-media { background: repeating-linear-gradient(45deg, #0e0e0e, #0e0e0e 10px, #121212 10px, #121212 20px); }
+
+    /* Shorts Grid */
+    .shorts-grid { max-width: var(--container); margin: 2rem auto 0; padding: 0 clamp(1.2rem, 4vw, 3.5rem) 5.5rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem; }
+    @media (max-width: 980px) { .shorts-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .shorts-grid { grid-template-columns: 1fr; } }
+    .shorts-grid .card-media { aspect-ratio: 9/16; }
+
+    /* About */
+    .about { max-width: var(--container); margin: 0 auto; padding: 5.5rem clamp(1.2rem, 4vw, 3.5rem); border-top: 1px solid var(--line); }
+    .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 3rem; margin-top: 2rem; }
+    .about-text { font-size: 1.15rem; color: var(--muted); line-height: 1.75; max-width: 520px; }
+    .about-cols { display: flex; gap: 3rem; }
+    .label { font-size: 0.64rem; color: var(--acid); margin-bottom: 0.8rem; }
+    .about-cols li { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.45rem; }
+    @media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; } }
+
+    /* Contact */
+    .contact { max-width: var(--container); margin: 0 auto; padding: 5rem clamp(1.2rem, 4vw, 3.5rem); border-top: 1px solid var(--line); }
+    .contact h2 { font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 800; text-transform: uppercase; margin-top: 0.6rem; line-height: 1.05; }
+    .contact-links { display: flex; flex-direction: column; margin-top: 3rem; border-top: 1px solid var(--line); max-width: 640px; }
+    .contact-link { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0.5rem; border-bottom: 1px solid var(--line); transition: all 0.3s ease; }
+    .contact-left { display: flex; align-items: center; gap: 1rem; }
+    .contact-left svg { width: 22px; height: 22px; color: var(--muted); transition: color 0.3s ease; }
+    .contact-link:hover .contact-left svg { color: var(--acid); }
+    .contact-link:hover { padding-left: 1rem; }
+    .contact-link .arrow { color: var(--muted); font-size: 0.85rem; transition: color 0.25s; }
+    .contact-link:hover .arrow { color: var(--acid); }
+
+    /* Panel Modal */
+    .project-panel { position: fixed; inset: 0; z-index: 700; background: var(--bg); transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 0.84, 0.44, 1); overflow-y: auto; }
+    .project-panel.open { transform: translateX(0); }
+    .panel-inner { max-width: var(--container); margin: 0 auto; padding: 5.5rem clamp(1.2rem, 4vw, 3.5rem) 5rem; }
+    .close-btn { font-size: 0.75rem; color: var(--muted); margin-bottom: 2.2rem; cursor: pointer; transition: color 0.2s; }
+    .close-btn:hover { color: var(--acid); }
+    .panel-video { width: 100%; aspect-ratio: 16/9; background: #000; border: 1px solid var(--line); margin-bottom: 2.4rem; }
+    .panel-video iframe, .panel-video video { width: 100%; height: 100%; display: block; }
+    .panel-title { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; text-transform: uppercase; margin-bottom: 2rem; }
+    .panel-meta { display: grid; grid-template-columns: 1fr 1fr 2fr; gap: 2.4rem; }
+    .panel-meta .label { margin-bottom: 0.7rem; }
+    .panel-meta li { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.3rem; }
+    .panel-meta p { color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
+    @media (max-width: 720px) { .panel-meta { grid-template-columns: 1fr; gap: 1.5rem; } }
+    .footer { text-align: center; padding: 2.4rem 1rem 3rem; font-size: 0.62rem; color: #444; }
+  </style>
+</head>
+<body>
+  
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <header class="nav">
+    <a class="brand" href="#top">IGOR<span>.</span></a>
+    <nav class="nav-links">
+      <a href="#work">WORK</a>
+      <a href="#shorts">SHORTS</a>
+      <a href="#about">ABOUT</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- Hero com IGOR em destaque -->
+    <section class="hero">
+      <p class="kicker mono">VIDEO EDITOR / MOTION DESIGNER</p>
+      <h1 class="hero-title">
+        IGOR.<br>
+        <span class="accent">STORIES THAT STAY.</span>
+      </h1>
+      <p class="hero-text">
+        I turn raw footage into tension-driven stories — with precise pacing, sound design, motion, and atmosphere. Built for creators and channels that need the viewer locked in from the first second.
+      </p>
+      <div class="hero-meta mono">
+        <span>SUSPENSE</span><span>/</span><span>STORYTELLING</span><span>/</span><span>DOCUMENTARY</span>
+      </div>
+    </section>
+
+    <!-- Showcase Botão -->
+    <section class="showcase" id="showcase">
+      <p class="section-label mono">FEATURED PROJECT</p>
+      <div class="showcase-box">
+        <div class="showcase-content">
+          <h2 id="showcaseTitle">Signal Lost</h2>
+          <p class="showcase-desc" id="showcaseNote">3D motion design in Blender, composited and sound-designed for an analog-horror feel.</p>
+          <button class="btn-outline mono" id="btnShowcase">OPEN FEATURED PROJECT ↗</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work: 16:9 -->
+    <section class="work" id="work">
+      <div class="section-head">
+        <p class="section-label mono">SELECTED WORK</p>
+        <h2>PROJECTS</h2>
+      </div>
+      <!-- Abas Sem "ALL" -->
+      <div class="tabs mono" role="tablist">
+        <button class="tab active" data-cat="suspense">SUSPENSE</button>
+        <button class="tab" data-cat="storytelling">STORYTELLING</button>
+        <button class="tab" data-cat="documentary">DOCUMENTARY</button>
+      </div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <!-- Shorts: 9:16 separados -->
+    <section class="shorts" id="shorts">
+      <div class="section-head">
+        <p class="section-label mono">VERTICAL FORMAT</p>
+        <h2>SHORTS</h2>
+      </div>
+      <div class="shorts-grid" id="shortsGrid"></div>
+    </section>
+
+    <!-- About -->
+    <section class="about" id="about">
+      <p class="section-label mono">PROFILE</p>
+      <div class="about-grid">
+        <p class="about-text">
+          I'm Igor, a video editor and motion designer. I don't just cut clips together; I build narratives. Whether it's a suspenseful storytime, a documentary-style breakdown, or a fully 3D-animated intro, my focus is on flow, rhythm, and keeping the audience hooked.
+        </p>
+        <div class="about-cols">
+          <div><p class="mono label">SERVICES</p><ul><li>Video Editing</li><li>Motion Design</li><li>Sound Design</li><li>Color Grading</li></ul></div>
+          <div><p class="mono label">SOFTWARE</p><ul><li>Premiere Pro</li><li>After Effects</li><li>Blender</li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contatos -->
+    <section class="contact" id="contact">
+      <p class="section-label mono">GET IN TOUCH</p>
+      <h2>START A<br>PROJECT</h2>
+      <div class="contact-links" id="contactLinks"></div>
+    </section>
+  </main>
+
+  <div class="project-panel" id="projectPanel">
+    <div class="panel-inner">
+      <button class="close-btn mono" id="closePanel">← BACK</button>
+      <div class="panel-body" id="panelBody"></div>
+    </div>
+  </div>
+
+  <footer class="footer mono">© 2024 IGOR — VIDEO EDITOR / MOTION DESIGNER</footer>
+
+  <script>
+    /* =======================================================
+       JAVASCRIPT (LÓGICA E DADOS)
+    ======================================================== */
+    const WORK = [
+      { id: "suspense-01", title: "The Last Call", tag: "CASE_01", category: "suspense", placeholder: false, source: { type: "youtube", videoId: "" }, thumbnail: null, description: "A tension-driven short: original narration, frame by frame animations, sound design and motion built to keep the viewer locked in.", services: ["Video Editing", "Motion Design", "Sound Design"], software: ["Premiere Pro", "After Effects"] },
+      { id: "suspense-02", title: "Work in progress", tag: "CASE_02", category: "suspense", placeholder: true, source: { type: "youtube", videoId: "" }, thumbnail: null, description: "", services: [], software: [] },
+      { id: "storytelling-01", title: "Signal Lost", tag: "CASE_03", category: "storytelling", placeholder: false, source: { type: "youtube", videoId: "" }, thumbnail: null, description: "An analog TV with static-filled eyes, modeled and animated in Blender, composited with tape-noise sound design.", services: ["3D Motion Design", "Compositing", "Sound Design"], software: ["Blender", "After Effects", "Premiere Pro"] },
+      { id: "storytelling-02", title: "Work in progress", tag: "CASE_04", category: "storytelling", placeholder: true, source: { type: "youtube", videoId: "" }, thumbnail: null, description: "", services: [], software: [] },
+      { id: "documentary-01", title: "Work in progress", tag: "CASE_05", category: "documentary", placeholder: true, source: { type: "youtube", videoId: "" }, thumbnail: null, description: "", services: [], software: [] },
+      { id: "documentary-02", title: "Work in progress", tag: "CASE_06", category: "documentary", placeholder: true, source: { type: "youtube", videoId: "" }, thumbnail: null, description: "", services: [], software: [] }
+    ];
+
+    const SHORTS = [
+      { id: "short-01", title: "Work in progress", tag: "CLIP_01", placeholder: true, source: { type: "youtube", videoId: "" }, thumbnail: null, description: "", services: [], software: [] },
+      { id: "short-02", title: "Work in progress", tag: "CLIP_02", placeholder: true, source: { type: "youtube", videoId: "" }, thumbnail: null, description: "", services: [], software: [] },
+      { id: "short-03", title: "Work in progress", tag: "CLIP_03", placeholder: true, source: { type: "youtube", videoId: "" }, thumbnail: null, description: "", services: [], software: [] },
+      { id: "short-04", title: "Work in progress", tag: "CLIP_04", placeholder: true, source: { type: "youtube", videoId: "" }, thumbnail: null, description: "", services: [], software: [] }
+    ];
+
+    const SHOWCASE_VIDEO = { id: "showcase-main", title: "Signal Lost", source: { type: "youtube", videoId: "" }, description: "Featured project — 3D motion design in Blender, composited and sound-designed for an analog-horror feel.", services: ["3D Motion Design", "Sound Design"], software: ["Blender", "After Effects"] };
+
+    const CONTACT = {
+      email: "igoreditor.contact@gmail.com",
+      instagram: "https://www.instagram.com/igoroeditor/"
+    };
+
+    function youtubeThumb(id) { return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`; }
+    function embedHTML(source, autoplay = true) {
+      if (!source) return "";
+      if (source.type === "youtube" && source.videoId) return `<iframe src="https://www.youtube-nocookie.com/embed/${source.videoId}?rel=0&modestbranding=1${autoplay ? "&autoplay=1" : ""}" title="video" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      if (source.type === "local" && source.src) return `<video src="${source.src}" controls ${autoplay ? "autoplay" : ""} playsinline></video>`;
+      return `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#555;font-family:'DM Mono',monospace;font-size:0.78rem;">NO VIDEO SOURCE</div>`;
+    }
+    function thumbFor(item) {
+      if (item.thumbnail) return item.thumbnail;
+      if (item.source?.type === "youtube" && item.source.videoId) return youtubeThumb(item.source.videoId);
+      return null;
+    }
+
+    const grid = document.getElementById("grid");
+    let activeCat = "suspense";
+
+    function cardHTML(item, vertical = false) {
+      const thumb = thumbFor(item);
+      return `
+        <article class="card ${item.placeholder ? "placeholder" : ""}" data-id="${item.id}" data-list="${vertical ? "shorts" : "work"}">
+          <div class="card-media">
+            <span class="card-tag">${item.tag || ""}</span>
+            ${thumb ? `<img src="${thumb}" alt="">` : ""}
+          </div>
+          <div class="card-body">
+            <div class="card-title">${item.title}</div>
+            <div class="card-sub">${item.placeholder ? "New case coming soon" : (item.services || []).slice(0, 2).join(" · ")}</div>
+          </div>
+        </article>`;
+    }
+
+    function renderGrid() {
+      const items = WORK.filter(v => v.category === activeCat);
+      grid.innerHTML = items.map(item => cardHTML(item, false)).join("");
+      attachCardHandlers(grid, WORK);
+    }
+
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        activeCat = tab.dataset.cat;
+        renderGrid();
+      });
+    });
+    renderGrid();
+
+    const shortsGrid = document.getElementById("shortsGrid");
+    shortsGrid.innerHTML = SHORTS.map(item => cardHTML(item, true)).join("");
+    attachCardHandlers(shortsGrid, SHORTS);
+
+    function attachCardHandlers(container, dataset) {
+      container.querySelectorAll(".card:not(.placeholder)").forEach(card => {
+        card.addEventListener("click", () => openProject(card.dataset.id, dataset));
+      });
+    }
+
+    const projectPanel = document.getElementById("projectPanel");
+    const panelBody = document.getElementById("panelBody");
+    document.getElementById("closePanel").addEventListener("click", closeProject);
+
+    function openProject(id, dataset) {
+      const item = dataset.find(v => v.id === id);
+      if (!item) return;
+      panelBody.innerHTML = `
+        <div class="panel-video">${embedHTML(item.source)}</div>
+        <h2 class="panel-title">${item.title}</h2>
+        <div class="panel-meta">
+          <div><p class="mono label">SERVICES</p><ul>${(item.services || []).map(s => `<li>${s}</li>`).join("")}</ul></div>
+          <div><p class="mono label">SOFTWARE</p><ul>${(item.software || []).map(s => `<li>${s}</li>`).join("")}</ul></div>
+          <div><p class="mono label">DESCRIPTION</p><p>${item.description || ""}</p></div>
+        </div>`;
+      projectPanel.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeProject() {
+      projectPanel.classList.remove("open");
+      panelBody.innerHTML = "";
+      document.body.style.overflow = "";
+    }
+
+    document.getElementById("btnShowcase").addEventListener("click", () => openProject(SHOWCASE_VIDEO.id, [SHOWCASE_VIDEO]));
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && projectPanel.classList.contains("open")) closeProject(); });
+
+    const contactLinks = document.getElementById("contactLinks");
+    const emailIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`;
+    const instaIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>`;
+    
+    contactLinks.innerHTML = [
+      { label: "EMAIL", value: CONTACT.email, href: `mailto:${CONTACT.email}`, icon: emailIcon },
+      { label: "INSTAGRAM", value: "@igoroeditor", href: CONTACT.instagram, icon: instaIcon }
+    ].map(l => `
+      <a class="contact-link" href="${l.href}" target="_blank" rel="noopener">
+        <div class="contact-left">${l.icon}<span class="mono">${l.label}</span></div>
+        <span class="arrow">${l.value} →</span>
+      </a>
+    `).join("");
+
+    const cursorDot = document.querySelector(".cursor-dot");
+    const cursorRing = document.querySelector(".cursor-ring");
+    if (window.matchMedia("(pointer: fine)").matches) {
+      document.body.classList.add("cursor-ready");
+      window.addEventListener("mousemove", (e) => {
+        cursorDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        cursorRing.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      });
+      document.querySelectorAll("a, button, .card").forEach(el => {
+        el.addEventListener("mouseenter", () => cursorRing.classList.add("hovering"));
+        el.addEventListener("mouseleave", () => cursorRing.classList.remove("hovering"));
+      });
+    }
+  </script>
+</body>
+</html>
