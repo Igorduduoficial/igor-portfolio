@@ -1,9 +1,27 @@
-/* =========================
-   FILTER PROJECTS
-========================= */
-
 const filters = document.querySelectorAll(".filter");
 const projects = document.querySelectorAll(".project");
+
+
+// =========================
+// CATEGORY FILTER
+// =========================
+
+function filterProjects(category) {
+
+    projects.forEach(project => {
+
+        const projectCategory = project.dataset.category;
+
+        if (projectCategory === category) {
+            project.style.display = "";
+        } else {
+            project.style.display = "none";
+        }
+
+    });
+
+}
+
 
 filters.forEach(filter => {
 
@@ -17,44 +35,43 @@ filters.forEach(filter => {
 
         const category = filter.dataset.filter;
 
-        projects.forEach(project => {
-
-            const projectCategory = project.dataset.category;
-
-            if (
-                category === "all" ||
-                projectCategory === category
-            ) {
-                project.style.display = "";
-            } else {
-                project.style.display = "none";
-            }
-
-        });
+        filterProjects(category);
 
     });
 
 });
 
 
-/* =========================
-   PROJECT MODAL
-========================= */
+// =========================
+// START WITH SUSPENSE
+// =========================
+
+filterProjects("suspense");
+
+
+// =========================
+// PROJECT MODAL
+// =========================
 
 const modal = document.querySelector(".project-modal");
+
 const modalClose = document.querySelector(".modal-close");
 
 const modalTitle = document.querySelector("#modalTitle");
+
 const modalType = document.querySelector("#modalType");
+
 
 projects.forEach(project => {
 
     project.addEventListener("click", () => {
 
         const title = project.dataset.title;
+
         const type = project.dataset.type;
 
         modalTitle.textContent = title;
+
         modalType.textContent = type;
 
         modal.classList.add("open");
@@ -66,7 +83,9 @@ projects.forEach(project => {
 });
 
 
-/* CLOSE MODAL */
+// =========================
+// CLOSE MODAL
+// =========================
 
 function closeModal() {
 
@@ -76,26 +95,40 @@ function closeModal() {
 
 }
 
-modalClose.addEventListener("click", closeModal);
+
+modalClose.addEventListener(
+    "click",
+    closeModal
+);
 
 
-/* CLOSE WITH ESC */
+// =========================
+// ESC KEY
+// =========================
 
-document.addEventListener("keydown", event => {
+document.addEventListener(
+    "keydown",
+    event => {
 
-    if (event.key === "Escape") {
-        closeModal();
+        if (event.key === "Escape") {
+            closeModal();
+        }
+
     }
+);
 
-});
 
+// =========================
+// CLICK OUTSIDE MODAL
+// =========================
 
-/* CLOSE CLICKING OUTSIDE */
+modal.addEventListener(
+    "click",
+    event => {
 
-modal.addEventListener("click", event => {
+        if (event.target === modal) {
+            closeModal();
+        }
 
-    if (event.target === modal) {
-        closeModal();
     }
-
-});
+);
