@@ -1,134 +1,284 @@
-const filters = document.querySelectorAll(".filter");
-const projects = document.querySelectorAll(".project");
+/* =====================================
+   CATEGORY FILTER
+===================================== */
+
+const categories = document.querySelectorAll(".category");
+
+const cards = document.querySelectorAll(".work-card");
 
 
-// =========================
-// CATEGORY FILTER
-// =========================
+function showCategory(category) {
 
-function filterProjects(category) {
+  cards.forEach((card) => {
 
-    projects.forEach(project => {
+    if (card.dataset.category === category) {
 
-        const projectCategory = project.dataset.category;
+      card.classList.remove("hidden");
 
-        if (projectCategory === category) {
-            project.style.display = "";
-        } else {
-            project.style.display = "none";
-        }
+    } else {
 
-    });
+      card.classList.add("hidden");
+
+    }
+
+  });
 
 }
 
 
-filters.forEach(filter => {
+categories.forEach((button) => {
 
-    filter.addEventListener("click", () => {
+  button.addEventListener("click", () => {
 
-        filters.forEach(button => {
-            button.classList.remove("active");
-        });
+    categories.forEach((item) => {
 
-        filter.classList.add("active");
-
-        const category = filter.dataset.filter;
-
-        filterProjects(category);
+      item.classList.remove("active");
 
     });
+
+
+    button.classList.add("active");
+
+
+    const category = button.dataset.category;
+
+
+    showCategory(category);
+
+  });
 
 });
 
 
-// =========================
-// START WITH SUSPENSE
-// =========================
+/*
+   Categoria inicial:
 
-filterProjects("suspense");
+   SUSPENSE
+*/
 
-
-// =========================
-// PROJECT MODAL
-// =========================
-
-const modal = document.querySelector(".project-modal");
-
-const modalClose = document.querySelector(".modal-close");
-
-const modalTitle = document.querySelector("#modalTitle");
-
-const modalType = document.querySelector("#modalType");
+showCategory("suspense");
 
 
-projects.forEach(project => {
 
-    project.addEventListener("click", () => {
+/* =====================================
+   PROJECT MODAL
+===================================== */
 
-        const title = project.dataset.title;
+const modal = document.querySelector(".modal");
 
-        const type = project.dataset.type;
+const closeModalButton =
+  document.querySelector(".modal-close");
 
-        modalTitle.textContent = title;
+const modalTitle =
+  document.querySelector(".modal-title");
 
-        modalType.textContent = type;
+const modalType =
+  document.querySelector(".modal-type");
 
-        modal.classList.add("open");
 
-        document.body.style.overflow = "hidden";
 
-    });
+cards.forEach((card) => {
+
+  const media =
+    card.querySelector(".media");
+
+
+  media.addEventListener("click", () => {
+
+    const title =
+      card.dataset.title;
+
+    const type =
+      card.dataset.type;
+
+
+    modalTitle.textContent = title;
+
+    modalType.textContent = type;
+
+
+    modal.classList.add("open");
+
+    modal.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+
+    document.body.style.overflow =
+      "hidden";
+
+  });
 
 });
 
 
-// =========================
-// CLOSE MODAL
-// =========================
+
+/* =====================================
+   CLOSE MODAL
+===================================== */
 
 function closeModal() {
 
-    modal.classList.remove("open");
+  modal.classList.remove("open");
 
-    document.body.style.overflow = "";
+  modal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+
+  document.body.style.overflow =
+    "";
 
 }
 
 
-modalClose.addEventListener(
-    "click",
-    closeModal
+closeModalButton.addEventListener(
+  "click",
+  closeModal
 );
 
 
-// =========================
-// ESC KEY
-// =========================
 
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key === "Escape") {
-            closeModal();
-        }
-
-    }
-);
-
-
-// =========================
-// CLICK OUTSIDE MODAL
-// =========================
+/*
+   Fecha clicando fora
+*/
 
 modal.addEventListener(
-    "click",
-    event => {
+  "click",
+  (event) => {
 
-        if (event.target === modal) {
-            closeModal();
-        }
+    if (
+      event.target === modal
+    ) {
+
+      closeModal();
 
     }
+
+  }
 );
+
+
+
+/*
+   Fecha com ESC
+*/
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (
+      event.key === "Escape"
+    ) {
+
+      closeModal();
+
+    }
+
+  }
+);
+
+
+
+/* =====================================
+   SHOWCASE VIDEO
+===================================== */
+
+/*
+   Quando você colocar:
+
+   assets/showcase.mp4
+
+   no HTML, o vídeo poderá ser
+   reproduzido automaticamente.
+
+   O vídeo precisa estar:
+
+   muted
+   autoplay
+   loop
+   playsinline
+*/
+
+
+const showcase =
+  document.querySelector(
+    ".showcase-video"
+  );
+
+
+if (showcase) {
+
+  showcase
+    .play()
+    .catch(() => {
+
+      /*
+        Alguns navegadores
+        bloqueiam autoplay.
+
+        Nesse caso não fazemos
+        nada e o usuário poderá
+        iniciar o vídeo manualmente.
+      */
+
+    });
+
+}
+
+
+
+/* =====================================
+   CUSTOM CURSOR
+===================================== */
+
+const dot =
+  document.querySelector(
+    ".cursor-dot"
+  );
+
+
+const ring =
+  document.querySelector(
+    ".cursor-ring"
+  );
+
+
+
+if (
+  window.matchMedia(
+    "(min-width: 1000px)"
+  ).matches
+) {
+
+  window.addEventListener(
+    "mousemove",
+    (event) => {
+
+      dot.style.display =
+        "block";
+
+      ring.style.display =
+        "block";
+
+
+      dot.style.transform =
+        `translate(
+          ${event.clientX - 2.5}px,
+          ${event.clientY - 2.5}px
+        )`;
+
+
+      ring.style.transform =
+        `translate(
+          ${event.clientX - 14}px,
+          ${event.clientY - 14}px
+        )`;
+
+    }
+  );
+
+}
