@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IGOR. — Video Editor</title>
+  <title>IGOR-VIDEO EDITOR</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&amp;family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
   
   <style>
@@ -11,7 +11,18 @@
        CSS (ESTILOS VISUAIS)
     ======================================================== */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --bg: #070707; --panel: #0d0d0d; --card: #111111; --line: #242424; --muted: #7a7a7a; --text: #f1f1ef; --acid: #d8ff00; --f-mono: "DM Mono", monospace; --f-sans: "Inter", sans-serif; --container: 1200px; }
+    :root { 
+      --bg: #070707; 
+      --panel: #0d0d0d; 
+      --card: #111111; 
+      --line: #242424; 
+      --muted: #7a7a7a; 
+      --text: #f1f1ef; 
+      --acid: #00f0ff; /* Alterado de verde para Ciano Neon Moderno */
+      --f-mono: "DM Mono", monospace; 
+      --f-sans: "Inter", sans-serif; 
+      --container: 1200px; 
+    }
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: var(--f-sans); overflow-x: hidden; }
 
@@ -21,20 +32,87 @@
     ::selection { background: var(--acid); color: #000; }
     .mono { font-family: var(--f-mono); letter-spacing: 0.06em; }
 
+    /* Efeito de Aberração Cromática */
+    .glitch-effect {
+      position: relative;
+      display: inline-block;
+      color: var(--text);
+    }
+    .glitch-effect::before,
+    .glitch-effect::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .glitch-effect::before {
+      left: 2px;
+      text-shadow: -2px 0 #ff0055;
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim 5s infinite linear alternate-reverse;
+    }
+    .glitch-effect::after {
+      left: -2px;
+      text-shadow: -2px 0 #00ffff, 0 2px #ff0055;
+      clip: rect(85px, 450px, 140px, 0);
+      animation: glitch-anim2 5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim {
+      0% { clip: rect(31px, 9999px, 94px, 0); }
+      10% { clip: rect(112px, 9999px, 76px, 0); }
+      20% { clip: rect(85px, 9999px, 5px, 0); }
+      30% { clip: rect(27px, 9999px, 115px, 0); }
+      40% { clip: rect(78px, 9999px, 32px, 0); }
+      50% { clip: rect(14px, 9999px, 99px, 0); }
+      60% { clip: rect(54px, 9999px, 43px, 0); }
+      70% { clip: rect(91px, 9999px, 12px, 0); }
+      80% { clip: rect(38px, 9999px, 88px, 0); }
+      100% { clip: rect(62px, 9999px, 19px, 0); }
+    }
+    @keyframes glitch-anim2 {
+      0% { clip: rect(76px, 9999px, 11px, 0); }
+      15% { clip: rect(12px, 9999px, 83px, 0); }
+      30% { clip: rect(95px, 9999px, 44px, 0); }
+      45% { clip: rect(21px, 9999px, 102px, 0); }
+      60% { clip: rect(67px, 9999px, 29px, 0); }
+      75% { clip: rect(41px, 9999px, 74px, 0); }
+      100% { clip: rect(89px, 9999px, 55px, 0); }
+    }
+
     .nav { position: sticky; top: 0; z-index: 500; display: flex; align-items: center; justify-content: space-between; padding: 1.3rem clamp(1.2rem, 4vw, 3.5rem); background: rgba(7,7,7,0.85); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
-    .brand { font-weight: 800; font-size: 1.1rem; letter-spacing: 0.02em; }
+    .brand { font-weight: 800; font-size: 1.1rem; letter-spacing: 0.02em; text-transform: uppercase; }
     .brand span { color: var(--acid); }
     .nav-links { display: flex; gap: 2rem; font-size: 0.72rem; color: var(--muted); }
     .nav-links a:hover { color: var(--text); }
     @media (max-width: 760px) { .nav-links { display: none; } }
 
     .hero { padding: 4rem clamp(1.2rem, 4vw, 3.5rem) 3.5rem; max-width: var(--container); margin: 0 auto; }
+    .hero-flex { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
     .kicker { font-size: 0.72rem; color: var(--acid); margin-bottom: 1.2rem; }
     .hero-title { font-size: clamp(2.6rem, 6.4vw, 5.2rem); font-weight: 800; line-height: 1.02; letter-spacing: -0.01em; margin-bottom: 1.8rem; text-transform: uppercase; }
-    .hero-title .accent { color: var(--acid); }
     .hero-text { max-width: 560px; color: var(--muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.8rem; }
     .hero-meta { display: flex; gap: 0.6rem; font-size: 0.68rem; color: var(--muted); }
     .hero-meta span:nth-child(even) { color: var(--acid); }
+
+    .hero-contact-btn {
+      border: 1px solid var(--acid);
+      color: var(--acid);
+      padding: 1rem 2rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      transition: background 0.25s, color 0.25s;
+      cursor: pointer;
+      display: inline-block;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    .hero-contact-btn:hover {
+      background: var(--acid);
+      color: #000;
+    }
 
     .showcase { padding: 1rem clamp(1.2rem, 4vw, 3.5rem) 4rem; max-width: var(--container); margin: 0 auto; }
     .section-label { font-size: 0.68rem; color: var(--acid); margin-bottom: 1rem; }
@@ -110,7 +188,7 @@
 <body>
 
   <header class="nav">
-    <a class="brand" href="#top" id="el-brand-name">IGOR<span>.</span></a>
+    <a class="brand" href="#top" id="el-brand-name">IGOR-VIDEO EDITOR<span>.</span></a>
     <nav class="nav-links">
       <a href="#work">WORK</a>
       <a href="#shorts">SHORTS</a>
@@ -123,11 +201,17 @@
     <!-- HERO -->
     <section class="hero">
       <p class="kicker mono">VIDEO EDITOR / MOTION DESIGNER</p>
-      <h1 class="hero-title">
-        <span id="el-hero-name"></span><br>
-        <span class="accent" id="el-hero-highlight"></span>
-      </h1>
-      <p class="hero-text" id="el-hero-desc"></p>
+      <div class="hero-flex">
+        <div>
+          <h1 class="hero-title">
+            <span id="el-hero-name" class="glitch-effect" data-text="IGOR AUGUSTO">IGOR AUGUSTO</span>
+          </h1>
+          <p class="hero-text" id="el-hero-desc"></p>
+        </div>
+        <div>
+          <a href="#contact" class="hero-contact-btn mono">CONTACT ↗</a>
+        </div>
+      </div>
       <div class="hero-meta mono">
         <span>SUSPENSE</span><span>/</span><span>STORYTELLING</span><span>/</span><span>DOCUMENTARY</span>
       </div>
@@ -210,7 +294,7 @@
   <script id="data-script">
 const SITE_CONTENT = {
   "heroName": "IGOR AUGUSTO",
-  "heroHighlight": "STORIES THAT STAY!",
+  "heroHighlight": "",
   "heroDesc": "Video editor focused on suspense, storytelling and documentary content. I create edits built around pacing, atmosphere and visual storytelling.",
   "aboutDesc": "I'm Igor, a video editor and motion designer. I don't just cut clips together; I build narratives. Whether it's a suspenseful storytime, a documentary-style breakdown, or a fully 3D-animated intro, my focus is on flow, rhythm, and keeping the audience hooked.",
   "services": [
@@ -403,16 +487,15 @@ const CONTACT = {
   "email": "igoreditor.contact@gmail.com",
   "instagram": "https://www.instagram.com/igoroeditor/"
 };
-</script>
+  </script>
 
   <!-- =======================================================
        LÓGICA DO SITE E MONTAGEM DOS TEXTOS
   ======================================================== -->
   <script id="logic-script">
     // Injeta Textos Globais
-    document.getElementById("el-brand-name").innerHTML = SITE_CONTENT.heroName + `<span>.</span>`;
     document.getElementById("el-hero-name").textContent = SITE_CONTENT.heroName;
-    document.getElementById("el-hero-highlight").textContent = SITE_CONTENT.heroHighlight;
+    document.getElementById("el-hero-name").setAttribute("data-text", SITE_CONTENT.heroName);
     document.getElementById("el-hero-desc").textContent = SITE_CONTENT.heroDesc;
     document.getElementById("el-about-desc").textContent = SITE_CONTENT.aboutDesc;
     document.getElementById("el-footer").textContent = SITE_CONTENT.footer;
@@ -531,7 +614,7 @@ const CONTACT = {
       const btn = document.createElement("button");
       btn.innerHTML = "⚙️ CONFIGURAR SITE";
       btn.className = "admin-ui-element";
-      btn.style.cssText = "position:fixed; bottom:20px; left:20px; background:#d8ff00; color:#000; font-family:'DM Mono', monospace; font-size:12px; font-weight:bold; padding:10px 15px; border-radius:5px; z-index:9999; cursor:pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); border:none;";
+      btn.style.cssText = "position:fixed; bottom:20px; left:20px; background:#00f0ff; color:#000; font-family:'DM Mono', monospace; font-size:12px; font-weight:bold; padding:10px 15px; border-radius:5px; z-index:9999; cursor:pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); border:none;";
       document.body.appendChild(btn);
 
       // Fundo do Painel (Overlay)
@@ -542,7 +625,7 @@ const CONTACT = {
       
       let html = `<div style="max-width:900px; margin:0 auto; padding-bottom:100px;">`;
       html += `<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #333; padding-bottom:20px; margin-bottom:20px;">
-                 <h2 style="color:#d8ff00; font-size:24px; text-transform:uppercase; font-weight:900;">⚙️ MEGA BRAIN CMS</h2>
+                 <h2 style="color:#00f0ff; font-size:24px; text-transform:uppercase; font-weight:900;">⚙️ MEGA BRAIN CMS</h2>
                  <button id="close-admin" style="background:transparent; color:#fff; border:1px solid #555; padding:8px 12px; cursor:pointer; font-weight:bold;">FECHAR ✕</button>
                </div>`;
       html += `<p style="color:#aaa; font-size:15px; margin-bottom:30px; line-height:1.5;">Altere os textos do seu portfólio. Ao final da página, clique em "GERAR CÓDIGO" para obter o código HTML pronto para colar no GitHub.</p>`;
@@ -553,8 +636,7 @@ const CONTACT = {
 
       // 1. HERO (TOPO)
       html += `<h3 style="${sectionH}">🏠 TOPO DO SITE (HERO)</h3>`;
-      html += `<label style="color:#ccc; font-size:12px;">Seu Nome (Aparece grande e na logo):</label><input id="adm-g-name" value="${SITE_CONTENT.heroName}" style="${inStyle}">`;
-      html += `<label style="color:#ccc; font-size:12px;">Frase de Efeito (Aparece em verde):</label><input id="adm-g-hl" value="${SITE_CONTENT.heroHighlight}" style="${inStyle}">`;
+      html += `<label style="color:#ccc; font-size:12px;">Seu Nome (Aparece com efeito de aberração cromática):</label><input id="adm-g-name" value="${SITE_CONTENT.heroName}" style="${inStyle}">`;
       html += `<label style="color:#ccc; font-size:12px;">Texto de Introdução:</label><textarea id="adm-g-hd" style="${areaStyle}">${SITE_CONTENT.heroDesc}</textarea>`;
 
       // 2. SHOWCASE
@@ -567,7 +649,7 @@ const CONTACT = {
       html += `<h3 style="${sectionH}">📁 PROJETOS DAS ABAS (16:9)</h3>`;
       WORK.forEach((w, i) => {
         html += `<div style="background:#111; padding:20px; border:1px solid #222; margin-bottom:20px; border-radius:6px;">
-                   <strong style="color:#d8ff00; text-transform:uppercase; font-size:14px;">${w.category} - Projeto ${i+1}</strong><br><br>
+                   <strong style="color:#00f0ff; text-transform:uppercase; font-size:14px;">${w.category} - Projeto ${i+1}</strong><br><br>
                    <label style="color:#ccc; font-size:12px;">Título:</label><input id="adm-wk-title-${i}" value="${w.title}" style="${inStyle}">
                    <label style="color:#ccc; font-size:12px;">Descrição:</label><textarea id="adm-wk-desc-${i}" style="${areaStyle}">${w.description}</textarea>
                    <label style="color:#ccc; font-size:12px;">ID do YouTube (Deixe em branco para "Work in progress"):</label><input id="adm-wk-id-${i}" value="${w.source.videoId}" style="${inStyle}">
@@ -578,7 +660,7 @@ const CONTACT = {
       html += `<h3 style="${sectionH}">📱 SHORTS (VERTICAL 9:16)</h3>`;
       SHORTS.forEach((s, i) => {
         html += `<div style="background:#111; padding:20px; border:1px solid #222; margin-bottom:20px; border-radius:6px;">
-                   <strong style="color:#d8ff00; font-size:14px;">Short ${i+1}</strong><br><br>
+                   <strong style="color:#00f0ff; font-size:14px;">Short ${i+1}</strong><br><br>
                    <label style="color:#ccc; font-size:12px;">Título:</label><input id="adm-sh-title-${i}" value="${s.title}" style="${inStyle}">
                    <label style="color:#ccc; font-size:12px;">Descrição:</label><textarea id="adm-sh-desc-${i}" style="${areaStyle}">${s.description}</textarea>
                    <label style="color:#ccc; font-size:12px;">ID do YouTube (Deixe vazio para Work in progress):</label><input id="adm-sh-id-${i}" value="${s.source.videoId}" style="${inStyle}">
@@ -598,9 +680,9 @@ const CONTACT = {
       html += `<label style="color:#ccc; font-size:12px;">Texto do Rodapé (Fim da página):</label><input id="adm-g-foot" value="${SITE_CONTENT.footer}" style="${inStyle}">`;
 
       // --- GERADOR (FIM DA PÁGINA) ---
-      html += `<button id="btn-generate" style="width:100%; padding:20px; background:#d8ff00; color:#000; font-weight:900; font-size:18px; margin-top:40px; border:none; cursor:pointer; border-radius:6px; transition:0.3s;">💾 GERAR CÓDIGO FINAL</button>`;
+      html += `<button id="btn-generate" style="width:100%; padding:20px; background:#00f0ff; color:#000; font-weight:900; font-size:18px; margin-top:40px; border:none; cursor:pointer; border-radius:6px; transition:0.3s;">💾 GERAR CÓDIGO FINAL</button>`;
       html += `<textarea id="adm-output" readonly style="width:100%; height:300px; margin-top:20px; background:#000; color:#0f0; border:1px solid #333; padding:15px; font-family:monospace; display:none; border-radius:6px;"></textarea>`;
-      html += `<p id="adm-msg" style="color:#d8ff00; text-align:center; margin-top:15px; font-weight:bold; display:none; font-size:16px;">↑ CÓDIGO COPIADO! Agora apague o arquivo antigo no GitHub e cole esse.</p>`;
+      html += `<p id="adm-msg" style="color:#00f0ff; text-align:center; margin-top:15px; font-weight:bold; display:none; font-size:16px;">↑ CÓDIGO COPIADO! Agora apague o arquivo antigo no GitHub e cole esse.</p>`;
 
       html += `</div>`;
       overlay.innerHTML = html;
@@ -614,7 +696,7 @@ const CONTACT = {
         // 1. Pega os textos Globais
         const newSite = {
           heroName: document.getElementById("adm-g-name").value.trim(),
-          heroHighlight: document.getElementById("adm-g-hl").value.trim(),
+          heroHighlight: "",
           heroDesc: document.getElementById("adm-g-hd").value.trim(),
           aboutDesc: document.getElementById("adm-g-about").value.trim(),
           services: document.getElementById("adm-g-serv").value.split(',').map(s=>s.trim()).filter(Boolean),
@@ -687,9 +769,8 @@ const CONTACT = ${JSON.stringify(newContact, null, 2)};
         clone.querySelector('#data-script').textContent = newDataScript;
 
         // Limpa os textos estáticos do clone para que o novo Script preencha perfeitamente
-        clone.querySelector('#el-brand-name').innerHTML = `IGOR<span>.</span>`;
         clone.querySelector('#el-hero-name').textContent = "";
-        clone.querySelector('#el-hero-highlight').textContent = "";
+        clone.querySelector('#el-hero-name').removeAttribute("data-text");
         clone.querySelector('#el-hero-desc').textContent = "";
         clone.querySelector('#el-about-desc').textContent = "";
         clone.querySelector('#el-footer').textContent = "";
@@ -713,53 +794,5 @@ const CONTACT = ${JSON.stringify(newContact, null, 2)};
       });
     })();
   </script>
-
-
-<audio class="audio-output" style="display: none;"></audio><div id="volume-booster-visusalizer">
-                    <div class="sound">
-                        <div class="sound-icon"></div>
-                        <div class="sound-wave sound-wave_one"></div>
-                        <div class="sound-wave sound-wave_two"></div>
-                        <div class="sound-wave sound-wave_three"></div>
-                    </div>
-                    <div class="segments-box">
-                        <div data-range="1-20" class="segment"><span></span></div>
-                        <div data-range="21-40" class="segment"><span></span></div>
-                        <div data-range="41-60" class="segment"><span></span></div>
-                        <div data-range="61-80" class="segment"><span></span></div>
-                        <div data-range="81-100" class="segment"><span></span></div>
-                    </div>
-                </div>
-
-<audio class="audio-output" style="display: none;"></audio><div id="volume-booster-visusalizer">
-                    <div class="sound">
-                        <div class="sound-icon"></div>
-                        <div class="sound-wave sound-wave_one"></div>
-                        <div class="sound-wave sound-wave_two"></div>
-                        <div class="sound-wave sound-wave_three"></div>
-                    </div>
-                    <div class="segments-box">
-                        <div data-range="1-20" class="segment"><span></span></div>
-                        <div data-range="21-40" class="segment"><span></span></div>
-                        <div data-range="41-60" class="segment"><span></span></div>
-                        <div data-range="61-80" class="segment"><span></span></div>
-                        <div data-range="81-100" class="segment"><span></span></div>
-                    </div>
-                </div>
-
-<audio class="audio-output" style="display: none;"></audio><div id="volume-booster-visusalizer">
-                    <div class="sound">
-                        <div class="sound-icon"></div>
-                        <div class="sound-wave sound-wave_one"></div>
-                        <div class="sound-wave sound-wave_two"></div>
-                        <div class="sound-wave sound-wave_three"></div>
-                    </div>
-                    <div class="segments-box">
-                        <div data-range="1-20" class="segment"><span></span></div>
-                        <div data-range="21-40" class="segment"><span></span></div>
-                        <div data-range="41-60" class="segment"><span></span></div>
-                        <div data-range="61-80" class="segment"><span></span></div>
-                        <div data-range="81-100" class="segment"><span></span></div>
-                    </div>
-                </div></body>
+</body>
 </html>
