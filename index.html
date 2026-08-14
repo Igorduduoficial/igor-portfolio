@@ -24,7 +24,6 @@
       --container: 1200px; 
     }
     html { scroll-behavior: smooth; background: var(--bg); }
-    /* Ajuste para o fundo não cobrir os elementos de investigação */
     body { color: var(--text); font-family: var(--f-sans); overflow-x: hidden; position: relative; background: transparent; }
 
     /* =======================================================
@@ -35,7 +34,6 @@
       pointer-events: none; z-index: 0; overflow: hidden;
     }
 
-    /* Grade (Grid) Gigante com movimento rápido */
     .giant-grid {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background-image: 
@@ -49,7 +47,6 @@
       100% { background-position: 120px 120px; }
     }
 
-    /* Efeito de Tela de TV Antiga / Estática */
     .crt-overlay {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
@@ -66,10 +63,9 @@
       z-index: 9997; pointer-events: none;
     }
 
-    /* Quadro de Investigação (Pastas e Fotos) */
     .investigation-board {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      opacity: 0.45; /* Deixei mais visível */
+      opacity: 0.45;
     }
 
     @keyframes floatItem {
@@ -82,7 +78,6 @@
       100% { transform: translateY(8px) rotate(1.5deg); }
     }
 
-    /* Pastas Secretas */
     .secret-folder {
       position: relative; width: 160px; height: 110px;
       background: #a47b52; border-radius: 2px 5px 5px 5px;
@@ -102,7 +97,6 @@
       background: #8e6842; border-radius: 6px 6px 0 0;
     }
 
-    /* Fotos com Sangue */
     .blood-photo {
       position: relative; width: 120px; height: 140px;
       background: #ccc; padding: 6px 6px 30px 6px;
@@ -123,7 +117,6 @@
       background: rgba(139,0,0,0.8); border-radius: 5px; filter: blur(1px);
     }
 
-    /* Fios Vermelhos */
     .red-string-wrap { position: absolute; transform-origin: 0 50%; }
     .red-string {
       width: 100%; height: 2px; background: rgba(150, 0, 0, 0.7);
@@ -132,9 +125,8 @@
     }
 
     /* =======================================================
-       ESTILOS DO PORTFÓLIO PRINCIPAL (z-index superior)
+       ESTILOS DO PORTFÓLIO PRINCIPAL
     ======================================================== */
-    /* Wrapper para garantir que o conteúdo fique acima do fundo */
     .content-wrapper { position: relative; z-index: 10; }
 
     .chromatic-static {
@@ -206,42 +198,32 @@
     .shorts-grid .card-media { aspect-ratio: 9/16; }
 
     /* =======================================================
-       NOVA SESSÃO DE CONTATO (BOTÕES GRANDES)
+       CONTATOS (Formato Lista - Textos e Ícones Maiores)
     ======================================================== */
-    .contact { max-width: var(--container); margin: 0 auto; padding: 5rem clamp(1.2rem, 4vw, 3.5rem); border-top: 1px solid var(--line); }
-    .contact-wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; margin-top: 0.6rem; }
-    .contact h2 { font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 800; text-transform: uppercase; line-height: 1.05; margin: 0; }
+    .contact { max-width: var(--container); margin: 0 auto; padding: 5rem clamp(1.2rem, 4vw, 3.5rem); border-top: 1px solid var(--line); position: relative; z-index: 1;}
+    .contact h2 { font-size: clamp(2.6rem, 6vw, 5rem); font-weight: 900; text-transform: uppercase; margin-top: 0.6rem; line-height: 1.05; }
     
-    .contact-links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+    .contact-links { display: flex; flex-direction: column; margin-top: 3.5rem; border-top: 1px solid var(--line); max-width: 850px; }
+    .contact-link { display: flex; justify-content: space-between; align-items: center; padding: 1.8rem 0.5rem; border-bottom: 1px solid var(--line); transition: all 0.3s ease; }
+    .contact-left { display: flex; align-items: center; gap: 1.2rem; }
     
-    /* Botões Sociais Caixas */
-    .contact-btn {
-      display: flex; align-items: center; justify-content: center;
-      width: 80px; height: 80px;
-      border: 2px solid var(--line);
-      border-radius: 12px;
-      background: var(--panel);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .contact-btn svg { width: 36px; height: 36px; color: var(--muted); transition: color 0.3s ease; position: relative; z-index: 2; }
-    .contact-btn:hover {
-      border-color: var(--acid);
-      background: rgba(0, 240, 255, 0.05);
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 240, 255, 0.15);
-    }
-    .contact-btn:hover svg { color: var(--acid); }
+    /* Aumentando Ícones e Texto */
+    .contact-left svg { width: 32px; height: 32px; color: var(--muted); transition: color 0.3s ease; }
+    .contact-left .mono { font-size: 1.1rem; font-weight: 600; color: var(--text); transition: color 0.3s ease; }
+    .contact-link .arrow { color: var(--muted); font-size: 1rem; transition: color 0.25s; }
+    
+    /* Efeitos de Hover na Lista */
+    .contact-link:hover { padding-left: 1.5rem; background: rgba(0, 240, 255, 0.03); }
+    .contact-link:hover .contact-left svg, .contact-link:hover .contact-left .mono { color: var(--acid); }
+    .contact-link:hover .arrow { color: var(--acid); }
 
     /* =======================================================
-       PROJECT PANEL (BOTÃO DE FECHAR ATUALIZADO)
+       PROJECT PANEL 
     ======================================================== */
     .project-panel { position: fixed; inset: 0; z-index: 700; background: var(--bg); transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 0.84, 0.44, 1); overflow-y: auto; }
     .project-panel.open { transform: translateX(0); }
     .panel-inner { max-width: var(--container); margin: 0 auto; padding: 5.5rem clamp(1.2rem, 4vw, 3.5rem) 5rem; }
     
-    /* Novo Botão Close Project */
     .close-btn { 
       border: 1px solid var(--line); 
       color: var(--text); 
@@ -259,12 +241,7 @@
       font-weight: 700;
       letter-spacing: 0.05em;
     }
-    .close-btn:hover { 
-      color: #000; 
-      border-color: var(--acid); 
-      background: var(--acid); 
-      box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
-    }
+    .close-btn:hover { color: #000; border-color: var(--acid); background: var(--acid); box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3); }
     
     .panel-video { width: 100%; aspect-ratio: 16/9; background: #000; border: 1px solid var(--line); margin-bottom: 2.4rem; }
     .panel-video iframe, .panel-video video { width: 100%; height: 100%; display: block; }
@@ -281,62 +258,22 @@
   <div class="bg-layer">
     <div class="giant-grid"></div>
     <div class="investigation-board">
-      <!-- Fios -->
-      <div class="red-string-wrap" style="top: 15%; left: 10%; transform: rotate(18deg); width: 35vw;">
-        <div class="red-string"></div>
-      </div>
-      <div class="red-string-wrap" style="top: 45%; right: 5%; transform: rotate(-32deg); width: 45vw;">
-        <div class="red-string" style="animation-delay: -2s;"></div>
-      </div>
-      <div class="red-string-wrap" style="top: 75%; left: 25%; transform: rotate(-8deg); width: 30vw;">
-        <div class="red-string" style="animation-delay: -4s;"></div>
-      </div>
-      <div class="red-string-wrap" style="top: 25%; left: 50%; transform: rotate(65deg); width: 40vw;">
-        <div class="red-string" style="animation-delay: -1s;"></div>
-      </div>
-
-      <!-- Pastas Secretas espalhadas -->
-      <div style="position: absolute; top: 12%; left: 15%; transform: rotate(-12deg) scale(0.9);">
-        <div class="secret-folder"></div>
-      </div>
-      <div style="position: absolute; bottom: 20%; right: 15%; transform: rotate(22deg) scale(1.1);">
-        <div class="secret-folder" style="animation-delay: -5s;"></div>
-      </div>
-      <div style="position: absolute; top: 60%; left: 5%; transform: rotate(-5deg) scale(0.8);">
-        <div class="secret-folder" style="animation-delay: -2s;"></div>
-      </div>
-
-      <!-- Fotos com Sangue espalhadas -->
-      <div style="position: absolute; top: 38%; right: 28%; transform: rotate(14deg) scale(1.2);">
-        <div class="blood-photo" style="animation-delay: -1s;">
-          <div class="img-ph"></div>
-          <div class="blood-stain" style="top: 70%; left: 55%;"></div>
-        </div>
-      </div>
-      <div style="position: absolute; bottom: 25%; left: 18%; transform: rotate(-10deg) scale(0.9);">
-        <div class="blood-photo" style="animation-delay: -4s;">
-          <div class="img-ph"></div>
-          <div class="blood-stain" style="top: -10px; left: 15px;"></div>
-        </div>
-      </div>
-      <div style="position: absolute; top: 10%; right: 10%; transform: rotate(-25deg) scale(0.7);">
-        <div class="blood-photo" style="animation-delay: -7s;">
-          <div class="img-ph"></div>
-          <div class="blood-stain" style="top: 40%; left: 10px; width: 45px; height: 45px;"></div>
-        </div>
-      </div>
-      <div style="position: absolute; top: 80%; right: 40%; transform: rotate(35deg) scale(1);">
-        <div class="blood-photo" style="animation-delay: -3s;">
-          <div class="img-ph"></div>
-          <div class="blood-stain" style="top: 10%; left: 40%; width: 25px; height: 25px;"></div>
-        </div>
-      </div>
+      <div class="red-string-wrap" style="top: 15%; left: 10%; transform: rotate(18deg); width: 35vw;"><div class="red-string"></div></div>
+      <div class="red-string-wrap" style="top: 45%; right: 5%; transform: rotate(-32deg); width: 45vw;"><div class="red-string" style="animation-delay: -2s;"></div></div>
+      <div class="red-string-wrap" style="top: 75%; left: 25%; transform: rotate(-8deg); width: 30vw;"><div class="red-string" style="animation-delay: -4s;"></div></div>
+      <div class="red-string-wrap" style="top: 25%; left: 50%; transform: rotate(65deg); width: 40vw;"><div class="red-string" style="animation-delay: -1s;"></div></div>
+      <div style="position: absolute; top: 12%; left: 15%; transform: rotate(-12deg) scale(0.9);"><div class="secret-folder"></div></div>
+      <div style="position: absolute; bottom: 20%; right: 15%; transform: rotate(22deg) scale(1.1);"><div class="secret-folder" style="animation-delay: -5s;"></div></div>
+      <div style="position: absolute; top: 60%; left: 5%; transform: rotate(-5deg) scale(0.8);"><div class="secret-folder" style="animation-delay: -2s;"></div></div>
+      <div style="position: absolute; top: 38%; right: 28%; transform: rotate(14deg) scale(1.2);"><div class="blood-photo" style="animation-delay: -1s;"><div class="img-ph"></div><div class="blood-stain" style="top: 70%; left: 55%;"></div></div></div>
+      <div style="position: absolute; bottom: 25%; left: 18%; transform: rotate(-10deg) scale(0.9);"><div class="blood-photo" style="animation-delay: -4s;"><div class="img-ph"></div><div class="blood-stain" style="top: -10px; left: 15px;"></div></div></div>
+      <div style="position: absolute; top: 10%; right: 10%; transform: rotate(-25deg) scale(0.7);"><div class="blood-photo" style="animation-delay: -7s;"><div class="img-ph"></div><div class="blood-stain" style="top: 40%; left: 10px; width: 45px; height: 45px;"></div></div></div>
+      <div style="position: absolute; top: 80%; right: 40%; transform: rotate(35deg) scale(1);"><div class="blood-photo" style="animation-delay: -3s;"><div class="img-ph"></div><div class="blood-stain" style="top: 10%; left: 40%; width: 25px; height: 25px;"></div></div></div>
     </div>
   </div>
   
   <div class="crt-overlay"></div>
   <div class="vignette"></div>
-  <!-- FIM DO FUNDO -->
 
   <div class="content-wrapper">
     <header class="nav">
@@ -349,7 +286,6 @@
     </header>
 
     <main id="top">
-      <!-- HERO -->
       <section class="hero">
         <p class="kicker mono">VIDEO EDITOR / MOTION DESIGNER</p>
         <div class="hero-flex">
@@ -377,7 +313,6 @@
         </div>
       </section>
 
-      <!-- SHOWCASE -->
       <section class="showcase" id="showcase">
         <p class="section-label mono">FEATURED PROJECT</p>
         <div class="showcase-box">
@@ -389,7 +324,6 @@
         </div>
       </section>
 
-      <!-- WORK -->
       <section class="work" id="work">
         <div class="section-head">
           <p class="section-label mono">SELECTED WORK</p>
@@ -403,7 +337,6 @@
         <div class="grid" id="grid"></div>
       </section>
 
-      <!-- SHORTS -->
       <section class="shorts" id="shorts">
         <div class="section-head">
           <p class="section-label mono">VERTICAL FORMAT</p>
@@ -412,23 +345,19 @@
         <div class="shorts-grid" id="shortsGrid"></div>
       </section>
 
-      <!-- CONTACT -->
+      <!-- SEÇÃO DE CONTATO ATUALIZADA -->
       <section class="contact" id="contact">
         <p class="section-label mono">GET IN TOUCH</p>
-        <div class="contact-wrap">
-          <h2>START A<br>PROJECT</h2>
-          <div class="contact-links" id="contactLinks"></div>
-        </div>
+        <h2>START A<br>PROJECT</h2>
+        <div class="contact-links" id="contactLinks"></div>
       </section>
     </main>
 
     <footer class="footer mono" id="el-footer"></footer>
-  </div> <!-- FIM CONTENT WRAPPER -->
+  </div>
 
-  <!-- PANEL DE PROJETOS -->
   <div class="project-panel" id="projectPanel">
     <div class="panel-inner">
-      <!-- BOTÃO DE VOLTAR COM DESIGN NOVO -->
       <button class="close-btn mono" id="closePanel">✕ CLOSE PROJECT</button>
       <div class="panel-body" id="panelBody"></div>
     </div>
@@ -474,12 +403,12 @@ const SHORTS = [
 ];
 const CONTACT = {
   "email": "igoreditor.contact@gmail.com",
-  "instagram": "https://www.instagram.com/igoroeditor/"
+  "instagram": "https://www.instagram.com/igoroeditor/",
+  "x": "https://x.com/Igoroeditor"
 };
   </script>
 
   <script id="logic-script">
-    // Injeta Textos Globais
     document.getElementById("el-hero-name").textContent = SITE_CONTENT.heroName;
     document.getElementById("el-hero-desc").textContent = SITE_CONTENT.heroDesc;
     document.getElementById("el-footer").textContent = SITE_CONTENT.footer;
@@ -487,7 +416,6 @@ const CONTACT = {
     document.getElementById("el-about-services").innerHTML = SITE_CONTENT.services.map(s => `<li style="margin-bottom:0.3rem;">${s}</li>`).join('');
     document.getElementById("el-about-software").innerHTML = SITE_CONTENT.software.map(s => `<li style="margin-bottom:0.3rem;">${s}</li>`).join('');
 
-    // Preenche Showcase
     document.getElementById("showcaseTitle").textContent = SHOWCASE_VIDEO.title;
     document.getElementById("showcaseNote").textContent = SHOWCASE_VIDEO.description;
 
@@ -576,14 +504,17 @@ const CONTACT = {
     const contactLinks = document.getElementById("contactLinks");
     const emailIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`;
     const instaIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>`;
+    const xIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"></path><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path></svg>`;
     
-    // BOTÕES DE CONTATO GRANDES
+    // LISTA DE CONTATOS AUMENTADA COM O 'X' ADICIONADO
     contactLinks.innerHTML = [
-      { href: `mailto:${CONTACT.email}`, icon: emailIcon, label: 'Email' },
-      { href: CONTACT.instagram, icon: instaIcon, label: 'Instagram' }
+      { label: "EMAIL", value: CONTACT.email, href: `mailto:${CONTACT.email}`, icon: emailIcon },
+      { label: "INSTAGRAM", value: "@igoroeditor", href: CONTACT.instagram, icon: instaIcon },
+      { label: "X (TWITTER)", value: "@Igoroeditor", href: CONTACT.x, icon: xIcon }
     ].map(l => `
-      <a class="contact-btn" href="${l.href}" target="_blank" rel="noopener" aria-label="${l.label}">
-        ${l.icon}
+      <a class="contact-link" href="${l.href}" target="_blank" rel="noopener">
+        <div class="contact-left">${l.icon}<span class="mono">${l.label}</span></div>
+        <span class="arrow">${l.value} →</span>
       </a>
     `).join("");
   </script>
@@ -650,6 +581,7 @@ const CONTACT = {
       html += `<h3 style="${sectionH}">✉️ CONTATOS & RODAPÉ</h3>`;
       html += `<label style="color:#ccc; font-size:12px;">E-mail:</label><input id="adm-email" value="${CONTACT.email}" style="${inStyle}">`;
       html += `<label style="color:#ccc; font-size:12px;">Link do Instagram:</label><input id="adm-insta" value="${CONTACT.instagram}" style="${inStyle}">`;
+      html += `<label style="color:#ccc; font-size:12px;">Link do X (Twitter):</label><input id="adm-x" value="${CONTACT.x}" style="${inStyle}">`;
       html += `<label style="color:#ccc; font-size:12px;">Texto do Rodapé (Fim da página):</label><input id="adm-g-foot" value="${SITE_CONTENT.footer}" style="${inStyle}">`;
 
       // GERAR
@@ -700,7 +632,8 @@ const CONTACT = {
         });
         const newContact = {
           email: document.getElementById("adm-email").value.trim(),
-          instagram: document.getElementById("adm-insta").value.trim()
+          instagram: document.getElementById("adm-insta").value.trim(),
+          x: document.getElementById("adm-x").value.trim()
         };
 
         const newDataScript = `\nconst SITE_CONTENT = ${JSON.stringify(newSite, null, 2)};\nconst SHOWCASE_VIDEO = ${JSON.stringify(newShowcase, null, 2)};\nconst WORK = ${JSON.stringify(newWork, null, 2)};\nconst SHORTS = ${JSON.stringify(newShorts, null, 2)};\nconst CONTACT = ${JSON.stringify(newContact, null, 2)};\n`;
