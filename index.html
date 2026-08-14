@@ -23,23 +23,25 @@
       --f-sans: "Inter", sans-serif; 
       --container: 1200px; 
     }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: var(--f-sans); overflow-x: hidden; position: relative; }
+    html { scroll-behavior: smooth; background: var(--bg); }
+    /* Ajuste para o fundo não cobrir os elementos de investigação */
+    body { color: var(--text); font-family: var(--f-sans); overflow-x: hidden; position: relative; background: transparent; }
 
     /* =======================================================
-       FUNDO: GRADE GIGANTE RÁPIDA + TV ANTIGA
+       FUNDO: INVESTIGAÇÃO / GRADE / TV ANTIGA
     ======================================================== */
-    
+    .bg-layer {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none; z-index: 0; overflow: hidden;
+    }
+
     /* Grade (Grid) Gigante com movimento rápido */
     .giant-grid {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background-image: 
-        linear-gradient(rgba(0, 240, 255, 0.08) 2px, transparent 2px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.08) 2px, transparent 2px);
+        linear-gradient(rgba(0, 240, 255, 0.05) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.05) 2px, transparent 2px);
       background-size: 120px 120px;
-      z-index: -2;
-      pointer-events: none;
       animation: moveGrid 1.2s linear infinite;
     }
     @keyframes moveGrid {
@@ -47,19 +49,7 @@
       100% { background-position: 120px 120px; }
     }
 
-    /* Brilho pulsante no centro da grade */
-    .grid-glow {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.12) 0%, transparent 60%);
-      z-index: -1; pointer-events: none;
-      animation: pulseGlow 1.5s ease-in-out infinite alternate;
-    }
-    @keyframes pulseGlow {
-      0% { opacity: 0.5; transform: scale(0.9); }
-      100% { opacity: 1; transform: scale(1.1); }
-    }
-
-    /* Efeito de Tela de TV Antiga / Estática (Piscando rápido) */
+    /* Efeito de Tela de TV Antiga / Estática */
     .crt-overlay {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
@@ -70,18 +60,83 @@
     @keyframes tv-flicker {
       0% { opacity: 0.12; } 50% { opacity: 0.18; } 100% { opacity: 0.13; }
     }
-
-    /* Escurecimento das bordas (Vignette) */
     .vignette {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.9) 120%);
+      background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.95) 120%);
       z-index: 9997; pointer-events: none;
     }
 
+    /* Quadro de Investigação (Pastas e Fotos) */
+    .investigation-board {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      opacity: 0.45; /* Deixei mais visível */
+    }
+
+    @keyframes floatItem {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(2deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+    @keyframes stringSway {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(8px) rotate(1.5deg); }
+    }
+
+    /* Pastas Secretas */
+    .secret-folder {
+      position: relative; width: 160px; height: 110px;
+      background: #a47b52; border-radius: 2px 5px 5px 5px;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.9), 10px 10px 25px rgba(0,0,0,0.9);
+      border: 1px solid #735333;
+      animation: floatItem 14s ease-in-out infinite;
+    }
+    .secret-folder::before {
+      content: "CONFIDENTIAL";
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-12deg);
+      color: rgba(160, 0, 0, 0.8); font-family: var(--f-mono); font-weight: 900; font-size: 0.9rem;
+      border: 3px solid rgba(160, 0, 0, 0.8); padding: 2px 8px; border-radius: 2px;
+    }
+    .secret-folder::after {
+      content: ""; position: absolute; top: -14px; left: 0; width: 55px; height: 14px;
+      background: #8e6842; border-radius: 6px 6px 0 0;
+    }
+
+    /* Fotos com Sangue */
+    .blood-photo {
+      position: relative; width: 120px; height: 140px;
+      background: #ccc; padding: 6px 6px 30px 6px;
+      box-shadow: 8px 8px 20px rgba(0,0,0,0.9);
+      animation: floatItem 12s ease-in-out infinite alternate;
+    }
+    .blood-photo .img-ph {
+      width: 100%; height: 100%; background: #1a1a1a;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.9);
+    }
+    .blood-stain {
+      position: absolute; width: 35px; height: 35px;
+      background: radial-gradient(circle, rgba(139,0,0,0.9) 10%, transparent 60%);
+      border-radius: 50%; filter: blur(1.5px);
+    }
+    .blood-stain::after {
+      content: ""; position: absolute; top: 15px; left: 14px; width: 6px; height: 40px;
+      background: rgba(139,0,0,0.8); border-radius: 5px; filter: blur(1px);
+    }
+
+    /* Fios Vermelhos */
+    .red-string-wrap { position: absolute; transform-origin: 0 50%; }
+    .red-string {
+      width: 100%; height: 2px; background: rgba(150, 0, 0, 0.7);
+      box-shadow: 0 5px 8px rgba(0,0,0,0.8);
+      animation: stringSway 7s ease-in-out infinite alternate;
+    }
+
     /* =======================================================
-       ESTILOS DO PORTFÓLIO
+       ESTILOS DO PORTFÓLIO PRINCIPAL (z-index superior)
     ======================================================== */
-    /* Aberração Cromática Estática */
+    /* Wrapper para garantir que o conteúdo fique acima do fundo */
+    .content-wrapper { position: relative; z-index: 10; }
+
     .chromatic-static {
       position: relative; display: inline-block;
       text-shadow: 4px 0px 0px rgba(255, 0, 85, 0.7), -4px 0px 0px rgba(0, 255, 255, 0.7);
@@ -99,7 +154,7 @@
     .nav-links a:hover { color: var(--text); }
     @media (max-width: 760px) { .nav-links { display: none; } }
 
-    .hero { padding: 4rem clamp(1.2rem, 4vw, 3.5rem) 3.5rem; max-width: var(--container); margin: 0 auto; position: relative; z-index: 1; }
+    .hero { padding: 4rem clamp(1.2rem, 4vw, 3.5rem) 3.5rem; max-width: var(--container); margin: 0 auto; }
     .hero-flex { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
     .kicker { font-size: 0.72rem; color: var(--acid); margin-bottom: 1.2rem; text-transform: uppercase;}
     .hero-title { font-size: clamp(2.6rem, 6.4vw, 5.2rem); font-weight: 900; line-height: 1.02; letter-spacing: -0.01em; margin-bottom: 1.8rem; text-transform: uppercase; }
@@ -115,7 +170,7 @@
     .hero-contact-btn { border: 1px solid var(--acid); color: var(--acid); padding: 1rem 2rem; font-size: 0.8rem; letter-spacing: 0.08em; transition: background 0.25s, color 0.25s; cursor: pointer; display: inline-block; text-transform: uppercase; font-weight: bold; }
     .hero-contact-btn:hover { background: var(--acid); color: #000; }
 
-    .showcase { padding: 1rem clamp(1.2rem, 4vw, 3.5rem) 4rem; max-width: var(--container); margin: 0 auto; position: relative; z-index: 1;}
+    .showcase { padding: 1rem clamp(1.2rem, 4vw, 3.5rem) 4rem; max-width: var(--container); margin: 0 auto; }
     .section-label { font-size: 0.68rem; color: var(--acid); margin-bottom: 1rem; }
     .showcase-box { background: var(--panel); border: 1px solid var(--line); padding: 3.5rem 2.5rem; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
     .showcase-content h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 0.8rem; text-transform: uppercase; font-weight: 800; }
@@ -123,14 +178,14 @@
     .btn-outline { border: 1px solid var(--acid); color: var(--acid); padding: 0.9rem 1.6rem; font-size: 0.75rem; letter-spacing: 0.08em; transition: background 0.25s, color 0.25s; cursor: pointer; display: inline-block; }
     .btn-outline:hover { background: var(--acid); color: #000; }
 
-    .section-head { max-width: var(--container); margin: 0 auto; padding: 4rem clamp(1.2rem, 4vw, 3.5rem) 0; position: relative; z-index: 1;}
+    .section-head { max-width: var(--container); margin: 0 auto; padding: 4rem clamp(1.2rem, 4vw, 3.5rem) 0; }
     .section-head h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; }
-    .tabs { max-width: var(--container); margin: 2.2rem auto 0; padding: 0 clamp(1.2rem, 4vw, 3.5rem); display: flex; gap: 0.5rem; flex-wrap: wrap; position: relative; z-index: 1;}
+    .tabs { max-width: var(--container); margin: 2.2rem auto 0; padding: 0 clamp(1.2rem, 4vw, 3.5rem); display: flex; gap: 0.5rem; flex-wrap: wrap; }
     .tab { padding: 0.6rem 1.1rem; font-size: 0.7rem; color: var(--muted); border: 1px solid var(--line); cursor: pointer; transition: 0.2s; }
     .tab.active { color: #000; background: var(--acid); border-color: var(--acid); }
     .tab:not(.active):hover { border-color: var(--muted); color: var(--text); }
 
-    .grid { max-width: var(--container); margin: 2rem auto 0; padding: 0 clamp(1.2rem, 4vw, 3.5rem) 5.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; position: relative; z-index: 1;}
+    .grid { max-width: var(--container); margin: 2rem auto 0; padding: 0 clamp(1.2rem, 4vw, 3.5rem) 5.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; }
     @media (max-width: 980px) { .grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 620px) { .grid { grid-template-columns: 1fr; } }
     .card { border: 1px solid var(--line); background: var(--card); cursor: pointer; transition: border-color 0.25s, transform 0.25s; overflow: hidden; }
@@ -145,50 +200,71 @@
     .card.placeholder:hover { transform: none; border-color: var(--line); }
     .card.placeholder .card-media { background: repeating-linear-gradient(45deg, #0e0e0e, #0e0e0e 10px, #121212 10px, #121212 20px); }
 
-    .shorts-grid { max-width: var(--container); margin: 2rem auto 0; padding: 0 clamp(1.2rem, 4vw, 3.5rem) 5.5rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem; position: relative; z-index: 1;}
+    .shorts-grid { max-width: var(--container); margin: 2rem auto 0; padding: 0 clamp(1.2rem, 4vw, 3.5rem) 5.5rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem; }
     @media (max-width: 980px) { .shorts-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 560px) { .shorts-grid { grid-template-columns: 1fr; } }
     .shorts-grid .card-media { aspect-ratio: 9/16; }
 
     /* =======================================================
-       NOVA SESSÃO DE CONTATO (Lado a Lado + Apenas Ícones)
+       NOVA SESSÃO DE CONTATO (BOTÕES GRANDES)
     ======================================================== */
-    .contact { max-width: var(--container); margin: 0 auto; padding: 5rem clamp(1.2rem, 4vw, 3.5rem); border-top: 1px solid var(--line); position: relative; z-index: 1;}
+    .contact { max-width: var(--container); margin: 0 auto; padding: 5rem clamp(1.2rem, 4vw, 3.5rem); border-top: 1px solid var(--line); }
     .contact-wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; margin-top: 0.6rem; }
     .contact h2 { font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 800; text-transform: uppercase; line-height: 1.05; margin: 0; }
-    .contact-links { display: flex; gap: 1.5rem; align-items: center; }
     
-    .contact-link svg { 
-      width: 42px; height: 42px; 
-      color: var(--muted); 
-      transition: all 0.3s ease; 
+    .contact-links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+    
+    /* Botões Sociais Caixas */
+    .contact-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 80px; height: 80px;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
-    .contact-link:hover svg { 
-      color: var(--acid); 
-      transform: translateY(-5px) scale(1.1); 
-      filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.5)); 
+    .contact-btn svg { width: 36px; height: 36px; color: var(--muted); transition: color 0.3s ease; position: relative; z-index: 2; }
+    .contact-btn:hover {
+      border-color: var(--acid);
+      background: rgba(0, 240, 255, 0.05);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 240, 255, 0.15);
     }
+    .contact-btn:hover svg { color: var(--acid); }
 
+    /* =======================================================
+       PROJECT PANEL (BOTÃO DE FECHAR ATUALIZADO)
+    ======================================================== */
     .project-panel { position: fixed; inset: 0; z-index: 700; background: var(--bg); transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 0.84, 0.44, 1); overflow-y: auto; }
     .project-panel.open { transform: translateX(0); }
     .panel-inner { max-width: var(--container); margin: 0 auto; padding: 5.5rem clamp(1.2rem, 4vw, 3.5rem) 5rem; }
     
+    /* Novo Botão Close Project */
     .close-btn { 
-      border: 1px solid #333; 
+      border: 1px solid var(--line); 
       color: var(--text); 
-      background: rgba(0,0,0,0.5);
-      padding: 0.8rem 1.5rem; 
-      border-radius: 4px;
-      font-size: 0.75rem; 
+      background: var(--panel);
+      padding: 0.8rem 1.8rem; 
+      border-radius: 8px;
+      font-size: 0.8rem; 
       margin-bottom: 2.2rem; 
       cursor: pointer; 
       transition: all 0.3s ease; 
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
       text-transform: uppercase;
-      font-weight: bold;
+      font-weight: 700;
       letter-spacing: 0.05em;
     }
-    .close-btn:hover { color: var(--acid); border-color: var(--acid); background: rgba(0, 240, 255, 0.05); }
+    .close-btn:hover { 
+      color: #000; 
+      border-color: var(--acid); 
+      background: var(--acid); 
+      box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
+    }
     
     .panel-video { width: 100%; aspect-ratio: 16/9; background: #000; border: 1px solid var(--line); margin-bottom: 2.4rem; }
     .panel-video iframe, .panel-video video { width: 100%; height: 100%; display: block; }
@@ -196,109 +272,167 @@
     .panel-meta { max-width: 800px; }
     .panel-meta .label { margin-bottom: 0.7rem; color: var(--acid); }
     .panel-meta p { color: var(--muted); font-size: 1.05rem; line-height: 1.7; }
-    .footer { text-align: center; padding: 2.4rem 1rem 3rem; font-size: 0.62rem; color: #444; position: relative; z-index: 1;}
+    .footer { text-align: center; padding: 2.4rem 1rem 3rem; font-size: 0.62rem; color: #444; }
   </style>
 </head>
 <body>
 
-  <!-- ELEMENTOS DE FUNDO ANIMADOS -->
-  <div class="giant-grid"></div>
-  <div class="grid-glow"></div>
+  <!-- ELEMENTOS DE SUSPENSE E INVESTIGAÇÃO NO FUNDO -->
+  <div class="bg-layer">
+    <div class="giant-grid"></div>
+    <div class="investigation-board">
+      <!-- Fios -->
+      <div class="red-string-wrap" style="top: 15%; left: 10%; transform: rotate(18deg); width: 35vw;">
+        <div class="red-string"></div>
+      </div>
+      <div class="red-string-wrap" style="top: 45%; right: 5%; transform: rotate(-32deg); width: 45vw;">
+        <div class="red-string" style="animation-delay: -2s;"></div>
+      </div>
+      <div class="red-string-wrap" style="top: 75%; left: 25%; transform: rotate(-8deg); width: 30vw;">
+        <div class="red-string" style="animation-delay: -4s;"></div>
+      </div>
+      <div class="red-string-wrap" style="top: 25%; left: 50%; transform: rotate(65deg); width: 40vw;">
+        <div class="red-string" style="animation-delay: -1s;"></div>
+      </div>
+
+      <!-- Pastas Secretas espalhadas -->
+      <div style="position: absolute; top: 12%; left: 15%; transform: rotate(-12deg) scale(0.9);">
+        <div class="secret-folder"></div>
+      </div>
+      <div style="position: absolute; bottom: 20%; right: 15%; transform: rotate(22deg) scale(1.1);">
+        <div class="secret-folder" style="animation-delay: -5s;"></div>
+      </div>
+      <div style="position: absolute; top: 60%; left: 5%; transform: rotate(-5deg) scale(0.8);">
+        <div class="secret-folder" style="animation-delay: -2s;"></div>
+      </div>
+
+      <!-- Fotos com Sangue espalhadas -->
+      <div style="position: absolute; top: 38%; right: 28%; transform: rotate(14deg) scale(1.2);">
+        <div class="blood-photo" style="animation-delay: -1s;">
+          <div class="img-ph"></div>
+          <div class="blood-stain" style="top: 70%; left: 55%;"></div>
+        </div>
+      </div>
+      <div style="position: absolute; bottom: 25%; left: 18%; transform: rotate(-10deg) scale(0.9);">
+        <div class="blood-photo" style="animation-delay: -4s;">
+          <div class="img-ph"></div>
+          <div class="blood-stain" style="top: -10px; left: 15px;"></div>
+        </div>
+      </div>
+      <div style="position: absolute; top: 10%; right: 10%; transform: rotate(-25deg) scale(0.7);">
+        <div class="blood-photo" style="animation-delay: -7s;">
+          <div class="img-ph"></div>
+          <div class="blood-stain" style="top: 40%; left: 10px; width: 45px; height: 45px;"></div>
+        </div>
+      </div>
+      <div style="position: absolute; top: 80%; right: 40%; transform: rotate(35deg) scale(1);">
+        <div class="blood-photo" style="animation-delay: -3s;">
+          <div class="img-ph"></div>
+          <div class="blood-stain" style="top: 10%; left: 40%; width: 25px; height: 25px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <div class="crt-overlay"></div>
   <div class="vignette"></div>
+  <!-- FIM DO FUNDO -->
 
-  <header class="nav">
-    <a class="brand" href="#top" id="el-brand-name">IGOR-VIDEO EDITOR<span>.</span></a>
-    <nav class="nav-links">
-      <a href="#work">WORK</a>
-      <a href="#shorts">SHORTS</a>
-      <a href="#contact">CONTACT</a>
-    </nav>
-  </header>
+  <div class="content-wrapper">
+    <header class="nav">
+      <a class="brand" href="#top" id="el-brand-name">IGOR-VIDEO EDITOR<span>.</span></a>
+      <nav class="nav-links">
+        <a href="#work">WORK</a>
+        <a href="#shorts">SHORTS</a>
+        <a href="#contact">CONTACT</a>
+      </nav>
+    </header>
 
-  <main id="top">
-    <!-- HERO -->
-    <section class="hero">
-      <p class="kicker mono">VIDEO EDITOR / MOTION DESIGNER</p>
-      <div class="hero-flex">
-        <div>
-          <h1 class="hero-title"><span class="chromatic-static" id="el-hero-name"></span></h1>
-          <p class="hero-text" id="el-hero-desc"></p>
+    <main id="top">
+      <!-- HERO -->
+      <section class="hero">
+        <p class="kicker mono">VIDEO EDITOR / MOTION DESIGNER</p>
+        <div class="hero-flex">
+          <div>
+            <h1 class="hero-title"><span class="chromatic-static" id="el-hero-name"></span></h1>
+            <p class="hero-text" id="el-hero-desc"></p>
+          </div>
+          <div>
+            <a href="#contact" class="hero-contact-btn mono">CONTACT ↗</a>
+          </div>
         </div>
-        <div>
-          <a href="#contact" class="hero-contact-btn mono">CONTACT ↗</a>
-        </div>
-      </div>
 
-      <div class="hero-bottom-grid">
-        <div class="hero-meta mono">
-          <span>SUSPENSE</span><span>/</span><span>STORYTELLING</span><span>/</span><span>DOCUMENTARY</span>
+        <div class="hero-bottom-grid">
+          <div class="hero-meta mono">
+            <span>SUSPENSE</span><span>/</span><span>STORYTELLING</span><span>/</span><span>DOCUMENTARY</span>
+          </div>
+          <div class="info-block">
+            <p class="mono label">SERVICES</p>
+            <ul id="el-about-services"></ul>
+          </div>
+          <div class="info-block">
+            <p class="mono label">SOFTWARE</p>
+            <ul id="el-about-software"></ul>
+          </div>
         </div>
-        <div class="info-block">
-          <p class="mono label">SERVICES</p>
-          <ul id="el-about-services"></ul>
+      </section>
+
+      <!-- SHOWCASE -->
+      <section class="showcase" id="showcase">
+        <p class="section-label mono">FEATURED PROJECT</p>
+        <div class="showcase-box">
+          <div class="showcase-content">
+            <h2 id="showcaseTitle">WHAT I DO IN PRACTICE</h2>
+            <p class="showcase-desc" id="showcaseNote">A visual showcase of my motion design, 3D animation and visual effects.</p>
+            <button class="btn-outline mono" id="btnShowcase">SHOWCASE ↗</button>
+          </div>
         </div>
-        <div class="info-block">
-          <p class="mono label">SOFTWARE</p>
-          <ul id="el-about-software"></ul>
+      </section>
+
+      <!-- WORK -->
+      <section class="work" id="work">
+        <div class="section-head">
+          <p class="section-label mono">SELECTED WORK</p>
+          <h2>PROJECTS</h2>
         </div>
-      </div>
-    </section>
-
-    <!-- SHOWCASE -->
-    <section class="showcase" id="showcase">
-      <p class="section-label mono">FEATURED PROJECT</p>
-      <div class="showcase-box">
-        <div class="showcase-content">
-          <h2 id="showcaseTitle">WHAT I DO IN PRACTICE</h2>
-          <p class="showcase-desc" id="showcaseNote">A visual showcase of my motion design, 3D animation and visual effects.</p>
-          <button class="btn-outline mono" id="btnShowcase">SHOWCASE ↗</button>
+        <div class="tabs mono" role="tablist">
+          <button class="tab active" data-cat="suspense">SUSPENSE</button>
+          <button class="tab" data-cat="storytelling">STORYTELLING</button>
+          <button class="tab" data-cat="documentary">DOCUMENTARY</button>
         </div>
-      </div>
-    </section>
+        <div class="grid" id="grid"></div>
+      </section>
 
-    <!-- WORK -->
-    <section class="work" id="work">
-      <div class="section-head">
-        <p class="section-label mono">SELECTED WORK</p>
-        <h2>PROJECTS</h2>
-      </div>
-      <div class="tabs mono" role="tablist">
-        <button class="tab active" data-cat="suspense">SUSPENSE</button>
-        <button class="tab" data-cat="storytelling">STORYTELLING</button>
-        <button class="tab" data-cat="documentary">DOCUMENTARY</button>
-      </div>
-      <div class="grid" id="grid"></div>
-    </section>
+      <!-- SHORTS -->
+      <section class="shorts" id="shorts">
+        <div class="section-head">
+          <p class="section-label mono">VERTICAL FORMAT</p>
+          <h2>SHORTS</h2>
+        </div>
+        <div class="shorts-grid" id="shortsGrid"></div>
+      </section>
 
-    <!-- SHORTS -->
-    <section class="shorts" id="shorts">
-      <div class="section-head">
-        <p class="section-label mono">VERTICAL FORMAT</p>
-        <h2>SHORTS</h2>
-      </div>
-      <div class="shorts-grid" id="shortsGrid"></div>
-    </section>
+      <!-- CONTACT -->
+      <section class="contact" id="contact">
+        <p class="section-label mono">GET IN TOUCH</p>
+        <div class="contact-wrap">
+          <h2>START A<br>PROJECT</h2>
+          <div class="contact-links" id="contactLinks"></div>
+        </div>
+      </section>
+    </main>
 
-    <!-- CONTACT -->
-    <section class="contact" id="contact">
-      <p class="section-label mono">GET IN TOUCH</p>
-      <div class="contact-wrap">
-        <h2>START A<br>PROJECT</h2>
-        <div class="contact-links" id="contactLinks"></div>
-      </div>
-    </section>
-  </main>
+    <footer class="footer mono" id="el-footer"></footer>
+  </div> <!-- FIM CONTENT WRAPPER -->
 
   <!-- PANEL DE PROJETOS -->
   <div class="project-panel" id="projectPanel">
     <div class="panel-inner">
-      <button class="close-btn mono" id="closePanel">← BACK</button>
+      <!-- BOTÃO DE VOLTAR COM DESIGN NOVO -->
+      <button class="close-btn mono" id="closePanel">✕ CLOSE PROJECT</button>
       <div class="panel-body" id="panelBody"></div>
     </div>
   </div>
-
-  <footer class="footer mono" id="el-footer"></footer>
 
   <!-- =======================================================
        DADOS DO SITE E CMS 
@@ -443,12 +577,12 @@ const CONTACT = {
     const emailIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`;
     const instaIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>`;
     
-    // ATUALIZADO: APENAS ÍCONES
+    // BOTÕES DE CONTATO GRANDES
     contactLinks.innerHTML = [
-      { href: `mailto:${CONTACT.email}`, icon: emailIcon },
-      { href: CONTACT.instagram, icon: instaIcon }
+      { href: `mailto:${CONTACT.email}`, icon: emailIcon, label: 'Email' },
+      { href: CONTACT.instagram, icon: instaIcon, label: 'Instagram' }
     ].map(l => `
-      <a class="contact-link" href="${l.href}" target="_blank" rel="noopener">
+      <a class="contact-btn" href="${l.href}" target="_blank" rel="noopener" aria-label="${l.label}">
         ${l.icon}
       </a>
     `).join("");
