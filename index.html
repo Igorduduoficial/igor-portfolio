@@ -63,9 +63,21 @@
       z-index: 9997; pointer-events: none;
     }
 
-    /* -----------------------------------------------------
-       OBJETOS DE INVESTIGAÇÃO (Aumentados e Novos Itens)
-    ------------------------------------------------------ */
+    /* BARRA PRETA NO MEIO (DIFERENCIADOR DE CONTEÚDO) */
+    .center-black-bar {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1250px; /* Um pouco maior que o container para dar margem */
+      height: 100vh;
+      background: rgba(7, 7, 7, 0.92); /* Preto quase sólido do tema */
+      box-shadow: 0 0 100px 80px rgba(7, 7, 7, 0.92); /* Esfumaçado nas bordas */
+      z-index: 5; /* Fica acima do fundo, mas atrás do texto */
+      pointer-events: none;
+    }
+
     .investigation-board {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       opacity: 0.45;
@@ -73,37 +85,14 @@
 
     @keyframes floatItem {
       0% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(2deg); }
+      50% { transform: translateY(-15px) rotate(2deg); }
       100% { transform: translateY(0px) rotate(0deg); }
     }
-    @keyframes tapeFloat {
-      0% { transform: translateY(0px); }
-      100% { transform: translateY(15px); }
-    }
 
-    /* Fita de Isolamento Policial */
-    .police-tape {
-      position: absolute;
-      background: #ffcc00;
-      color: #000;
-      font-family: var(--f-sans);
-      font-weight: 900;
-      font-size: 1.8rem;
-      letter-spacing: 0.1em;
-      line-height: 55px;
-      height: 55px;
-      white-space: nowrap;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.9);
-      animation: tapeFloat 8s ease-in-out infinite alternate;
-      border-top: 2px solid rgba(255,255,255,0.3);
-      border-bottom: 2px solid rgba(0,0,0,0.4);
-    }
-
-    /* Pastas Secretas (TAMANHO AUMENTADO) */
     .secret-folder {
-      position: relative; width: 220px; height: 150px;
-      background: #a47b52; border-radius: 3px 8px 8px 8px;
-      box-shadow: inset 0 0 40px rgba(0,0,0,0.9), 15px 15px 35px rgba(0,0,0,0.9);
+      position: relative; width: 160px; height: 110px;
+      background: #a47b52; border-radius: 2px 5px 5px 5px;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.9), 10px 10px 25px rgba(0,0,0,0.9);
       border: 1px solid #735333;
       animation: floatItem 14s ease-in-out infinite;
     }
@@ -111,54 +100,32 @@
       content: "CONFIDENTIAL";
       position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%) rotate(-12deg);
-      color: rgba(160, 0, 0, 0.85); font-family: var(--f-mono); font-weight: 900; font-size: 1.3rem;
-      border: 4px solid rgba(160, 0, 0, 0.85); padding: 4px 10px; border-radius: 3px;
+      color: rgba(160, 0, 0, 0.8); font-family: var(--f-mono); font-weight: 900; font-size: 0.9rem;
+      border: 3px solid rgba(160, 0, 0, 0.8); padding: 2px 8px; border-radius: 2px;
     }
     .secret-folder::after {
-      content: ""; position: absolute; top: -20px; left: 0; width: 75px; height: 20px;
-      background: #8e6842; border-radius: 8px 8px 0 0;
+      content: ""; position: absolute; top: -14px; left: 0; width: 55px; height: 14px;
+      background: #8e6842; border-radius: 6px 6px 0 0;
     }
 
-    /* Fotos Polaroid com Sangue (TAMANHO AUMENTADO) */
     .blood-photo {
-      position: relative; width: 170px; height: 200px;
-      background: #ccc; padding: 8px 8px 40px 8px;
-      box-shadow: 12px 12px 25px rgba(0,0,0,0.9);
+      position: relative; width: 120px; height: 140px;
+      background: #ccc; padding: 6px 6px 30px 6px;
+      box-shadow: 8px 8px 20px rgba(0,0,0,0.9);
       animation: floatItem 12s ease-in-out infinite alternate;
     }
     .blood-photo .img-ph {
       width: 100%; height: 100%; background: #1a1a1a;
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.9);
     }
     .blood-stain {
-      position: absolute; width: 50px; height: 50px;
+      position: absolute; width: 35px; height: 35px;
       background: radial-gradient(circle, rgba(139,0,0,0.9) 10%, transparent 60%);
-      border-radius: 50%; filter: blur(2px);
+      border-radius: 50%; filter: blur(1.5px);
     }
     .blood-stain::after {
-      content: ""; position: absolute; top: 20px; left: 20px; width: 8px; height: 55px;
+      content: ""; position: absolute; top: 15px; left: 14px; width: 6px; height: 40px;
       background: rgba(139,0,0,0.8); border-radius: 5px; filter: blur(1px);
-    }
-
-    /* Anotações Soltas / Páginas de Diário */
-    .torn-note {
-      position: relative; width: 160px; height: 210px;
-      background: #d9d4c5;
-      box-shadow: 8px 8px 25px rgba(0,0,0,0.9);
-      animation: floatItem 16s ease-in-out infinite alternate-reverse;
-      transform-origin: top center;
-    }
-    .torn-note::before {
-      content: ""; position: absolute; top: 25px; left: 20px; right: 20px; bottom: 25px;
-      background: repeating-linear-gradient(transparent, transparent 20px, rgba(0,0,0,0.15) 20px, rgba(0,0,0,0.15) 22px);
-    }
-
-    /* Manchas de Copo de Café */
-    .coffee-stain {
-      position: absolute; width: 90px; height: 90px;
-      border-radius: 50%; border: 6px solid rgba(89, 53, 25, 0.4);
-      background: radial-gradient(transparent 60%, rgba(89, 53, 25, 0.1) 100%);
-      filter: blur(1px); z-index: 2; pointer-events: none;
     }
 
     /* =======================================================
@@ -181,7 +148,9 @@
     .hero { padding: 4rem clamp(1.2rem, 4vw, 3.5rem) 3.5rem; max-width: var(--container); margin: 0 auto; }
     .hero-flex { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
     .kicker { font-size: 0.72rem; color: var(--acid); margin-bottom: 1.2rem; text-transform: uppercase;}
+    
     .hero-title { font-size: clamp(2.6rem, 6.4vw, 5.2rem); font-weight: 900; line-height: 1.02; letter-spacing: -0.01em; margin-bottom: 1.8rem; text-transform: uppercase; color: var(--text); }
+    
     .hero-text { max-width: 600px; color: var(--muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.8rem; }
     
     .hero-bottom-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 3rem; align-items: start; margin-top: 1rem; border-top: 1px solid var(--line); padding-top: 2.5rem; }
@@ -230,7 +199,7 @@
     .shorts-grid .card-media { aspect-ratio: 9/16; }
 
     /* =======================================================
-       CONTATOS
+       CONTATOS (Lista Grande)
     ======================================================== */
     .contact { max-width: var(--container); margin: 0 auto; padding: 5rem clamp(1.2rem, 4vw, 3.5rem); border-top: 1px solid var(--line); }
     .contact h2 { font-size: clamp(2.6rem, 6vw, 5rem); font-weight: 900; text-transform: uppercase; margin-top: 0.6rem; line-height: 1.05; }
@@ -278,75 +247,41 @@
   <div class="bg-layer">
     <div class="giant-grid"></div>
     <div class="investigation-board">
-      
-      <!-- Fitas Policiais -->
-      <div class="police-tape" style="top: 15%; left: -10%; width: 120%; transform: rotate(4deg);">
-        CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS
-      </div>
-      <div class="police-tape" style="top: 75%; left: -10%; width: 120%; transform: rotate(-8deg); animation-delay: -3s; opacity: 0.7;">
-        CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS
-      </div>
-      <div class="police-tape" style="top: 40%; left: -20%; width: 140%; transform: rotate(35deg); animation-delay: -6s; opacity: 0.4;">
-        CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS
-      </div>
 
-      <!-- Pastas Secretas Gigantes -->
-      <div style="position: absolute; top: 8%; left: 10%; transform: rotate(-12deg);">
+      <!-- Pastas Secretas espalhadas -->
+      <div style="position: absolute; top: 12%; left: 15%; transform: rotate(-12deg) scale(0.9);">
         <div class="secret-folder"></div>
-        <div class="coffee-stain" style="top: 10px; right: -20px;"></div>
       </div>
-      <div style="position: absolute; bottom: 15%; right: 8%; transform: rotate(22deg);">
+      <div style="position: absolute; bottom: 20%; right: 15%; transform: rotate(22deg) scale(1.1);">
         <div class="secret-folder" style="animation-delay: -5s;"></div>
       </div>
-      <div style="position: absolute; top: 65%; left: 8%; transform: rotate(-5deg);">
+      <div style="position: absolute; top: 60%; left: 5%; transform: rotate(-5deg) scale(0.8);">
         <div class="secret-folder" style="animation-delay: -2s;"></div>
       </div>
-      <div style="position: absolute; top: 25%; right: 18%; transform: rotate(15deg);">
-        <div class="secret-folder" style="animation-delay: -8s;"></div>
-      </div>
 
-      <!-- Anotações Rasgadas (Novas) -->
-      <div style="position: absolute; top: 18%; left: 45%; transform: rotate(15deg);">
-        <div class="torn-note"></div>
-        <div class="coffee-stain" style="top: -20px; left: -20px;"></div>
-      </div>
-      <div style="position: absolute; bottom: 28%; right: 40%; transform: rotate(-25deg);">
-        <div class="torn-note" style="animation-delay:-4s;"></div>
-      </div>
-      <div style="position: absolute; top: 50%; left: 35%; transform: rotate(-8deg);">
-        <div class="torn-note" style="animation-delay:-7s;"></div>
-        <div class="coffee-stain" style="bottom: 10px; right: 10px;"></div>
-      </div>
-
-      <!-- Fotos com Sangue Gigantes -->
-      <div style="position: absolute; top: 38%; right: 28%; transform: rotate(14deg);">
+      <!-- Fotos com Sangue espalhadas -->
+      <div style="position: absolute; top: 38%; right: 28%; transform: rotate(14deg) scale(1.2);">
         <div class="blood-photo" style="animation-delay: -1s;">
           <div class="img-ph"></div>
-          <div class="blood-stain" style="top: 75%; left: 55%;"></div>
+          <div class="blood-stain" style="top: 70%; left: 55%;"></div>
         </div>
       </div>
-      <div style="position: absolute; bottom: 20%; left: 22%; transform: rotate(-10deg);">
+      <div style="position: absolute; bottom: 25%; left: 18%; transform: rotate(-10deg) scale(0.9);">
         <div class="blood-photo" style="animation-delay: -4s;">
           <div class="img-ph"></div>
-          <div class="blood-stain" style="top: -15px; left: 15px;"></div>
+          <div class="blood-stain" style="top: -10px; left: 15px;"></div>
         </div>
       </div>
-      <div style="position: absolute; top: 5%; right: 35%; transform: rotate(-25deg);">
+      <div style="position: absolute; top: 10%; right: 10%; transform: rotate(-25deg) scale(0.7);">
         <div class="blood-photo" style="animation-delay: -7s;">
           <div class="img-ph"></div>
-          <div class="blood-stain" style="top: 40%; left: 10px; width: 60px; height: 60px;"></div>
+          <div class="blood-stain" style="top: 40%; left: 10px; width: 45px; height: 45px;"></div>
         </div>
       </div>
-      <div style="position: absolute; top: 85%; right: 45%; transform: rotate(35deg);">
+      <div style="position: absolute; top: 80%; right: 40%; transform: rotate(35deg) scale(1);">
         <div class="blood-photo" style="animation-delay: -3s;">
           <div class="img-ph"></div>
-          <div class="blood-stain" style="top: 10%; left: 40%; width: 40px; height: 40px;"></div>
-        </div>
-      </div>
-      <div style="position: absolute; top: 45%; left: 15%; transform: rotate(-45deg);">
-        <div class="blood-photo" style="animation-delay: -9s;">
-          <div class="img-ph"></div>
-          <div class="blood-stain" style="top: 80%; left: 20%; width: 50px; height: 50px;"></div>
+          <div class="blood-stain" style="top: 10%; left: 40%; width: 25px; height: 25px;"></div>
         </div>
       </div>
     </div>
@@ -354,6 +289,10 @@
   
   <div class="crt-overlay"></div>
   <div class="vignette"></div>
+  
+  <!-- BARRA PRETA NO MEIO (Para ler o texto perfeito) -->
+  <div class="center-black-bar"></div>
+  
   <!-- FIM DO FUNDO -->
 
   <div class="content-wrapper">
