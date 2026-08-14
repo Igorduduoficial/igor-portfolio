@@ -7,102 +7,734 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&amp;family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
   
   <style>
+    /* =======================================================
+       CSS (ESTILOS VISUAIS E BACKGROUND)
+    ======================================================== */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     :root { 
       --bg: #070707; 
       --panel: #0d0d0d; 
       --card: #111111; 
+      --line: #242424; 
+      --muted: #7a7a7a; 
       --text: #f1f1ef; 
       --acid: #00f0ff; 
       --f-mono: "DM Mono", monospace; 
       --f-sans: "Inter", sans-serif; 
+      --container: 1200px; 
     }
-    body { background: var(--bg); color: var(--text); font-family: var(--f-sans); overflow-x: hidden; position: relative; }
+    html { scroll-behavior: smooth; }
+    
+    body { 
+      background: var(--bg); 
+      color: var(--text); 
+      font-family: var(--f-sans); 
+      overflow-x: hidden; 
+      position: relative; /* Necessário para a animação de fundo ficar atrás */
+    }
 
-    /* Animação de Fundo (Partículas sutis) */
-    body::after {
+    /* Animação de Fundo (Partículas flutuantes sutis) */
+    body::before {
       content: "";
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.03) 0%, transparent 70%);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       pointer-events: none;
-      z-index: 0;
+      z-index: -1;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.03) 0%, transparent 50%);
+      animation: bgFloat 15s ease-in-out infinite alternate;
+    }
+    @keyframes bgFloat {
+      0% { background-position: 0% 0%; opacity: 0.5; }
+      100% { background-position: 100% 100%; opacity: 1; }
     }
 
-    /* Aberração Cromática Estática */
-    .chromatic-text {
+    /* Aberração Cromática Estática (Sem animação, só o visual) */
+    .chromatic-static {
       position: relative;
       display: inline-block;
-      text-shadow: 3px 0 0 rgba(255, 0, 85, 0.5), -3px 0 0 rgba(0, 255, 255, 0.5);
+      text-shadow: 
+        4px 0px 0px rgba(255, 0, 85, 0.7), 
+        -4px 0px 0px rgba(0, 255, 255, 0.7);
     }
 
     a { text-decoration: none; color: inherit; }
     button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+    ul { list-style: none; }
+    ::selection { background: var(--acid); color: #000; }
     .mono { font-family: var(--f-mono); letter-spacing: 0.06em; }
 
-    .nav { position: relative; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 1.3rem clamp(1.2rem, 4vw, 3.5rem); border-bottom: 1px solid #242424; }
-    .brand { font-weight: 800; font-size: 1.1rem; text-transform: uppercase; }
+    /* NAVEGAÇÃO */
+    .nav { position: sticky; top: 0; z-index: 500; display: flex; align-items: center; justify-content: space-between; padding: 1.3rem clamp(1.2rem, 4vw, 3.5rem); background: rgba(7,7,7,0.85); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
+    .brand { font-weight: 800; font-size: 1.1rem; letter-spacing: 0.02em; text-transform: uppercase; }
     .brand span { color: var(--acid); }
+    .nav-links { display: flex; gap: 2rem; font-size: 0.72rem; color: var(--muted); }
+    .nav-links a:hover { color: var(--text); }
+    @media (max-width: 760px) { .nav-links { display: none; } }
 
-    .hero { position: relative; z-index: 10; padding: 4rem clamp(1.2rem, 4vw, 3.5rem); max-width: 1200px; margin: 0 auto; }
-    .hero-title { font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; line-height: 1; text-transform: uppercase; margin-bottom: 2rem; }
-    .hero-text { max-width: 600px; color: #888; font-size: 1.1rem; line-height: 1.6; }
+    /* HERO (Topo Agrupado) */
+    .hero { padding: 4rem clamp(1.2rem, 4vw, 3.5rem) 3.5rem; max-width: var(--container); margin: 0 auto; position: relative; z-index: 1; }
+    .hero-flex { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
+    .kicker { font-size: 0.72rem; color: var(--acid); margin-bottom: 1.2rem; text-transform: uppercase;}
     
-    /* Demais estilos mantidos para consistência... */
-    .showcase, .work, .shorts, .contact { position: relative; z-index: 10; padding: 4rem clamp(1.2rem, 4vw, 3.5rem); max-width: 1200px; margin: 0 auto; }
-    .btn-outline { border: 1px solid var(--acid); color: var(--acid); padding: 0.9rem 1.6rem; font-size: 0.75rem; text-transform: uppercase; cursor: pointer; }
-    .card { border: 1px solid #242424; background: var(--card); padding: 1rem; margin-bottom: 1rem; cursor: pointer; }
-    .footer { text-align: center; padding: 3rem; font-size: 0.7rem; color: #444; }
+    .hero-title { font-size: clamp(2.6rem, 6.4vw, 5.2rem); font-weight: 900; line-height: 1.02; letter-spacing: -0.01em; margin-bottom: 1.8rem; text-transform: uppercase; }
+    .hero-text { max-width: 600px; color: var(--muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.8rem; }
+    
+    /* Grid inferior do Hero (Onde entrou Services e Software) */
+    .hero-bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 3rem;
+      align-items: start;
+      margin-top: 1rem;
+      border-top: 1px solid var(--line);
+      padding-top: 2.5rem;
+    }
+    @media (max-width: 768px) {
+      .hero-bottom-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+    .hero-meta { display: flex; gap: 0.6rem; font-size: 0.68rem; color: var(--muted); align-self: end;}
+    .hero-meta span:nth-child(even) { color: var(--acid); }
+    .info-block .label { color: var(--acid); font-size: 0.64rem; margin-bottom: 0.8rem; text-transform: uppercase; }
+    .info-block ul { font-size: 0.85rem; color: var(--muted); }
+    .info-block li { margin-bottom: 0.4rem; }
 
+    .hero-contact-btn {
+      border: 1px solid var(--acid);
+      color: var(--acid);
+      padding: 1rem 2rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      transition: background 0.25s, color 0.25s;
+      cursor: pointer;
+      display: inline-block;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    .hero-contact-btn:hover { background: var(--acid); color: #000; }
+
+    /* SHOWCASE */
+    .showcase { padding: 1rem clamp(1.2rem, 4vw, 3.5rem) 4rem; max-width: var(--container); margin: 0 auto; position: relative; z-index: 1;}
+    .section-label { font-size: 0.68rem; color: var(--acid); margin-bottom: 1rem; }
+    .showcase-box { background: var(--panel); border: 1px solid var(--line); padding: 3.5rem 2.5rem; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+    .showcase-content h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 0.8rem; text-transform: uppercase; font-weight: 800; }
+    .showcase-desc { color: var(--muted); margin-bottom: 2rem; max-width: 500px; font-size: 0.95rem; line-height: 1.6; }
+    .btn-outline { border: 1px solid var(--acid); color: var(--acid); padding: 0.9rem 1.6rem; font-size: 0.75rem; letter-spacing: 0.08em; transition: background 0.25s, color 0.25s; cursor: pointer; display: inline-block; }
+    .btn-outline:hover { background: var(--acid); color: #000; }
+
+    /* WORK */
+    .section-head { max-width: var(--container); margin: 0 auto; padding: 4rem clamp(1.2rem, 4vw, 3.5rem) 0; position: relative; z-index: 1;}
+    .section-head h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; }
+    .tabs { max-width: var(--container); margin: 2.2rem auto 0; padding: 0 clamp(1.2rem, 4vw, 3.5rem); display: flex; gap: 0.5rem; flex-wrap: wrap; position: relative; z-index: 1;}
+    .tab { padding: 0.6rem 1.1rem; font-size: 0.7rem; color: var(--muted); border: 1px solid var(--line); cursor: pointer; transition: 0.2s; }
+    .tab.active { color: #000; background: var(--acid); border-color: var(--acid); }
+    .tab:not(.active):hover { border-color: var(--muted); color: var(--text); }
+
+    .grid { max-width: var(--container); margin: 2rem auto 0; padding: 0 clamp(1.2rem, 4vw, 3.5rem) 5.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; position: relative; z-index: 1;}
+    @media (max-width: 980px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 620px) { .grid { grid-template-columns: 1fr; } }
+
+    .card { border: 1px solid var(--line); background: var(--card); cursor: pointer; transition: border-color 0.25s, transform 0.25s; overflow: hidden; }
+    .card:hover { border-color: var(--acid); transform: translateY(-3px); }
+    .card-media { position: relative; aspect-ratio: 16/9; background: radial-gradient(circle at 50% 35%, #161616, #0a0a0a); overflow: hidden; }
+    .card-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+    .card-tag { position: absolute; top: 0.6rem; left: 0.6rem; z-index: 2; font-size: 0.58rem; color: var(--acid); font-family: var(--f-mono); }
+    .card-body { padding: 1rem 1.1rem 1.2rem; }
+    .card-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .card-sub { font-size: 0.72rem; color: var(--muted); }
+    .card.placeholder { opacity: 0.5; cursor: default; }
+    .card.placeholder:hover { transform: none; border-color: var(--line); }
+    .card.placeholder .card-media { background: repeating-linear-gradient(45deg, #0e0e0e, #0e0e0e 10px, #121212 10px, #121212 20px); }
+
+    /* SHORTS */
+    .shorts-grid { max-width: var(--container); margin: 2rem auto 0; padding: 0 clamp(1.2rem, 4vw, 3.5rem) 5.5rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem; position: relative; z-index: 1;}
+    @media (max-width: 980px) { .shorts-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .shorts-grid { grid-template-columns: 1fr; } }
+    .shorts-grid .card-media { aspect-ratio: 9/16; }
+
+    /* CONTACT */
+    .contact { max-width: var(--container); margin: 0 auto; padding: 5rem clamp(1.2rem, 4vw, 3.5rem); border-top: 1px solid var(--line); position: relative; z-index: 1;}
+    .contact h2 { font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 800; text-transform: uppercase; margin-top: 0.6rem; line-height: 1.05; }
+    .contact-links { display: flex; flex-direction: column; margin-top: 3rem; border-top: 1px solid var(--line); max-width: 640px; }
+    .contact-link { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0.5rem; border-bottom: 1px solid var(--line); transition: all 0.3s ease; }
+    .contact-left { display: flex; align-items: center; gap: 1rem; }
+    .contact-left svg { width: 22px; height: 22px; color: var(--muted); transition: color 0.3s ease; }
+    .contact-link:hover .contact-left svg { color: var(--acid); }
+    .contact-link:hover { padding-left: 1rem; }
+    .contact-link .arrow { color: var(--muted); font-size: 0.85rem; transition: color 0.25s; }
+    .contact-link:hover .arrow { color: var(--acid); }
+
+    /* PROJECT PANEL (Apenas Descrição) */
+    .project-panel { position: fixed; inset: 0; z-index: 700; background: var(--bg); transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 0.84, 0.44, 1); overflow-y: auto; }
+    .project-panel.open { transform: translateX(0); }
+    .panel-inner { max-width: var(--container); margin: 0 auto; padding: 5.5rem clamp(1.2rem, 4vw, 3.5rem) 5rem; }
+    .close-btn { font-size: 0.75rem; color: var(--muted); margin-bottom: 2.2rem; cursor: pointer; transition: color 0.2s; }
+    .close-btn:hover { color: var(--acid); }
+    .panel-video { width: 100%; aspect-ratio: 16/9; background: #000; border: 1px solid var(--line); margin-bottom: 2.4rem; }
+    .panel-video iframe, .panel-video video { width: 100%; height: 100%; display: block; }
+    .panel-title { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; text-transform: uppercase; margin-bottom: 2rem; }
+    .panel-meta { max-width: 800px; }
+    .panel-meta .label { margin-bottom: 0.7rem; color: var(--acid); }
+    .panel-meta p { color: var(--muted); font-size: 1.05rem; line-height: 1.7; }
+    
+    .footer { text-align: center; padding: 2.4rem 1rem 3rem; font-size: 0.62rem; color: #444; position: relative; z-index: 1;}
   </style>
 </head>
 <body>
 
   <header class="nav">
-    <a class="brand" href="#top">IGOR-VIDEO EDITOR<span>.</span></a>
+    <a class="brand" href="#top" id="el-brand-name">IGOR-VIDEO EDITOR<span>.</span></a>
+    <nav class="nav-links">
+      <a href="#work">WORK</a>
+      <a href="#shorts">SHORTS</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
   </header>
 
-  <main>
+  <main id="top">
+    <!-- HERO (Tudo agrupado aqui) -->
     <section class="hero">
-      <h1 class="hero-title"><span class="chromatic-text" id="el-hero-name">IGOR AUGUSTO</span></h1>
-      <p class="hero-text" id="el-hero-desc"></p>
+      <p class="kicker mono">VIDEO EDITOR / MOTION DESIGNER</p>
+      <div class="hero-flex">
+        <div>
+          <!-- O efeito Aberração Cromática agora é Estático -->
+          <h1 class="hero-title"><span class="chromatic-static" id="el-hero-name"></span></h1>
+          <p class="hero-text" id="el-hero-desc"></p>
+        </div>
+        <div>
+          <a href="#contact" class="hero-contact-btn mono">CONTACT ↗</a>
+        </div>
+      </div>
+
+      <!-- INFORMAÇÕES QUE ESTAVAM LÁ EMBAIXO AGORA ESTÃO AQUI -->
+      <div class="hero-bottom-grid">
+        <div class="hero-meta mono">
+          <span>SUSPENSE</span><span>/</span><span>STORYTELLING</span><span>/</span><span>DOCUMENTARY</span>
+        </div>
+        <div class="info-block">
+          <p class="mono label">SERVICES</p>
+          <ul id="el-about-services"></ul>
+        </div>
+        <div class="info-block">
+          <p class="mono label">SOFTWARE</p>
+          <ul id="el-about-software"></ul>
+        </div>
+      </div>
     </section>
 
+    <!-- SHOWCASE -->
     <section class="showcase" id="showcase">
-      <h2 id="showcaseTitle"></h2>
-      <p style="color:#666; margin-bottom: 2rem;" id="showcaseNote"></p>
-      <button class="btn-outline" id="btnShowcase">SHOWCASE ↗</button>
+      <p class="section-label mono">FEATURED PROJECT</p>
+      <div class="showcase-box">
+        <div class="showcase-content">
+          <h2 id="showcaseTitle">WHAT I DO IN PRACTICE</h2>
+          <p class="showcase-desc" id="showcaseNote">A visual showcase of my motion design, 3D animation and visual effects.</p>
+          <button class="btn-outline mono" id="btnShowcase">SHOWCASE ↗</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section class="work" id="work">
+      <div class="section-head">
+        <p class="section-label mono">SELECTED WORK</p>
+        <h2>PROJECTS</h2>
+      </div>
+      <div class="tabs mono" role="tablist">
+        <button class="tab active" data-cat="suspense">SUSPENSE</button>
+        <button class="tab" data-cat="storytelling">STORYTELLING</button>
+        <button class="tab" data-cat="documentary">DOCUMENTARY</button>
+      </div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <!-- SHORTS -->
+    <section class="shorts" id="shorts">
+      <div class="section-head">
+        <p class="section-label mono">VERTICAL FORMAT</p>
+        <h2>SHORTS</h2>
+      </div>
+      <div class="shorts-grid" id="shortsGrid"></div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+      <p class="section-label mono">GET IN TOUCH</p>
+      <h2>START A<br>PROJECT</h2>
+      <div class="contact-links" id="contactLinks"></div>
     </section>
   </main>
 
+  <!-- PANEL DE PROJETOS -->
+  <div class="project-panel" id="projectPanel">
+    <div class="panel-inner">
+      <button class="close-btn mono" id="closePanel">← BACK</button>
+      <div class="panel-body" id="panelBody"></div>
+    </div>
+  </div>
+
+  <footer class="footer mono" id="el-footer"></footer>
+
+  <!-- =======================================================
+       DADOS DO SITE: O CÓDIGO VAI ALTERAR ISSO AQUI
+  ======================================================== -->
   <script id="data-script">
-    const SITE_CONTENT = {
-      "heroName": "IGOR AUGUSTO",
-      "heroDesc": "Video editor focused on suspense, storytelling and documentary content. I create edits built around pacing, atmosphere and visual storytelling."
-    };
-    const SHOWCASE_VIDEO = {
-      "id": "showcase-main",
-      "title": "WHAT I DO IN PRACTICE",
-      "description": "A visual showcase of my motion design, 3D animation and visual effects.",
-      "source": { "type": "youtube", "videoId": "" }
-    };
+const SITE_CONTENT = {
+  "heroName": "IGOR AUGUSTO",
+  "heroDesc": "I'm Igor, a video editor and motion designer. I don't just cut clips together; I build narratives. Whether it's a suspenseful storytime, a documentary-style breakdown, or a fully 3D-animated intro, my focus is on flow, rhythm, and keeping the audience hooked.",
+  "services": [
+    "Video Editing",
+    "Motion Design"
+  ],
+  "software": [
+    "Premiere Pro",
+    "After Effects",
+    "Blender"
+  ],
+  "footer": "© 2024 IGOR — VIDEO EDITOR / MOTION DESIGNER"
+};
+const SHOWCASE_VIDEO = {
+  "id": "showcase-main",
+  "title": "WHAT I DO IN PRACTICE",
+  "description": "A visual showcase of my motion design, 3D animation and visual effects.",
+  "source": {
+    "type": "youtube",
+    "videoId": ""
+  }
+};
+const WORK = [
+  {
+    "id": "proj-01",
+    "category": "suspense",
+    "placeholder": false,
+    "title": "No Dogs in house.",
+    "description": "Utilizando motion design e uma versão digitalmente recriada do rosto do criador, construí o cenário para estabelecer uma atmosfera tensa e de suspense.",
+    "tag": "CASE_01",
+    "source": {
+      "type": "youtube",
+      "videoId": "z7F1Hm7_4lU"
+    },
+    "thumbnail": null
+  },
+  {
+    "id": "proj-02",
+    "category": "suspense",
+    "placeholder": true,
+    "title": "Work in progress",
+    "description": "",
+    "tag": "CASE_02",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null
+  },
+  {
+    "id": "proj-03",
+    "category": "storytelling",
+    "placeholder": true,
+    "title": "Work in progress",
+    "description": "",
+    "tag": "CASE_03",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null
+  },
+  {
+    "id": "proj-04",
+    "category": "storytelling",
+    "placeholder": true,
+    "title": "Work in progress",
+    "description": "",
+    "tag": "CASE_04",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null
+  },
+  {
+    "id": "proj-05",
+    "category": "documentary",
+    "placeholder": true,
+    "title": "Work in progress",
+    "description": "",
+    "tag": "CASE_05",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null
+  },
+  {
+    "id": "proj-06",
+    "category": "documentary",
+    "placeholder": true,
+    "title": "Work in progress",
+    "description": "",
+    "tag": "CASE_06",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null
+  }
+];
+const SHORTS = [
+  {
+    "id": "short-01",
+    "title": "Work in progress",
+    "tag": "CLIP_01",
+    "placeholder": true,
+    "description": "",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null
+  },
+  {
+    "id": "short-02",
+    "title": "Work in progress",
+    "tag": "CLIP_02",
+    "placeholder": true,
+    "description": "",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null
+  },
+  {
+    "id": "short-03",
+    "title": "Work in progress",
+    "tag": "CLIP_03",
+    "placeholder": true,
+    "description": "",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null
+  },
+  {
+    "id": "short-04",
+    "title": "Work in progress",
+    "tag": "CLIP_04",
+    "placeholder": true,
+    "description": "",
+    "source": {
+      "type": "youtube",
+      "videoId": ""
+    },
+    "thumbnail": null
+  }
+];
+const CONTACT = {
+  "email": "igoreditor.contact@gmail.com",
+  "instagram": "https://www.instagram.com/igoroeditor/"
+};
   </script>
 
+  <!-- =======================================================
+       LÓGICA DO SITE E MONTAGEM DOS TEXTOS
+  ======================================================== -->
   <script id="logic-script">
+    // Injeta Textos Globais
     document.getElementById("el-hero-name").textContent = SITE_CONTENT.heroName;
-    document.getElementById("el-hero-name").setAttribute("data-text", SITE_CONTENT.heroName);
     document.getElementById("el-hero-desc").textContent = SITE_CONTENT.heroDesc;
+    document.getElementById("el-footer").textContent = SITE_CONTENT.footer;
+
+    document.getElementById("el-about-services").innerHTML = SITE_CONTENT.services.map(s => `<li>${s}</li>`).join('');
+    document.getElementById("el-about-software").innerHTML = SITE_CONTENT.software.map(s => `<li>${s}</li>`).join('');
+
+    // Preenche Showcase
     document.getElementById("showcaseTitle").textContent = SHOWCASE_VIDEO.title;
     document.getElementById("showcaseNote").textContent = SHOWCASE_VIDEO.description;
+
+    function youtubeThumb(id) { return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`; }
+    function embedHTML(source, autoplay = true) {
+      if (!source || !source.videoId) return `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#555;font-family:'DM Mono',monospace;font-size:0.78rem;">WORK IN PROGRESS</div>`;
+      return `<iframe src="https://www.youtube-nocookie.com/embed/${source.videoId}?rel=0&modestbranding=1${autoplay ? "&autoplay=1" : ""}" title="video" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    }
+    function thumbFor(item) {
+      if (item.thumbnail) return item.thumbnail;
+      if (item.source?.type === "youtube" && item.source.videoId) return youtubeThumb(item.source.videoId);
+      return null;
+    }
+
+    const grid = document.getElementById("grid");
+    let activeCat = "suspense";
+
+    function cardHTML(item, vertical = false) {
+      const thumb = thumbFor(item);
+      return `
+        <article class="card ${item.placeholder ? "placeholder" : ""}" data-id="${item.id}" data-list="${vertical ? "shorts" : "work"}">
+          <div class="card-media">
+            <span class="card-tag">${item.tag || ""}</span>
+            ${thumb ? `<img src="${thumb}" alt="">` : ""}
+          </div>
+          <div class="card-body">
+            <div class="card-title">${item.title}</div>
+            <div class="card-sub">${item.placeholder ? "New case coming soon" : SITE_CONTENT.services.slice(0, 2).join(" · ")}</div>
+          </div>
+        </article>`;
+    }
+
+    function renderGrid() {
+      const items = WORK.filter(v => v.category === activeCat);
+      grid.innerHTML = items.map(item => cardHTML(item, false)).join("");
+      attachCardHandlers(grid, WORK);
+    }
+
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        activeCat = tab.dataset.cat;
+        renderGrid();
+      });
+    });
+    renderGrid();
+
+    const shortsGrid = document.getElementById("shortsGrid");
+    shortsGrid.innerHTML = SHORTS.map(item => cardHTML(item, true)).join("");
+    attachCardHandlers(shortsGrid, SHORTS);
+
+    function attachCardHandlers(container, dataset) {
+      container.querySelectorAll(".card:not(.placeholder)").forEach(card => {
+        card.addEventListener("click", () => openProject(card.dataset.id, dataset));
+      });
+    }
+
+    const projectPanel = document.getElementById("projectPanel");
+    const panelBody = document.getElementById("panelBody");
+    document.getElementById("closePanel").addEventListener("click", closeProject);
+
+    function openProject(id, dataset) {
+      const item = dataset.find(v => v.id === id);
+      if (!item) return;
+      
+      // O painel do vídeo agora só exibe a DESCRIÇÃO
+      panelBody.innerHTML = `
+        <div class="panel-video">${embedHTML(item.source)}</div>
+        <h2 class="panel-title">${item.title}</h2>
+        <div class="panel-meta">
+          <div><p class="mono label">DESCRIPTION</p><p>${item.description || ""}</p></div>
+        </div>`;
+      projectPanel.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeProject() {
+      projectPanel.classList.remove("open");
+      panelBody.innerHTML = "";
+      document.body.style.overflow = "";
+    }
+
+    document.getElementById("btnShowcase").addEventListener("click", () => openProject(SHOWCASE_VIDEO.id, [SHOWCASE_VIDEO]));
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && projectPanel.classList.contains("open")) closeProject(); });
+
+    const contactLinks = document.getElementById("contactLinks");
+    const emailIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`;
+    const instaIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>`;
+    
+    contactLinks.innerHTML = [
+      { label: "EMAIL", value: CONTACT.email, href: `mailto:${CONTACT.email}`, icon: emailIcon },
+      { label: "INSTAGRAM", value: "@igoroeditor", href: CONTACT.instagram, icon: instaIcon }
+    ].map(l => `
+      <a class="contact-link" href="${l.href}" target="_blank" rel="noopener">
+        <div class="contact-left">${l.icon}<span class="mono">${l.label}</span></div>
+        <span class="arrow">${l.value} →</span>
+      </a>
+    `).join("");
   </script>
 
-  <!-- Painel Admin (Oculto) -->
+  <!-- =======================================================
+       O CÉREBRO: PAINEL GERADOR DE CÓDIGO (MEGA BRAIN)
+  ======================================================== -->
   <script id="admin-script">
     (function() {
+      // Botão Flutuante de Configuração
       const btn = document.createElement("button");
-      btn.innerHTML = "⚙️ CONFIG";
-      btn.style.cssText = "position:fixed; bottom:10px; left:10px; background:#00f0ff; padding:5px; font-size:10px; z-index:9999;";
+      btn.innerHTML = "⚙️ CONFIGURAR SITE";
+      btn.className = "admin-ui-element";
+      btn.style.cssText = "position:fixed; bottom:20px; left:20px; background:#00f0ff; color:#000; font-family:'DM Mono', monospace; font-size:12px; font-weight:bold; padding:10px 15px; border-radius:5px; z-index:9999; cursor:pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); border:none;";
       document.body.appendChild(btn);
-      btn.onclick = () => alert("Painel ativo.");
+
+      // Fundo do Painel (Overlay)
+      const overlay = document.createElement("div");
+      overlay.id = "mega-admin-panel";
+      overlay.className = "admin-ui-element";
+      overlay.style.cssText = "position:fixed; inset:0; background:rgba(0,0,0,0.98); z-index:10000; display:none; padding:40px 20px; overflow-y:auto; color:#fff; font-family:sans-serif;";
+      
+      let html = `<div style="max-width:900px; margin:0 auto; padding-bottom:100px;">`;
+      html += `<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #333; padding-bottom:20px; margin-bottom:20px;">
+                 <h2 style="color:#00f0ff; font-size:24px; text-transform:uppercase; font-weight:900;">⚙️ MEGA BRAIN CMS</h2>
+                 <button id="close-admin" style="background:transparent; color:#fff; border:1px solid #555; padding:8px 12px; cursor:pointer; font-weight:bold;">FECHAR ✕</button>
+               </div>`;
+      html += `<p style="color:#aaa; font-size:15px; margin-bottom:30px; line-height:1.5;">Altere os textos do seu portfólio. Ao final da página, clique em "GERAR CÓDIGO" para obter o código HTML pronto para colar no GitHub.</p>`;
+
+      const inStyle = "width:100%; padding:12px; margin-top:5px; margin-bottom:20px; background:#111; border:1px solid #333; color:#fff; font-family:monospace; border-radius:4px;";
+      const areaStyle = inStyle + " height:80px; resize:vertical;";
+      const sectionH = "margin-top:40px; border-bottom:1px solid #333; padding-bottom:10px; color:#fff; font-size:18px;";
+
+      // 1. HERO (TOPO)
+      html += `<h3 style="${sectionH}">🏠 TOPO DO SITE (HERO)</h3>`;
+      html += `<label style="color:#ccc; font-size:12px;">Seu Nome:</label><input id="adm-g-name" value="${SITE_CONTENT.heroName}" style="${inStyle}">`;
+      html += `<label style="color:#ccc; font-size:12px;">Texto de Introdução:</label><textarea id="adm-g-hd" style="${areaStyle}">${SITE_CONTENT.heroDesc}</textarea>`;
+      html += `<label style="color:#ccc; font-size:12px;">Seus Serviços (Separe usando vírgulas):</label><input id="adm-g-serv" value="${SITE_CONTENT.services.join(', ')}" style="${inStyle}">`;
+      html += `<label style="color:#ccc; font-size:12px;">Seus Softwares (Separe usando vírgulas):</label><input id="adm-g-soft" value="${SITE_CONTENT.software.join(', ')}" style="${inStyle}">`;
+
+      // 2. SHOWCASE
+      html += `<h3 style="${sectionH}">🎬 VÍDEO PRINCIPAL (SHOWCASE)</h3>`;
+      html += `<label style="color:#ccc; font-size:12px;">Título:</label><input id="adm-shw-title" value="${SHOWCASE_VIDEO.title}" style="${inStyle}">`;
+      html += `<label style="color:#ccc; font-size:12px;">Descrição:</label><textarea id="adm-shw-desc" style="${areaStyle}">${SHOWCASE_VIDEO.description}</textarea>`;
+      html += `<label style="color:#ccc; font-size:12px;">ID do YouTube (Ex: kYV3Vl_WXYM):</label><input id="adm-shw-id" value="${SHOWCASE_VIDEO.source.videoId}" style="${inStyle}">`;
+
+      // 3. WORK
+      html += `<h3 style="${sectionH}">📁 PROJETOS DAS ABAS (16:9)</h3>`;
+      WORK.forEach((w, i) => {
+        html += `<div style="background:#111; padding:20px; border:1px solid #222; margin-bottom:20px; border-radius:6px;">
+                   <strong style="color:#00f0ff; text-transform:uppercase; font-size:14px;">${w.category} - Projeto ${i+1}</strong><br><br>
+                   <label style="color:#ccc; font-size:12px;">Título:</label><input id="adm-wk-title-${i}" value="${w.title}" style="${inStyle}">
+                   <label style="color:#ccc; font-size:12px;">Descrição:</label><textarea id="adm-wk-desc-${i}" style="${areaStyle}">${w.description}</textarea>
+                   <label style="color:#ccc; font-size:12px;">ID do YouTube (Deixe em branco para "Work in progress"):</label><input id="adm-wk-id-${i}" value="${w.source.videoId}" style="${inStyle}">
+                 </div>`;
+      });
+
+      // 4. SHORTS
+      html += `<h3 style="${sectionH}">📱 SHORTS (VERTICAL 9:16)</h3>`;
+      SHORTS.forEach((s, i) => {
+        html += `<div style="background:#111; padding:20px; border:1px solid #222; margin-bottom:20px; border-radius:6px;">
+                   <strong style="color:#00f0ff; font-size:14px;">Short ${i+1}</strong><br><br>
+                   <label style="color:#ccc; font-size:12px;">Título:</label><input id="adm-sh-title-${i}" value="${s.title}" style="${inStyle}">
+                   <label style="color:#ccc; font-size:12px;">Descrição:</label><textarea id="adm-sh-desc-${i}" style="${areaStyle}">${s.description}</textarea>
+                   <label style="color:#ccc; font-size:12px;">ID do YouTube (Deixe vazio para Work in progress):</label><input id="adm-sh-id-${i}" value="${s.source.videoId}" style="${inStyle}">
+                 </div>`;
+      });
+
+      // 5. CONTATOS E FOOTER
+      html += `<h3 style="${sectionH}">✉️ CONTATOS & RODAPÉ</h3>`;
+      html += `<label style="color:#ccc; font-size:12px;">E-mail:</label><input id="adm-email" value="${CONTACT.email}" style="${inStyle}">`;
+      html += `<label style="color:#ccc; font-size:12px;">Link do Instagram:</label><input id="adm-insta" value="${CONTACT.instagram}" style="${inStyle}">`;
+      html += `<label style="color:#ccc; font-size:12px;">Texto do Rodapé (Fim da página):</label><input id="adm-g-foot" value="${SITE_CONTENT.footer}" style="${inStyle}">`;
+
+      // --- GERADOR (FIM DA PÁGINA) ---
+      html += `<button id="btn-generate" style="width:100%; padding:20px; background:#00f0ff; color:#000; font-weight:900; font-size:18px; margin-top:40px; border:none; cursor:pointer; border-radius:6px; transition:0.3s;">💾 GERAR CÓDIGO FINAL</button>`;
+      html += `<textarea id="adm-output" readonly style="width:100%; height:300px; margin-top:20px; background:#000; color:#0f0; border:1px solid #333; padding:15px; font-family:monospace; display:none; border-radius:6px;"></textarea>`;
+      html += `<p id="adm-msg" style="color:#00f0ff; text-align:center; margin-top:15px; font-weight:bold; display:none; font-size:16px;">↑ CÓDIGO COPIADO! Agora apague o arquivo antigo no GitHub e cole esse.</p>`;
+
+      html += `</div>`;
+      overlay.innerHTML = html;
+      document.body.appendChild(overlay);
+
+      // Ações do Painel
+      btn.addEventListener("click", () => overlay.style.display = "block");
+      document.getElementById("close-admin").addEventListener("click", () => overlay.style.display = "none");
+
+      document.getElementById("btn-generate").addEventListener("click", () => {
+        // 1. Pega os textos Globais
+        const newSite = {
+          heroName: document.getElementById("adm-g-name").value.trim(),
+          heroDesc: document.getElementById("adm-g-hd").value.trim(),
+          services: document.getElementById("adm-g-serv").value.split(',').map(s=>s.trim()).filter(Boolean),
+          software: document.getElementById("adm-g-soft").value.split(',').map(s=>s.trim()).filter(Boolean),
+          footer: document.getElementById("adm-g-foot").value.trim()
+        };
+
+        // 2. Pega o Showcase
+        const newShowcase = {
+          ...SHOWCASE_VIDEO,
+          title: document.getElementById("adm-shw-title").value.trim(),
+          description: document.getElementById("adm-shw-desc").value.trim(),
+          source: { type: "youtube", videoId: document.getElementById("adm-shw-id").value.trim() }
+        };
+
+        // 3. Pega Work
+        const newWork = WORK.map((w, i) => {
+          const id = document.getElementById(`adm-wk-id-${i}`).value.trim();
+          return {
+            ...w,
+            title: document.getElementById(`adm-wk-title-${i}`).value.trim(),
+            description: document.getElementById(`adm-wk-desc-${i}`).value.trim(),
+            source: { type: "youtube", videoId: id },
+            placeholder: id === ""
+          };
+        });
+
+        // 4. Pega Shorts
+        const newShorts = SHORTS.map((s, i) => {
+          const id = document.getElementById(`adm-sh-id-${i}`).value.trim();
+          return {
+            ...s,
+            title: document.getElementById(`adm-sh-title-${i}`).value.trim(),
+            description: document.getElementById(`adm-sh-desc-${i}`).value.trim(),
+            source: { type: "youtube", videoId: id },
+            placeholder: id === ""
+          };
+        });
+
+        // 5. Pega Contato
+        const newContact = {
+          email: document.getElementById("adm-email").value.trim(),
+          instagram: document.getElementById("adm-insta").value.trim()
+        };
+
+        // Monta o novo texto do script de dados
+        const newDataScript = `
+const SITE_CONTENT = ${JSON.stringify(newSite, null, 2)};
+const SHOWCASE_VIDEO = ${JSON.stringify(newShowcase, null, 2)};
+const WORK = ${JSON.stringify(newWork, null, 2)};
+const SHORTS = ${JSON.stringify(newShorts, null, 2)};
+const CONTACT = ${JSON.stringify(newContact, null, 2)};
+`;
+        
+        // Clona o HTML para gerar a string pura
+        const clone = document.documentElement.cloneNode(true);
+        
+        // Limpa tudo o que o JS renderiza dinamicamente para não bugar no novo salvamento
+        clone.querySelector('#grid').innerHTML = "";
+        clone.querySelector('#shortsGrid').innerHTML = "";
+        clone.querySelector('#panelBody').innerHTML = "";
+        clone.querySelector('#contactLinks').innerHTML = "";
+        clone.querySelectorAll('.active, .open').forEach(el => el.classList.remove('active', 'open'));
+        clone.querySelector('body').removeAttribute('style');
+
+        // Remove os elementos da interface do Admin
+        clone.querySelectorAll('.admin-ui-element').forEach(el => el.remove());
+
+        // Atualiza a TAG de Dados no código clonado
+        clone.querySelector('#data-script').textContent = newDataScript;
+
+        // Limpa os textos estáticos do clone para que o novo Script preencha perfeitamente
+        clone.querySelector('#el-hero-name').textContent = "";
+        clone.querySelector('#el-hero-desc').textContent = "";
+        clone.querySelector('#el-footer').textContent = "";
+        clone.querySelector('#el-about-services').innerHTML = "";
+        clone.querySelector('#el-about-software').innerHTML = "";
+
+        // Finaliza o HTML
+        const finalHTML = "<!DOCTYPE html>\n<html lang=\"en\">\n" + clone.innerHTML + "\n</html>";
+        
+        // Exibe pro usuário e copia
+        const outBox = document.getElementById("adm-output");
+        outBox.value = finalHTML;
+        outBox.style.display = "block";
+        document.getElementById("adm-msg").style.display = "block";
+        outBox.select();
+        document.execCommand('copy');
+
+        const btnGen = document.getElementById("btn-generate");
+        btnGen.textContent = "CÓDIGO COPIADO PARA ÁREA DE TRANSFERÊNCIA! 📋";
+        btnGen.style.background = "#fff";
+      });
     })();
   </script>
 </body>
