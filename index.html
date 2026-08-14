@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IGOR-VIDEO EDITOR</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&amp;family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
   
   <style>
     /* =======================================================
@@ -71,7 +71,6 @@
       z-index: 5; pointer-events: none;
     }
 
-    /* Objetos de Cena do Crime */
     .investigation-board {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       opacity: 0.45;
@@ -81,19 +80,6 @@
       0% { transform: translateY(0px) rotate(0deg); }
       50% { transform: translateY(-20px) rotate(2deg); }
       100% { transform: translateY(0px) rotate(0deg); }
-    }
-    @keyframes tapeFloat {
-      0% { transform: translateY(0px); }
-      100% { transform: translateY(15px); }
-    }
-
-    .police-tape {
-      position: absolute; background: #ffcc00; color: #000;
-      font-family: var(--f-sans); font-weight: 900; font-size: 1.8rem;
-      letter-spacing: 0.1em; line-height: 55px; height: 55px;
-      white-space: nowrap; box-shadow: 0 10px 25px rgba(0,0,0,0.9);
-      animation: tapeFloat 8s ease-in-out infinite alternate;
-      border-top: 2px solid rgba(255,255,255,0.3); border-bottom: 2px solid rgba(0,0,0,0.4);
     }
 
     .secret-folder {
@@ -218,7 +204,9 @@
     @media (max-width: 560px) { .shorts-grid { grid-template-columns: 1fr; } }
     .shorts-grid .card-media { aspect-ratio: 9/16; }
 
-    /* CONTATOS */
+    /* =======================================================
+       CONTATOS
+    ======================================================== */
     .contact { max-width: var(--container); margin: 0 auto; padding: 5rem clamp(1.2rem, 4vw, 3.5rem); border-top: 1px solid var(--line); }
     .contact h2 { font-size: clamp(2.6rem, 6vw, 5rem); font-weight: 900; text-transform: uppercase; margin-top: 0.6rem; line-height: 1.05; }
     
@@ -234,7 +222,9 @@
     .contact-link:hover .contact-left svg, .contact-link:hover .contact-left .mono { color: var(--acid); }
     .contact-link:hover .arrow { color: var(--acid); }
 
-    /* PROJECT PANEL */
+    /* =======================================================
+       PROJECT PANEL 
+    ======================================================== */
     .project-panel { position: fixed; inset: 0; z-index: 700; background: var(--bg); transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 0.84, 0.44, 1); overflow-y: auto; }
     .project-panel.open { transform: translateX(0); }
     .panel-inner { max-width: var(--container); margin: 0 auto; padding: 5.5rem clamp(1.2rem, 4vw, 3.5rem) 5rem; }
@@ -254,7 +244,7 @@
     .panel-meta { max-width: 800px; }
     .panel-meta .label { margin-bottom: 0.7rem; color: var(--acid); }
     .panel-meta p { color: var(--muted); font-size: 1.05rem; line-height: 1.7; }
-    .footer { text-align: center; padding: 2.4rem 1rem 3rem; font-size: 0.62rem; color: #444; }
+    .footer { text-align: center; padding: 2.4rem 1rem 3rem; font-size: 0.62rem; color: #444; position: relative; z-index: 1;}
   </style>
 </head>
 <body>
@@ -264,23 +254,15 @@
     <div class="giant-grid"></div>
     <div class="investigation-board">
       
-      <!-- Fitas Policiais -->
-      <div class="police-tape" style="top: 15%; left: -10%; width: 120%; transform: rotate(4deg);">
-        CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS
-      </div>
-      <div class="police-tape" style="top: 75%; left: -10%; width: 120%; transform: rotate(-8deg); animation-delay: -3s; opacity: 0.7;">
-        CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS - CRIME SCENE DO NOT CROSS
-      </div>
-
-      <!-- Pastas Secretas Gigantes -->
-      <div style="position: absolute; top: 8%; left: 10%; transform: rotate(-12deg);">
+      <!-- Pastas Secretas espalhadas -->
+      <div style="position: absolute; top: 12%; left: 15%; transform: rotate(-12deg) scale(0.9);">
         <div class="secret-folder"></div>
         <div class="coffee-stain" style="top: 10px; right: -20px;"></div>
       </div>
-      <div style="position: absolute; bottom: 15%; right: 8%; transform: rotate(22deg);">
+      <div style="position: absolute; bottom: 15%; right: 8%; transform: rotate(22deg) scale(1.1);">
         <div class="secret-folder" style="animation-delay: -5s;"></div>
       </div>
-      <div style="position: absolute; top: 65%; left: 8%; transform: rotate(-5deg);">
+      <div style="position: absolute; top: 65%; left: 8%; transform: rotate(-5deg) scale(0.8);">
         <div class="secret-folder" style="animation-delay: -2s;"></div>
       </div>
 
@@ -294,25 +276,25 @@
       </div>
 
       <!-- Fotos com Sangue Gigantes -->
-      <div style="position: absolute; top: 38%; right: 28%; transform: rotate(14deg);">
+      <div style="position: absolute; top: 38%; right: 28%; transform: rotate(14deg) scale(1.2);">
         <div class="blood-photo" style="animation-delay: -1s;">
           <div class="img-ph"></div>
           <div class="blood-stain" style="top: 75%; left: 55%;"></div>
         </div>
       </div>
-      <div style="position: absolute; bottom: 20%; left: 22%; transform: rotate(-10deg);">
+      <div style="position: absolute; bottom: 20%; left: 22%; transform: rotate(-10deg) scale(0.9);">
         <div class="blood-photo" style="animation-delay: -4s;">
           <div class="img-ph"></div>
           <div class="blood-stain" style="top: -15px; left: 15px;"></div>
         </div>
       </div>
-      <div style="position: absolute; top: 5%; right: 35%; transform: rotate(-25deg);">
+      <div style="position: absolute; top: 5%; right: 35%; transform: rotate(-25deg) scale(0.7);">
         <div class="blood-photo" style="animation-delay: -7s;">
           <div class="img-ph"></div>
           <div class="blood-stain" style="top: 40%; left: 10px; width: 60px; height: 60px;"></div>
         </div>
       </div>
-      <div style="position: absolute; top: 45%; left: 15%; transform: rotate(-45deg);">
+      <div style="position: absolute; top: 45%; left: 15%; transform: rotate(-45deg) scale(0.8);">
         <div class="blood-photo" style="animation-delay: -9s;">
           <div class="img-ph"></div>
           <div class="blood-stain" style="top: 80%; left: 20%; width: 50px; height: 50px;"></div>
@@ -455,7 +437,7 @@ const SHORTS = [
 ];
 const CONTACT = {
   "email": "igoreditor.contact@gmail.com",
-  "instagram": "https://www.instagram.com/igoroeditor/",
+  "discord": "igoro_augusto",
   "x": "https://x.com/Igoroeditor"
 };
   </script>
@@ -555,13 +537,14 @@ const CONTACT = {
 
     const contactLinks = document.getElementById("contactLinks");
     const emailIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`;
-    const instaIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>`;
+    const discordIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="1"></circle><circle cx="15" cy="12" r="1"></circle><path d="M7.5 7.5c3.5-1 5.5-1 9 0"></path><path d="M7 16.5c3.5 1 6.5 1 10 0"></path><path d="M15.5 17c0 1 1.5 3 2 3c1.5 0 2.833 -1.667 3.5 -3c.667 -1.667 .5 -5.833 -1.5 -11.5c-1.457 -1.015 -3 -1.34 -4.5 -1.5l-1 2.5"></path><path d="M8.5 17c0 1 -1.5 3 -2 3c-1.5 0 -2.833 -1.667 -3.5 -3c-.667 -1.667 -.5 -5.833 1.5 -11.5c1.457 -1.015 3 -1.34 4.5 -1.5l1 2.5"></path></svg>`;
     const xIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"></path><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path></svg>`;
     
+    // Lista de Contatos com Email, Discord e X
     contactLinks.innerHTML = [
       { label: "EMAIL", value: CONTACT.email, href: `mailto:${CONTACT.email}`, icon: emailIcon },
-      { label: "INSTAGRAM", value: "@igoroeditor", href: CONTACT.instagram, icon: instaIcon },
-      { label: "X (TWITTER)", value: "@Igoroeditor", href: CONTACT.x, icon: xIcon }
+      { label: "DISCORD", value: CONTACT.discord, href: `https://discord.com/users/${CONTACT.discord}`, icon: discordIcon },
+      { label: "X (TWITTER)", value: CONTACT.x, href: CONTACT.x, icon: xIcon }
     ].map(l => `
       <a class="contact-link" href="${l.href}" target="_blank" rel="noopener">
         <div class="contact-left">${l.icon}<span class="mono">${l.label}</span></div>
@@ -631,7 +614,7 @@ const CONTACT = {
       // 5. CONTATOS E FOOTER
       html += `<h3 style="${sectionH}">✉️ CONTATOS & RODAPÉ</h3>`;
       html += `<label style="color:#ccc; font-size:12px;">E-mail:</label><input id="adm-email" value="${CONTACT.email}" style="${inStyle}">`;
-      html += `<label style="color:#ccc; font-size:12px;">Link do Instagram:</label><input id="adm-insta" value="${CONTACT.instagram}" style="${inStyle}">`;
+      html += `<label style="color:#ccc; font-size:12px;">Seu Discord (Usuário):</label><input id="adm-discord" value="${CONTACT.discord}" style="${inStyle}">`;
       html += `<label style="color:#ccc; font-size:12px;">Link do X (Twitter):</label><input id="adm-x" value="${CONTACT.x}" style="${inStyle}">`;
       html += `<label style="color:#ccc; font-size:12px;">Texto do Rodapé (Fim da página):</label><input id="adm-g-foot" value="${SITE_CONTENT.footer}" style="${inStyle}">`;
 
@@ -683,7 +666,7 @@ const CONTACT = {
         });
         const newContact = {
           email: document.getElementById("adm-email").value.trim(),
-          instagram: document.getElementById("adm-insta").value.trim(),
+          discord: document.getElementById("adm-discord").value.trim(),
           x: document.getElementById("adm-x").value.trim()
         };
 
