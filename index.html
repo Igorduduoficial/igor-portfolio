@@ -24,6 +24,7 @@
       --container: 1200px; 
     }
     html { scroll-behavior: smooth; background: var(--bg); }
+    /* Ajuste para o fundo não cobrir os elementos */
     body { color: var(--text); font-family: var(--f-sans); overflow-x: hidden; position: relative; background: transparent; }
 
     /* =======================================================
@@ -34,6 +35,7 @@
       pointer-events: none; z-index: 0; overflow: hidden;
     }
 
+    /* Grade (Grid) Gigante com movimento rápido */
     .giant-grid {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background-image: 
@@ -47,6 +49,7 @@
       100% { background-position: 120px 120px; }
     }
 
+    /* Efeito de Tela de TV Antiga / Estática (Piscando rápido) */
     .crt-overlay {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
@@ -63,6 +66,7 @@
       z-index: 9997; pointer-events: none;
     }
 
+    /* Quadro de Investigação (Pastas e Fotos) */
     .investigation-board {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       opacity: 0.45;
@@ -73,11 +77,8 @@
       50% { transform: translateY(-15px) rotate(2deg); }
       100% { transform: translateY(0px) rotate(0deg); }
     }
-    @keyframes stringSway {
-      0% { transform: translateY(0) rotate(0deg); }
-      100% { transform: translateY(8px) rotate(1.5deg); }
-    }
 
+    /* Pastas Secretas */
     .secret-folder {
       position: relative; width: 160px; height: 110px;
       background: #a47b52; border-radius: 2px 5px 5px 5px;
@@ -97,6 +98,7 @@
       background: #8e6842; border-radius: 6px 6px 0 0;
     }
 
+    /* Fotos com Sangue */
     .blood-photo {
       position: relative; width: 120px; height: 140px;
       background: #ccc; padding: 6px 6px 30px 6px;
@@ -117,22 +119,10 @@
       background: rgba(139,0,0,0.8); border-radius: 5px; filter: blur(1px);
     }
 
-    .red-string-wrap { position: absolute; transform-origin: 0 50%; }
-    .red-string {
-      width: 100%; height: 2px; background: rgba(150, 0, 0, 0.7);
-      box-shadow: 0 5px 8px rgba(0,0,0,0.8);
-      animation: stringSway 7s ease-in-out infinite alternate;
-    }
-
     /* =======================================================
        ESTILOS DO PORTFÓLIO PRINCIPAL
     ======================================================== */
     .content-wrapper { position: relative; z-index: 10; }
-
-    .chromatic-static {
-      position: relative; display: inline-block;
-      text-shadow: 4px 0px 0px rgba(255, 0, 85, 0.7), -4px 0px 0px rgba(0, 255, 255, 0.7);
-    }
     
     a { text-decoration: none; color: inherit; }
     button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
@@ -149,7 +139,10 @@
     .hero { padding: 4rem clamp(1.2rem, 4vw, 3.5rem) 3.5rem; max-width: var(--container); margin: 0 auto; }
     .hero-flex { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
     .kicker { font-size: 0.72rem; color: var(--acid); margin-bottom: 1.2rem; text-transform: uppercase;}
-    .hero-title { font-size: clamp(2.6rem, 6.4vw, 5.2rem); font-weight: 900; line-height: 1.02; letter-spacing: -0.01em; margin-bottom: 1.8rem; text-transform: uppercase; }
+    
+    /* Título principal sem aberração cromática */
+    .hero-title { font-size: clamp(2.6rem, 6.4vw, 5.2rem); font-weight: 900; line-height: 1.02; letter-spacing: -0.01em; margin-bottom: 1.8rem; text-transform: uppercase; color: var(--text); }
+    
     .hero-text { max-width: 600px; color: var(--muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.8rem; }
     
     .hero-bottom-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 3rem; align-items: start; margin-top: 1rem; border-top: 1px solid var(--line); padding-top: 2.5rem; }
@@ -198,21 +191,19 @@
     .shorts-grid .card-media { aspect-ratio: 9/16; }
 
     /* =======================================================
-       CONTATOS (Formato Lista - Textos e Ícones Maiores)
+       CONTATOS (Lista Grande)
     ======================================================== */
-    .contact { max-width: var(--container); margin: 0 auto; padding: 5rem clamp(1.2rem, 4vw, 3.5rem); border-top: 1px solid var(--line); position: relative; z-index: 1;}
+    .contact { max-width: var(--container); margin: 0 auto; padding: 5rem clamp(1.2rem, 4vw, 3.5rem); border-top: 1px solid var(--line); }
     .contact h2 { font-size: clamp(2.6rem, 6vw, 5rem); font-weight: 900; text-transform: uppercase; margin-top: 0.6rem; line-height: 1.05; }
     
     .contact-links { display: flex; flex-direction: column; margin-top: 3.5rem; border-top: 1px solid var(--line); max-width: 850px; }
     .contact-link { display: flex; justify-content: space-between; align-items: center; padding: 1.8rem 0.5rem; border-bottom: 1px solid var(--line); transition: all 0.3s ease; }
     .contact-left { display: flex; align-items: center; gap: 1.2rem; }
     
-    /* Aumentando Ícones e Texto */
     .contact-left svg { width: 32px; height: 32px; color: var(--muted); transition: color 0.3s ease; }
     .contact-left .mono { font-size: 1.1rem; font-weight: 600; color: var(--text); transition: color 0.3s ease; }
     .contact-link .arrow { color: var(--muted); font-size: 1rem; transition: color 0.25s; }
     
-    /* Efeitos de Hover na Lista */
     .contact-link:hover { padding-left: 1.5rem; background: rgba(0, 240, 255, 0.03); }
     .contact-link:hover .contact-left svg, .contact-link:hover .contact-left .mono { color: var(--acid); }
     .contact-link:hover .arrow { color: var(--acid); }
@@ -258,22 +249,49 @@
   <div class="bg-layer">
     <div class="giant-grid"></div>
     <div class="investigation-board">
-      <div class="red-string-wrap" style="top: 15%; left: 10%; transform: rotate(18deg); width: 35vw;"><div class="red-string"></div></div>
-      <div class="red-string-wrap" style="top: 45%; right: 5%; transform: rotate(-32deg); width: 45vw;"><div class="red-string" style="animation-delay: -2s;"></div></div>
-      <div class="red-string-wrap" style="top: 75%; left: 25%; transform: rotate(-8deg); width: 30vw;"><div class="red-string" style="animation-delay: -4s;"></div></div>
-      <div class="red-string-wrap" style="top: 25%; left: 50%; transform: rotate(65deg); width: 40vw;"><div class="red-string" style="animation-delay: -1s;"></div></div>
-      <div style="position: absolute; top: 12%; left: 15%; transform: rotate(-12deg) scale(0.9);"><div class="secret-folder"></div></div>
-      <div style="position: absolute; bottom: 20%; right: 15%; transform: rotate(22deg) scale(1.1);"><div class="secret-folder" style="animation-delay: -5s;"></div></div>
-      <div style="position: absolute; top: 60%; left: 5%; transform: rotate(-5deg) scale(0.8);"><div class="secret-folder" style="animation-delay: -2s;"></div></div>
-      <div style="position: absolute; top: 38%; right: 28%; transform: rotate(14deg) scale(1.2);"><div class="blood-photo" style="animation-delay: -1s;"><div class="img-ph"></div><div class="blood-stain" style="top: 70%; left: 55%;"></div></div></div>
-      <div style="position: absolute; bottom: 25%; left: 18%; transform: rotate(-10deg) scale(0.9);"><div class="blood-photo" style="animation-delay: -4s;"><div class="img-ph"></div><div class="blood-stain" style="top: -10px; left: 15px;"></div></div></div>
-      <div style="position: absolute; top: 10%; right: 10%; transform: rotate(-25deg) scale(0.7);"><div class="blood-photo" style="animation-delay: -7s;"><div class="img-ph"></div><div class="blood-stain" style="top: 40%; left: 10px; width: 45px; height: 45px;"></div></div></div>
-      <div style="position: absolute; top: 80%; right: 40%; transform: rotate(35deg) scale(1);"><div class="blood-photo" style="animation-delay: -3s;"><div class="img-ph"></div><div class="blood-stain" style="top: 10%; left: 40%; width: 25px; height: 25px;"></div></div></div>
+
+      <!-- Pastas Secretas espalhadas -->
+      <div style="position: absolute; top: 12%; left: 15%; transform: rotate(-12deg) scale(0.9);">
+        <div class="secret-folder"></div>
+      </div>
+      <div style="position: absolute; bottom: 20%; right: 15%; transform: rotate(22deg) scale(1.1);">
+        <div class="secret-folder" style="animation-delay: -5s;"></div>
+      </div>
+      <div style="position: absolute; top: 60%; left: 5%; transform: rotate(-5deg) scale(0.8);">
+        <div class="secret-folder" style="animation-delay: -2s;"></div>
+      </div>
+
+      <!-- Fotos com Sangue espalhadas -->
+      <div style="position: absolute; top: 38%; right: 28%; transform: rotate(14deg) scale(1.2);">
+        <div class="blood-photo" style="animation-delay: -1s;">
+          <div class="img-ph"></div>
+          <div class="blood-stain" style="top: 70%; left: 55%;"></div>
+        </div>
+      </div>
+      <div style="position: absolute; bottom: 25%; left: 18%; transform: rotate(-10deg) scale(0.9);">
+        <div class="blood-photo" style="animation-delay: -4s;">
+          <div class="img-ph"></div>
+          <div class="blood-stain" style="top: -10px; left: 15px;"></div>
+        </div>
+      </div>
+      <div style="position: absolute; top: 10%; right: 10%; transform: rotate(-25deg) scale(0.7);">
+        <div class="blood-photo" style="animation-delay: -7s;">
+          <div class="img-ph"></div>
+          <div class="blood-stain" style="top: 40%; left: 10px; width: 45px; height: 45px;"></div>
+        </div>
+      </div>
+      <div style="position: absolute; top: 80%; right: 40%; transform: rotate(35deg) scale(1);">
+        <div class="blood-photo" style="animation-delay: -3s;">
+          <div class="img-ph"></div>
+          <div class="blood-stain" style="top: 10%; left: 40%; width: 25px; height: 25px;"></div>
+        </div>
+      </div>
     </div>
   </div>
   
   <div class="crt-overlay"></div>
   <div class="vignette"></div>
+  <!-- FIM DO FUNDO -->
 
   <div class="content-wrapper">
     <header class="nav">
@@ -290,7 +308,7 @@
         <p class="kicker mono">VIDEO EDITOR / MOTION DESIGNER</p>
         <div class="hero-flex">
           <div>
-            <h1 class="hero-title"><span class="chromatic-static" id="el-hero-name"></span></h1>
+            <h1 class="hero-title"><span id="el-hero-name"></span></h1>
             <p class="hero-text" id="el-hero-desc"></p>
           </div>
           <div>
@@ -345,7 +363,6 @@
         <div class="shorts-grid" id="shortsGrid"></div>
       </section>
 
-      <!-- SEÇÃO DE CONTATO ATUALIZADA -->
       <section class="contact" id="contact">
         <p class="section-label mono">GET IN TOUCH</p>
         <h2>START A<br>PROJECT</h2>
@@ -379,7 +396,7 @@ const SITE_CONTENT = {
     "After Effects",
     "Blender"
   ],
-  "footer": "© 2024 IGOR — VIDEO EDITOR / MOTION DESIGNER"
+  "footer": "© 2026 IGOR — VIDEO EDITOR / MOTION DESIGNER"
 };
 const SHOWCASE_VIDEO = {
   "id": "showcase-main",
@@ -506,7 +523,6 @@ const CONTACT = {
     const instaIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>`;
     const xIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"></path><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path></svg>`;
     
-    // LISTA DE CONTATOS AUMENTADA COM O 'X' ADICIONADO
     contactLinks.innerHTML = [
       { label: "EMAIL", value: CONTACT.email, href: `mailto:${CONTACT.email}`, icon: emailIcon },
       { label: "INSTAGRAM", value: "@igoroeditor", href: CONTACT.instagram, icon: instaIcon },
