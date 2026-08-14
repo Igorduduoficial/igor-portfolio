@@ -8,7 +8,7 @@
   
   <style>
     /* =======================================================
-       CSS (ESTILOS VISUAIS E BACKGROUND)
+       CSS PRINCIPAL
     ======================================================== */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     :root { 
@@ -24,64 +24,108 @@
       --container: 1200px; 
     }
     html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--f-sans); overflow-x: hidden; position: relative; }
+
+    /* =======================================================
+       CENÁRIO DE INVESTIGAÇÃO / SUSPENSE NO FUNDO
+    ======================================================== */
     
-    body { 
-      background: var(--bg); 
-      color: var(--text); 
-      font-family: var(--f-sans); 
-      overflow-x: hidden; 
-      position: relative; 
+    /* Efeito de Tela de TV Antiga / Estática */
+    .crt-overlay {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+      background-size: 100% 2px, 3px 100%;
+      z-index: 9998; pointer-events: none; opacity: 0.15;
+      animation: tv-flicker 0.15s infinite;
+    }
+    @keyframes tv-flicker {
+      0% { opacity: 0.12; } 50% { opacity: 0.15; } 100% { opacity: 0.13; }
+    }
+    .vignette {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.85) 120%);
+      z-index: 9997; pointer-events: none;
     }
 
-    /* Animação de Fundo (Luzes flutuantes) */
-    .bg-glow {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      overflow: hidden;
-      z-index: -1;
-      pointer-events: none;
-    }
-    .bg-glow .blob {
-      position: absolute;
-      filter: blur(120px);
-      border-radius: 50%;
-      opacity: 0.15; /* Perfeito para dar a cor sem ofuscar o texto */
-      animation: floatBlob 20s infinite ease-in-out alternate;
-    }
-    .bg-glow .blob1 {
-      width: 600px; height: 600px;
-      background: var(--acid);
-      top: -10%; left: -10%;
-    }
-    .bg-glow .blob2 {
-      width: 500px; height: 500px;
-      background: #0066ff; /* Azul profundo combinando com o ciano */
-      bottom: -10%; right: -10%;
-      animation-duration: 25s;
-      animation-direction: alternate-reverse;
-    }
-    @keyframes floatBlob {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(25%, 15%) scale(1.1); }
-      100% { transform: translate(-15%, 25%) scale(0.9); }
+    /* Container do Quadro de Investigação */
+    .investigation-board {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: -1; pointer-events: none; overflow: hidden;
+      opacity: 0.35; /* Deixei mais escuro para não ofuscar seu texto */
     }
 
-    /* Aberração Cromática Estática (Sem animação, só o visual) */
+    /* Animações dos Itens */
+    @keyframes floatItem {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(2deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+    @keyframes stringSway {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(8px) rotate(1.5deg); }
+    }
+
+    /* Pastas Secretas */
+    .secret-folder {
+      position: relative; width: 160px; height: 110px;
+      background: #a47b52; border-radius: 2px 5px 5px 5px;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.9), 10px 10px 25px rgba(0,0,0,0.9);
+      border: 1px solid #735333;
+      animation: floatItem 14s ease-in-out infinite;
+    }
+    .secret-folder::before {
+      content: "CONFIDENTIAL";
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-12deg);
+      color: rgba(160, 0, 0, 0.8); font-family: var(--f-mono); font-weight: 900; font-size: 0.9rem;
+      border: 3px solid rgba(160, 0, 0, 0.8); padding: 2px 8px; border-radius: 2px;
+    }
+    .secret-folder::after {
+      content: ""; position: absolute; top: -14px; left: 0; width: 55px; height: 14px;
+      background: #8e6842; border-radius: 6px 6px 0 0;
+    }
+
+    /* Fotos com Sangue */
+    .blood-photo {
+      position: relative; width: 120px; height: 140px;
+      background: #ccc; padding: 6px 6px 30px 6px;
+      box-shadow: 8px 8px 20px rgba(0,0,0,0.9);
+      animation: floatItem 12s ease-in-out infinite alternate;
+    }
+    .blood-photo .img-ph {
+      width: 100%; height: 100%; background: #1a1a1a;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.9);
+    }
+    .blood-stain {
+      position: absolute; width: 35px; height: 35px;
+      background: radial-gradient(circle, rgba(139,0,0,0.9) 10%, transparent 60%);
+      border-radius: 50%; filter: blur(1.5px);
+    }
+    .blood-stain::after {
+      content: ""; position: absolute; top: 15px; left: 14px; width: 6px; height: 40px;
+      background: rgba(139,0,0,0.8); border-radius: 5px; filter: blur(1px);
+    }
+
+    /* Fios Vermelhos (Investigação) */
+    .red-string-wrap { position: absolute; transform-origin: 0 50%; }
+    .red-string {
+      width: 100%; height: 2px; background: rgba(150, 0, 0, 0.7);
+      box-shadow: 0 5px 8px rgba(0,0,0,0.8);
+      animation: stringSway 7s ease-in-out infinite alternate;
+    }
+
+    /* =======================================================
+       ESTILOS DO PORTFÓLIO (INTACTOS)
+    ======================================================== */
     .chromatic-static {
-      position: relative;
-      display: inline-block;
-      text-shadow: 
-        4px 0px 0px rgba(255, 0, 85, 0.7), 
-        -4px 0px 0px rgba(0, 255, 255, 0.7);
+      position: relative; display: inline-block;
+      text-shadow: 4px 0px 0px rgba(255, 0, 85, 0.7), -4px 0px 0px rgba(0, 255, 255, 0.7);
     }
-
     a { text-decoration: none; color: inherit; }
     button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
     ul { list-style: none; }
     ::selection { background: var(--acid); color: #000; }
-    .mono { font-family: var(--f-mono); letter-spacing: 0.06em; }
 
-    /* NAVEGAÇÃO */
     .nav { position: sticky; top: 0; z-index: 500; display: flex; align-items: center; justify-content: space-between; padding: 1.3rem clamp(1.2rem, 4vw, 3.5rem); background: rgba(7,7,7,0.85); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
     .brand { font-weight: 800; font-size: 1.1rem; letter-spacing: 0.02em; text-transform: uppercase; }
     .brand span { color: var(--acid); }
@@ -89,48 +133,22 @@
     .nav-links a:hover { color: var(--text); }
     @media (max-width: 760px) { .nav-links { display: none; } }
 
-    /* HERO (Topo Agrupado) */
     .hero { padding: 4rem clamp(1.2rem, 4vw, 3.5rem) 3.5rem; max-width: var(--container); margin: 0 auto; position: relative; z-index: 1; }
     .hero-flex { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
     .kicker { font-size: 0.72rem; color: var(--acid); margin-bottom: 1.2rem; text-transform: uppercase;}
-    
     .hero-title { font-size: clamp(2.6rem, 6.4vw, 5.2rem); font-weight: 900; line-height: 1.02; letter-spacing: -0.01em; margin-bottom: 1.8rem; text-transform: uppercase; }
     .hero-text { max-width: 600px; color: var(--muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.8rem; }
     
-    /* Grid inferior do Hero (Onde entrou Services e Software) */
-    .hero-bottom-grid {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      gap: 3rem;
-      align-items: start;
-      margin-top: 1rem;
-      border-top: 1px solid var(--line);
-      padding-top: 2.5rem;
-    }
-    @media (max-width: 768px) {
-      .hero-bottom-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-    }
+    .hero-bottom-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 3rem; align-items: start; margin-top: 1rem; border-top: 1px solid var(--line); padding-top: 2.5rem; }
+    @media (max-width: 768px) { .hero-bottom-grid { grid-template-columns: 1fr; gap: 1.5rem; } }
     .hero-meta { display: flex; gap: 0.6rem; font-size: 0.68rem; color: var(--muted); align-self: end;}
     .hero-meta span:nth-child(even) { color: var(--acid); }
     .info-block .label { color: var(--acid); font-size: 0.64rem; margin-bottom: 0.8rem; text-transform: uppercase; }
     .info-block ul { font-size: 0.85rem; color: var(--muted); }
     .info-block li { margin-bottom: 0.4rem; }
-
-    .hero-contact-btn {
-      border: 1px solid var(--acid);
-      color: var(--acid);
-      padding: 1rem 2rem;
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-      transition: background 0.25s, color 0.25s;
-      cursor: pointer;
-      display: inline-block;
-      text-transform: uppercase;
-      font-weight: bold;
-    }
+    .hero-contact-btn { border: 1px solid var(--acid); color: var(--acid); padding: 1rem 2rem; font-size: 0.8rem; letter-spacing: 0.08em; transition: background 0.25s, color 0.25s; cursor: pointer; display: inline-block; text-transform: uppercase; font-weight: bold; }
     .hero-contact-btn:hover { background: var(--acid); color: #000; }
 
-    /* SHOWCASE */
     .showcase { padding: 1rem clamp(1.2rem, 4vw, 3.5rem) 4rem; max-width: var(--container); margin: 0 auto; position: relative; z-index: 1;}
     .section-label { font-size: 0.68rem; color: var(--acid); margin-bottom: 1rem; }
     .showcase-box { background: var(--panel); border: 1px solid var(--line); padding: 3.5rem 2.5rem; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
@@ -139,7 +157,6 @@
     .btn-outline { border: 1px solid var(--acid); color: var(--acid); padding: 0.9rem 1.6rem; font-size: 0.75rem; letter-spacing: 0.08em; transition: background 0.25s, color 0.25s; cursor: pointer; display: inline-block; }
     .btn-outline:hover { background: var(--acid); color: #000; }
 
-    /* WORK */
     .section-head { max-width: var(--container); margin: 0 auto; padding: 4rem clamp(1.2rem, 4vw, 3.5rem) 0; position: relative; z-index: 1;}
     .section-head h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; }
     .tabs { max-width: var(--container); margin: 2.2rem auto 0; padding: 0 clamp(1.2rem, 4vw, 3.5rem); display: flex; gap: 0.5rem; flex-wrap: wrap; position: relative; z-index: 1;}
@@ -150,7 +167,6 @@
     .grid { max-width: var(--container); margin: 2rem auto 0; padding: 0 clamp(1.2rem, 4vw, 3.5rem) 5.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; position: relative; z-index: 1;}
     @media (max-width: 980px) { .grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 620px) { .grid { grid-template-columns: 1fr; } }
-
     .card { border: 1px solid var(--line); background: var(--card); cursor: pointer; transition: border-color 0.25s, transform 0.25s; overflow: hidden; }
     .card:hover { border-color: var(--acid); transform: translateY(-3px); }
     .card-media { position: relative; aspect-ratio: 16/9; background: radial-gradient(circle at 50% 35%, #161616, #0a0a0a); overflow: hidden; }
@@ -163,13 +179,11 @@
     .card.placeholder:hover { transform: none; border-color: var(--line); }
     .card.placeholder .card-media { background: repeating-linear-gradient(45deg, #0e0e0e, #0e0e0e 10px, #121212 10px, #121212 20px); }
 
-    /* SHORTS */
     .shorts-grid { max-width: var(--container); margin: 2rem auto 0; padding: 0 clamp(1.2rem, 4vw, 3.5rem) 5.5rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem; position: relative; z-index: 1;}
     @media (max-width: 980px) { .shorts-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 560px) { .shorts-grid { grid-template-columns: 1fr; } }
     .shorts-grid .card-media { aspect-ratio: 9/16; }
 
-    /* CONTACT */
     .contact { max-width: var(--container); margin: 0 auto; padding: 5rem clamp(1.2rem, 4vw, 3.5rem); border-top: 1px solid var(--line); position: relative; z-index: 1;}
     .contact h2 { font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 800; text-transform: uppercase; margin-top: 0.6rem; line-height: 1.05; }
     .contact-links { display: flex; flex-direction: column; margin-top: 3rem; border-top: 1px solid var(--line); max-width: 640px; }
@@ -181,7 +195,6 @@
     .contact-link .arrow { color: var(--muted); font-size: 0.85rem; transition: color 0.25s; }
     .contact-link:hover .arrow { color: var(--acid); }
 
-    /* PROJECT PANEL (Apenas Descrição) */
     .project-panel { position: fixed; inset: 0; z-index: 700; background: var(--bg); transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 0.84, 0.44, 1); overflow-y: auto; }
     .project-panel.open { transform: translateX(0); }
     .panel-inner { max-width: var(--container); margin: 0 auto; padding: 5.5rem clamp(1.2rem, 4vw, 3.5rem) 5rem; }
@@ -193,17 +206,50 @@
     .panel-meta { max-width: 800px; }
     .panel-meta .label { margin-bottom: 0.7rem; color: var(--acid); }
     .panel-meta p { color: var(--muted); font-size: 1.05rem; line-height: 1.7; }
-    
     .footer { text-align: center; padding: 2.4rem 1rem 3rem; font-size: 0.62rem; color: #444; position: relative; z-index: 1;}
   </style>
 </head>
 <body>
 
-  <!-- ELEMENTOS DE LUZ DO BACKGROUND -->
-  <div class="bg-glow">
-    <div class="blob blob1"></div>
-    <div class="blob blob2"></div>
+  <!-- ELEMENTOS DE SUSPENSE E INVESTIGAÇÃO (FUNDO) -->
+  <div class="crt-overlay"></div>
+  <div class="vignette"></div>
+  
+  <div class="investigation-board">
+    <!-- Fios -->
+    <div class="red-string-wrap" style="top: 15%; left: 10%; transform: rotate(18deg); width: 35vw;">
+      <div class="red-string"></div>
+    </div>
+    <div class="red-string-wrap" style="top: 45%; right: 5%; transform: rotate(-32deg); width: 45vw;">
+      <div class="red-string" style="animation-delay: -2s;"></div>
+    </div>
+    <div class="red-string-wrap" style="top: 75%; left: 25%; transform: rotate(-8deg); width: 30vw;">
+      <div class="red-string" style="animation-delay: -4s;"></div>
+    </div>
+
+    <!-- Pastas -->
+    <div style="position: absolute; top: 12%; left: 15%; transform: rotate(-12deg);">
+      <div class="secret-folder"></div>
+    </div>
+    <div style="position: absolute; bottom: 20%; right: 15%; transform: rotate(22deg);">
+      <div class="secret-folder" style="animation-delay: -5s;"></div>
+    </div>
+
+    <!-- Fotos com Sangue -->
+    <div style="position: absolute; top: 38%; right: 28%; transform: rotate(14deg);">
+      <div class="blood-photo" style="animation-delay: -1s;">
+        <div class="img-ph"></div>
+        <div class="blood-stain" style="top: 70%; left: 55%;"></div>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 25%; left: 18%; transform: rotate(-10deg);">
+      <div class="blood-photo" style="animation-delay: -4s;">
+        <div class="img-ph"></div>
+        <div class="blood-stain" style="top: -10px; left: 15px;"></div>
+      </div>
+    </div>
   </div>
+  <!-- FIM DO FUNDO DE SUSPENSE -->
 
   <header class="nav">
     <a class="brand" href="#top" id="el-brand-name">IGOR-VIDEO EDITOR<span>.</span></a>
@@ -215,12 +261,11 @@
   </header>
 
   <main id="top">
-    <!-- HERO (Tudo agrupado aqui) -->
+    <!-- HERO (Topo Agrupado) -->
     <section class="hero">
       <p class="kicker mono">VIDEO EDITOR / MOTION DESIGNER</p>
       <div class="hero-flex">
         <div>
-          <!-- O efeito Aberração Cromática agora é Estático -->
           <h1 class="hero-title"><span class="chromatic-static" id="el-hero-name"></span></h1>
           <p class="hero-text" id="el-hero-desc"></p>
         </div>
@@ -229,7 +274,6 @@
         </div>
       </div>
 
-      <!-- INFORMAÇÕES QUE ESTAVAM LÁ EMBAIXO AGORA ESTÃO AQUI -->
       <div class="hero-bottom-grid">
         <div class="hero-meta mono">
           <span>SUSPENSE</span><span>/</span><span>STORYTELLING</span><span>/</span><span>DOCUMENTARY</span>
@@ -299,7 +343,7 @@
   <footer class="footer mono" id="el-footer"></footer>
 
   <!-- =======================================================
-       DADOS DO SITE: O CÓDIGO VAI ALTERAR ISSO AQUI
+       DADOS DO SITE E CMS 
   ======================================================== -->
   <script id="data-script">
 const SITE_CONTENT = {
@@ -320,140 +364,21 @@ const SHOWCASE_VIDEO = {
   "id": "showcase-main",
   "title": "WHAT I DO IN PRACTICE",
   "description": "A visual showcase of my motion design, 3D animation and visual effects.",
-  "source": {
-    "type": "youtube",
-    "videoId": ""
-  }
+  "source": { "type": "youtube", "videoId": "" }
 };
 const WORK = [
-  {
-    "id": "proj-01",
-    "category": "suspense",
-    "placeholder": false,
-    "title": "No Dogs in house.",
-    "description": "Utilizando motion design e uma versão digitalmente recriada do rosto do criador, construí o cenário para estabelecer uma atmosfera tensa e de suspense.",
-    "tag": "CASE_01",
-    "source": {
-      "type": "youtube",
-      "videoId": "z7F1Hm7_4lU"
-    },
-    "thumbnail": null
-  },
-  {
-    "id": "proj-02",
-    "category": "suspense",
-    "placeholder": true,
-    "title": "Work in progress",
-    "description": "",
-    "tag": "CASE_02",
-    "source": {
-      "type": "youtube",
-      "videoId": ""
-    },
-    "thumbnail": null
-  },
-  {
-    "id": "proj-03",
-    "category": "storytelling",
-    "placeholder": true,
-    "title": "Work in progress",
-    "description": "",
-    "tag": "CASE_03",
-    "source": {
-      "type": "youtube",
-      "videoId": ""
-    },
-    "thumbnail": null
-  },
-  {
-    "id": "proj-04",
-    "category": "storytelling",
-    "placeholder": true,
-    "title": "Work in progress",
-    "description": "",
-    "tag": "CASE_04",
-    "source": {
-      "type": "youtube",
-      "videoId": ""
-    },
-    "thumbnail": null
-  },
-  {
-    "id": "proj-05",
-    "category": "documentary",
-    "placeholder": true,
-    "title": "Work in progress",
-    "description": "",
-    "tag": "CASE_05",
-    "source": {
-      "type": "youtube",
-      "videoId": ""
-    },
-    "thumbnail": null
-  },
-  {
-    "id": "proj-06",
-    "category": "documentary",
-    "placeholder": true,
-    "title": "Work in progress",
-    "description": "",
-    "tag": "CASE_06",
-    "source": {
-      "type": "youtube",
-      "videoId": ""
-    },
-    "thumbnail": null
-  }
+  { "id": "proj-01", "category": "suspense", "placeholder": false, "title": "No Dogs in house.", "description": "Utilizando motion design e uma versão digitalmente recriada do rosto do criador, construí o cenário para estabelecer uma atmosfera tensa e de suspense.", "tag": "CASE_01", "source": { "type": "youtube", "videoId": "z7F1Hm7_4lU" }, "thumbnail": null },
+  { "id": "proj-02", "category": "suspense", "placeholder": true, "title": "Work in progress", "description": "", "tag": "CASE_02", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+  { "id": "proj-03", "category": "storytelling", "placeholder": true, "title": "Work in progress", "description": "", "tag": "CASE_03", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+  { "id": "proj-04", "category": "storytelling", "placeholder": true, "title": "Work in progress", "description": "", "tag": "CASE_04", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+  { "id": "proj-05", "category": "documentary", "placeholder": true, "title": "Work in progress", "description": "", "tag": "CASE_05", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+  { "id": "proj-06", "category": "documentary", "placeholder": true, "title": "Work in progress", "description": "", "tag": "CASE_06", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null }
 ];
 const SHORTS = [
-  {
-    "id": "short-01",
-    "title": "Work in progress",
-    "tag": "CLIP_01",
-    "placeholder": true,
-    "description": "",
-    "source": {
-      "type": "youtube",
-      "videoId": ""
-    },
-    "thumbnail": null
-  },
-  {
-    "id": "short-02",
-    "title": "Work in progress",
-    "tag": "CLIP_02",
-    "placeholder": true,
-    "description": "",
-    "source": {
-      "type": "youtube",
-      "videoId": ""
-    },
-    "thumbnail": null
-  },
-  {
-    "id": "short-03",
-    "title": "Work in progress",
-    "tag": "CLIP_03",
-    "placeholder": true,
-    "description": "",
-    "source": {
-      "type": "youtube",
-      "videoId": ""
-    },
-    "thumbnail": null
-  },
-  {
-    "id": "short-04",
-    "title": "Work in progress",
-    "tag": "CLIP_04",
-    "placeholder": true,
-    "description": "",
-    "source": {
-      "type": "youtube",
-      "videoId": ""
-    },
-    "thumbnail": null
-  }
+  { "id": "short-01", "title": "Work in progress", "tag": "CLIP_01", "placeholder": true, "description": "", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+  { "id": "short-02", "title": "Work in progress", "tag": "CLIP_02", "placeholder": true, "description": "", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+  { "id": "short-03", "title": "Work in progress", "tag": "CLIP_03", "placeholder": true, "description": "", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+  { "id": "short-04", "title": "Work in progress", "tag": "CLIP_04", "placeholder": true, "description": "", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null }
 ];
 const CONTACT = {
   "email": "igoreditor.contact@gmail.com",
@@ -461,9 +386,6 @@ const CONTACT = {
 };
   </script>
 
-  <!-- =======================================================
-       LÓGICA DO SITE E MONTAGEM DOS TEXTOS
-  ======================================================== -->
   <script id="logic-script">
     // Injeta Textos Globais
     document.getElementById("el-hero-name").textContent = SITE_CONTENT.heroName;
@@ -575,19 +497,14 @@ const CONTACT = {
     `).join("");
   </script>
 
-  <!-- =======================================================
-       O CÉREBRO: PAINEL GERADOR DE CÓDIGO (MEGA BRAIN)
-  ======================================================== -->
   <script id="admin-script">
     (function() {
-      // Botão Flutuante de Configuração
       const btn = document.createElement("button");
       btn.innerHTML = "⚙️ CONFIGURAR SITE";
       btn.className = "admin-ui-element";
       btn.style.cssText = "position:fixed; bottom:20px; left:20px; background:#00f0ff; color:#000; font-family:'DM Mono', monospace; font-size:12px; font-weight:bold; padding:10px 15px; border-radius:5px; z-index:9999; cursor:pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); border:none;";
       document.body.appendChild(btn);
 
-      // Fundo do Painel (Overlay)
       const overlay = document.createElement("div");
       overlay.id = "mega-admin-panel";
       overlay.className = "admin-ui-element";
@@ -598,13 +515,12 @@ const CONTACT = {
                  <h2 style="color:#00f0ff; font-size:24px; text-transform:uppercase; font-weight:900;">⚙️ MEGA BRAIN CMS</h2>
                  <button id="close-admin" style="background:transparent; color:#fff; border:1px solid #555; padding:8px 12px; cursor:pointer; font-weight:bold;">FECHAR ✕</button>
                </div>`;
-      html += `<p style="color:#aaa; font-size:15px; margin-bottom:30px; line-height:1.5;">Altere os textos do seu portfólio. Ao final da página, clique em "GERAR CÓDIGO" para obter o código HTML pronto para colar no GitHub.</p>`;
 
       const inStyle = "width:100%; padding:12px; margin-top:5px; margin-bottom:20px; background:#111; border:1px solid #333; color:#fff; font-family:monospace; border-radius:4px;";
       const areaStyle = inStyle + " height:80px; resize:vertical;";
       const sectionH = "margin-top:40px; border-bottom:1px solid #333; padding-bottom:10px; color:#fff; font-size:18px;";
 
-      // 1. HERO (TOPO)
+      // 1. HERO
       html += `<h3 style="${sectionH}">🏠 TOPO DO SITE (HERO)</h3>`;
       html += `<label style="color:#ccc; font-size:12px;">Seu Nome:</label><input id="adm-g-name" value="${SITE_CONTENT.heroName}" style="${inStyle}">`;
       html += `<label style="color:#ccc; font-size:12px;">Texto de Introdução:</label><textarea id="adm-g-hd" style="${areaStyle}">${SITE_CONTENT.heroDesc}</textarea>`;
@@ -624,7 +540,7 @@ const CONTACT = {
                    <strong style="color:#00f0ff; text-transform:uppercase; font-size:14px;">${w.category} - Projeto ${i+1}</strong><br><br>
                    <label style="color:#ccc; font-size:12px;">Título:</label><input id="adm-wk-title-${i}" value="${w.title}" style="${inStyle}">
                    <label style="color:#ccc; font-size:12px;">Descrição:</label><textarea id="adm-wk-desc-${i}" style="${areaStyle}">${w.description}</textarea>
-                   <label style="color:#ccc; font-size:12px;">ID do YouTube (Deixe em branco para "Work in progress"):</label><input id="adm-wk-id-${i}" value="${w.source.videoId}" style="${inStyle}">
+                   <label style="color:#ccc; font-size:12px;">ID do YouTube:</label><input id="adm-wk-id-${i}" value="${w.source.videoId}" style="${inStyle}">
                  </div>`;
       });
 
@@ -635,7 +551,7 @@ const CONTACT = {
                    <strong style="color:#00f0ff; font-size:14px;">Short ${i+1}</strong><br><br>
                    <label style="color:#ccc; font-size:12px;">Título:</label><input id="adm-sh-title-${i}" value="${s.title}" style="${inStyle}">
                    <label style="color:#ccc; font-size:12px;">Descrição:</label><textarea id="adm-sh-desc-${i}" style="${areaStyle}">${s.description}</textarea>
-                   <label style="color:#ccc; font-size:12px;">ID do YouTube (Deixe vazio para Work in progress):</label><input id="adm-sh-id-${i}" value="${s.source.videoId}" style="${inStyle}">
+                   <label style="color:#ccc; font-size:12px;">ID do YouTube:</label><input id="adm-sh-id-${i}" value="${s.source.videoId}" style="${inStyle}">
                  </div>`;
       });
 
@@ -645,7 +561,7 @@ const CONTACT = {
       html += `<label style="color:#ccc; font-size:12px;">Link do Instagram:</label><input id="adm-insta" value="${CONTACT.instagram}" style="${inStyle}">`;
       html += `<label style="color:#ccc; font-size:12px;">Texto do Rodapé (Fim da página):</label><input id="adm-g-foot" value="${SITE_CONTENT.footer}" style="${inStyle}">`;
 
-      // --- GERADOR (FIM DA PÁGINA) ---
+      // GERAR
       html += `<button id="btn-generate" style="width:100%; padding:20px; background:#00f0ff; color:#000; font-weight:900; font-size:18px; margin-top:40px; border:none; cursor:pointer; border-radius:6px; transition:0.3s;">💾 GERAR CÓDIGO FINAL</button>`;
       html += `<textarea id="adm-output" readonly style="width:100%; height:300px; margin-top:20px; background:#000; color:#0f0; border:1px solid #333; padding:15px; font-family:monospace; display:none; border-radius:6px;"></textarea>`;
       html += `<p id="adm-msg" style="color:#00f0ff; text-align:center; margin-top:15px; font-weight:bold; display:none; font-size:16px;">↑ CÓDIGO COPIADO! Agora apague o arquivo antigo no GitHub e cole esse.</p>`;
@@ -654,12 +570,10 @@ const CONTACT = {
       overlay.innerHTML = html;
       document.body.appendChild(overlay);
 
-      // Ações do Painel
       btn.addEventListener("click", () => overlay.style.display = "block");
       document.getElementById("close-admin").addEventListener("click", () => overlay.style.display = "none");
 
       document.getElementById("btn-generate").addEventListener("click", () => {
-        // 1. Pega os textos Globais
         const newSite = {
           heroName: document.getElementById("adm-g-name").value.trim(),
           heroDesc: document.getElementById("adm-g-hd").value.trim(),
@@ -667,16 +581,12 @@ const CONTACT = {
           software: document.getElementById("adm-g-soft").value.split(',').map(s=>s.trim()).filter(Boolean),
           footer: document.getElementById("adm-g-foot").value.trim()
         };
-
-        // 2. Pega o Showcase
         const newShowcase = {
           ...SHOWCASE_VIDEO,
           title: document.getElementById("adm-shw-title").value.trim(),
           description: document.getElementById("adm-shw-desc").value.trim(),
           source: { type: "youtube", videoId: document.getElementById("adm-shw-id").value.trim() }
         };
-
-        // 3. Pega Work
         const newWork = WORK.map((w, i) => {
           const id = document.getElementById(`adm-wk-id-${i}`).value.trim();
           return {
@@ -687,8 +597,6 @@ const CONTACT = {
             placeholder: id === ""
           };
         });
-
-        // 4. Pega Shorts
         const newShorts = SHORTS.map((s, i) => {
           const id = document.getElementById(`adm-sh-id-${i}`).value.trim();
           return {
@@ -699,60 +607,39 @@ const CONTACT = {
             placeholder: id === ""
           };
         });
-
-        // 5. Pega Contato
         const newContact = {
           email: document.getElementById("adm-email").value.trim(),
           instagram: document.getElementById("adm-insta").value.trim()
         };
 
-        // Monta o novo texto do script de dados
-        const newDataScript = `
-const SITE_CONTENT = ${JSON.stringify(newSite, null, 2)};
-const SHOWCASE_VIDEO = ${JSON.stringify(newShowcase, null, 2)};
-const WORK = ${JSON.stringify(newWork, null, 2)};
-const SHORTS = ${JSON.stringify(newShorts, null, 2)};
-const CONTACT = ${JSON.stringify(newContact, null, 2)};
-`;
+        const newDataScript = `\nconst SITE_CONTENT = ${JSON.stringify(newSite, null, 2)};\nconst SHOWCASE_VIDEO = ${JSON.stringify(newShowcase, null, 2)};\nconst WORK = ${JSON.stringify(newWork, null, 2)};\nconst SHORTS = ${JSON.stringify(newShorts, null, 2)};\nconst CONTACT = ${JSON.stringify(newContact, null, 2)};\n`;
         
-        // Clona o HTML para gerar a string pura
         const clone = document.documentElement.cloneNode(true);
-        
-        // Limpa tudo o que o JS renderiza dinamicamente para não bugar no novo salvamento
         clone.querySelector('#grid').innerHTML = "";
         clone.querySelector('#shortsGrid').innerHTML = "";
         clone.querySelector('#panelBody').innerHTML = "";
         clone.querySelector('#contactLinks').innerHTML = "";
         clone.querySelectorAll('.active, .open').forEach(el => el.classList.remove('active', 'open'));
         clone.querySelector('body').removeAttribute('style');
-
-        // Remove os elementos da interface do Admin
         clone.querySelectorAll('.admin-ui-element').forEach(el => el.remove());
 
-        // Atualiza a TAG de Dados no código clonado
         clone.querySelector('#data-script').textContent = newDataScript;
-
-        // Limpa os textos estáticos do clone para que o novo Script preencha perfeitamente
         clone.querySelector('#el-hero-name').textContent = "";
         clone.querySelector('#el-hero-desc').textContent = "";
         clone.querySelector('#el-footer').textContent = "";
         clone.querySelector('#el-about-services').innerHTML = "";
         clone.querySelector('#el-about-software').innerHTML = "";
 
-        // Finaliza o HTML
         const finalHTML = "<!DOCTYPE html>\n<html lang=\"en\">\n" + clone.innerHTML + "\n</html>";
         
-        // Exibe pro usuário e copia
         const outBox = document.getElementById("adm-output");
         outBox.value = finalHTML;
         outBox.style.display = "block";
         document.getElementById("adm-msg").style.display = "block";
         outBox.select();
         document.execCommand('copy');
-
-        const btnGen = document.getElementById("btn-generate");
-        btnGen.textContent = "CÓDIGO COPIADO PARA ÁREA DE TRANSFERÊNCIA! 📋";
-        btnGen.style.background = "#fff";
+        document.getElementById("btn-generate").textContent = "CÓDIGO COPIADO PARA ÁREA DE TRANSFERÊNCIA! 📋";
+        document.getElementById("btn-generate").style.background = "#fff";
       });
     })();
   </script>
