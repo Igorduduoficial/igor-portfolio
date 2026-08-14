@@ -30,27 +30,40 @@
       color: var(--text); 
       font-family: var(--f-sans); 
       overflow-x: hidden; 
-      position: relative; /* Necessário para a animação de fundo ficar atrás */
+      position: relative; 
     }
 
-    /* Animação de Fundo (Partículas flutuantes sutis) */
-    body::before {
-      content: "";
+    /* Animação de Fundo (Luzes flutuantes) */
+    .bg-glow {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
+      top: 0; left: 0; right: 0; bottom: 0;
+      overflow: hidden;
       z-index: -1;
-      background-image: 
-        radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.04) 0%, transparent 50%),
-        radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.03) 0%, transparent 50%);
-      animation: bgFloat 15s ease-in-out infinite alternate;
+      pointer-events: none;
     }
-    @keyframes bgFloat {
-      0% { background-position: 0% 0%; opacity: 0.5; }
-      100% { background-position: 100% 100%; opacity: 1; }
+    .bg-glow .blob {
+      position: absolute;
+      filter: blur(120px);
+      border-radius: 50%;
+      opacity: 0.15; /* Perfeito para dar a cor sem ofuscar o texto */
+      animation: floatBlob 20s infinite ease-in-out alternate;
+    }
+    .bg-glow .blob1 {
+      width: 600px; height: 600px;
+      background: var(--acid);
+      top: -10%; left: -10%;
+    }
+    .bg-glow .blob2 {
+      width: 500px; height: 500px;
+      background: #0066ff; /* Azul profundo combinando com o ciano */
+      bottom: -10%; right: -10%;
+      animation-duration: 25s;
+      animation-direction: alternate-reverse;
+    }
+    @keyframes floatBlob {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(25%, 15%) scale(1.1); }
+      100% { transform: translate(-15%, 25%) scale(0.9); }
     }
 
     /* Aberração Cromática Estática (Sem animação, só o visual) */
@@ -185,6 +198,12 @@
   </style>
 </head>
 <body>
+
+  <!-- ELEMENTOS DE LUZ DO BACKGROUND -->
+  <div class="bg-glow">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+  </div>
 
   <header class="nav">
     <a class="brand" href="#top" id="el-brand-name">IGOR-VIDEO EDITOR<span>.</span></a>
@@ -451,8 +470,8 @@ const CONTACT = {
     document.getElementById("el-hero-desc").textContent = SITE_CONTENT.heroDesc;
     document.getElementById("el-footer").textContent = SITE_CONTENT.footer;
 
-    document.getElementById("el-about-services").innerHTML = SITE_CONTENT.services.map(s => `<li>${s}</li>`).join('');
-    document.getElementById("el-about-software").innerHTML = SITE_CONTENT.software.map(s => `<li>${s}</li>`).join('');
+    document.getElementById("el-about-services").innerHTML = SITE_CONTENT.services.map(s => `<li style="margin-bottom:0.3rem;">${s}</li>`).join('');
+    document.getElementById("el-about-software").innerHTML = SITE_CONTENT.software.map(s => `<li style="margin-bottom:0.3rem;">${s}</li>`).join('');
 
     // Preenche Showcase
     document.getElementById("showcaseTitle").textContent = SHOWCASE_VIDEO.title;
