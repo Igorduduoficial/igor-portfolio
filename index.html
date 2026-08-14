@@ -27,97 +27,61 @@
     body { background: var(--bg); color: var(--text); font-family: var(--f-sans); overflow-x: hidden; position: relative; }
 
     /* =======================================================
-       FUNDO: INVESTIGAÇÃO / SUSPENSE MULTI-ITENS
+       FUNDO: GRADE GIGANTE RÁPIDA + TV ANTIGA
     ======================================================== */
     
-    /* Efeito de Tela de TV Antiga / Estática (Piscando) */
+    /* Grade (Grid) Gigante com movimento rápido */
+    .giant-grid {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-image: 
+        linear-gradient(rgba(0, 240, 255, 0.08) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.08) 2px, transparent 2px);
+      background-size: 120px 120px;
+      z-index: -2;
+      pointer-events: none;
+      animation: moveGrid 1.2s linear infinite;
+    }
+    @keyframes moveGrid {
+      0% { background-position: 0px 0px; }
+      100% { background-position: 120px 120px; }
+    }
+
+    /* Brilho pulsante no centro da grade */
+    .grid-glow {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.12) 0%, transparent 60%);
+      z-index: -1; pointer-events: none;
+      animation: pulseGlow 1.5s ease-in-out infinite alternate;
+    }
+    @keyframes pulseGlow {
+      0% { opacity: 0.5; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1.1); }
+    }
+
+    /* Efeito de Tela de TV Antiga / Estática (Piscando rápido) */
     .crt-overlay {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
       background-size: 100% 2px, 3px 100%;
       z-index: 9998; pointer-events: none; opacity: 0.15;
-      animation: tv-flicker 0.12s infinite;
+      animation: tv-flicker 0.08s infinite;
     }
     @keyframes tv-flicker {
-      0% { opacity: 0.12; } 50% { opacity: 0.16; } 100% { opacity: 0.13; }
+      0% { opacity: 0.12; } 50% { opacity: 0.18; } 100% { opacity: 0.13; }
     }
-    /* Escurecimento das bordas */
+
+    /* Escurecimento das bordas (Vignette) */
     .vignette {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.95) 120%);
+      background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.9) 120%);
       z-index: 9997; pointer-events: none;
-    }
-
-    /* Quadro de Investigação (Itens Animados) */
-    .investigation-board {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      z-index: -1; pointer-events: none; overflow: hidden;
-      opacity: 0.35; /* Fica visível, mas sem roubar atenção do texto */
-    }
-
-    @keyframes floatItem {
-      0% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-15px) rotate(2deg); }
-      100% { transform: translateY(0px) rotate(0deg); }
-    }
-    @keyframes stringSway {
-      0% { transform: translateY(0) rotate(0deg); }
-      100% { transform: translateY(8px) rotate(1.5deg); }
-    }
-
-    /* Pastas Secretas */
-    .secret-folder {
-      position: relative; width: 160px; height: 110px;
-      background: #a47b52; border-radius: 2px 5px 5px 5px;
-      box-shadow: inset 0 0 30px rgba(0,0,0,0.9), 10px 10px 25px rgba(0,0,0,0.9);
-      border: 1px solid #735333;
-      animation: floatItem 14s ease-in-out infinite;
-    }
-    .secret-folder::before {
-      content: "CONFIDENTIAL";
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%) rotate(-12deg);
-      color: rgba(160, 0, 0, 0.8); font-family: var(--f-mono); font-weight: 900; font-size: 0.9rem;
-      border: 3px solid rgba(160, 0, 0, 0.8); padding: 2px 8px; border-radius: 2px;
-    }
-    .secret-folder::after {
-      content: ""; position: absolute; top: -14px; left: 0; width: 55px; height: 14px;
-      background: #8e6842; border-radius: 6px 6px 0 0;
-    }
-
-    /* Fotos com Sangue */
-    .blood-photo {
-      position: relative; width: 120px; height: 140px;
-      background: #ccc; padding: 6px 6px 30px 6px;
-      box-shadow: 8px 8px 20px rgba(0,0,0,0.9);
-      animation: floatItem 12s ease-in-out infinite alternate;
-    }
-    .blood-photo .img-ph {
-      width: 100%; height: 100%; background: #1a1a1a;
-      box-shadow: inset 0 0 15px rgba(0,0,0,0.9);
-    }
-    .blood-stain {
-      position: absolute; width: 35px; height: 35px;
-      background: radial-gradient(circle, rgba(139,0,0,0.9) 10%, transparent 60%);
-      border-radius: 50%; filter: blur(1.5px);
-    }
-    .blood-stain::after {
-      content: ""; position: absolute; top: 15px; left: 14px; width: 6px; height: 40px;
-      background: rgba(139,0,0,0.8); border-radius: 5px; filter: blur(1px);
-    }
-
-    /* Fios Vermelhos (Investigação) */
-    .red-string-wrap { position: absolute; transform-origin: 0 50%; }
-    .red-string {
-      width: 100%; height: 2px; background: rgba(150, 0, 0, 0.7);
-      box-shadow: 0 5px 8px rgba(0,0,0,0.8);
-      animation: stringSway 7s ease-in-out infinite alternate;
     }
 
     /* =======================================================
        ESTILOS DO PORTFÓLIO
     ======================================================== */
-    /* Aberração Cromática Estática (Sem animação, só o visual) */
+    /* Aberração Cromática Estática */
     .chromatic-static {
       position: relative; display: inline-block;
       text-shadow: 4px 0px 0px rgba(255, 0, 85, 0.7), -4px 0px 0px rgba(0, 255, 255, 0.7);
@@ -148,7 +112,6 @@
     .info-block .label { color: var(--acid); font-size: 0.64rem; margin-bottom: 0.8rem; text-transform: uppercase; }
     .info-block ul { font-size: 0.85rem; color: var(--muted); }
     .info-block li { margin-bottom: 0.4rem; }
-    
     .hero-contact-btn { border: 1px solid var(--acid); color: var(--acid); padding: 1rem 2rem; font-size: 0.8rem; letter-spacing: 0.08em; transition: background 0.25s, color 0.25s; cursor: pointer; display: inline-block; text-transform: uppercase; font-weight: bold; }
     .hero-contact-btn:hover { background: var(--acid); color: #000; }
 
@@ -187,23 +150,29 @@
     @media (max-width: 560px) { .shorts-grid { grid-template-columns: 1fr; } }
     .shorts-grid .card-media { aspect-ratio: 9/16; }
 
+    /* =======================================================
+       NOVA SESSÃO DE CONTATO (Lado a Lado + Apenas Ícones)
+    ======================================================== */
     .contact { max-width: var(--container); margin: 0 auto; padding: 5rem clamp(1.2rem, 4vw, 3.5rem); border-top: 1px solid var(--line); position: relative; z-index: 1;}
-    .contact h2 { font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 800; text-transform: uppercase; margin-top: 0.6rem; line-height: 1.05; }
-    .contact-links { display: flex; flex-direction: column; margin-top: 3rem; border-top: 1px solid var(--line); max-width: 640px; }
-    .contact-link { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0.5rem; border-bottom: 1px solid var(--line); transition: all 0.3s ease; }
-    .contact-left { display: flex; align-items: center; gap: 1rem; }
-    .contact-left svg { width: 22px; height: 22px; color: var(--muted); transition: color 0.3s ease; }
-    .contact-link:hover .contact-left svg { color: var(--acid); }
-    .contact-link:hover { padding-left: 1rem; }
-    .contact-link .arrow { color: var(--muted); font-size: 0.85rem; transition: color 0.25s; }
-    .contact-link:hover .arrow { color: var(--acid); }
+    .contact-wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; margin-top: 0.6rem; }
+    .contact h2 { font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 800; text-transform: uppercase; line-height: 1.05; margin: 0; }
+    .contact-links { display: flex; gap: 1.5rem; align-items: center; }
+    
+    .contact-link svg { 
+      width: 42px; height: 42px; 
+      color: var(--muted); 
+      transition: all 0.3s ease; 
+    }
+    .contact-link:hover svg { 
+      color: var(--acid); 
+      transform: translateY(-5px) scale(1.1); 
+      filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.5)); 
+    }
 
-    /* PROJECT PANEL */
     .project-panel { position: fixed; inset: 0; z-index: 700; background: var(--bg); transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 0.84, 0.44, 1); overflow-y: auto; }
     .project-panel.open { transform: translateX(0); }
     .panel-inner { max-width: var(--container); margin: 0 auto; padding: 5.5rem clamp(1.2rem, 4vw, 3.5rem) 5rem; }
     
-    /* NOVO BOTÃO DE BACK */
     .close-btn { 
       border: 1px solid #333; 
       color: var(--text); 
@@ -219,11 +188,7 @@
       font-weight: bold;
       letter-spacing: 0.05em;
     }
-    .close-btn:hover { 
-      color: var(--acid); 
-      border-color: var(--acid);
-      background: rgba(0, 240, 255, 0.05);
-    }
+    .close-btn:hover { color: var(--acid); border-color: var(--acid); background: rgba(0, 240, 255, 0.05); }
     
     .panel-video { width: 100%; aspect-ratio: 16/9; background: #000; border: 1px solid var(--line); margin-bottom: 2.4rem; }
     .panel-video iframe, .panel-video video { width: 100%; height: 100%; display: block; }
@@ -236,65 +201,11 @@
 </head>
 <body>
 
-  <!-- ELEMENTOS DE SUSPENSE E INVESTIGAÇÃO NO FUNDO -->
+  <!-- ELEMENTOS DE FUNDO ANIMADOS -->
+  <div class="giant-grid"></div>
+  <div class="grid-glow"></div>
   <div class="crt-overlay"></div>
   <div class="vignette"></div>
-  
-  <div class="investigation-board">
-    <!-- Fios -->
-    <div class="red-string-wrap" style="top: 15%; left: 10%; transform: rotate(18deg); width: 35vw;">
-      <div class="red-string"></div>
-    </div>
-    <div class="red-string-wrap" style="top: 45%; right: 5%; transform: rotate(-32deg); width: 45vw;">
-      <div class="red-string" style="animation-delay: -2s;"></div>
-    </div>
-    <div class="red-string-wrap" style="top: 75%; left: 25%; transform: rotate(-8deg); width: 30vw;">
-      <div class="red-string" style="animation-delay: -4s;"></div>
-    </div>
-    <div class="red-string-wrap" style="top: 25%; left: 50%; transform: rotate(65deg); width: 40vw;">
-      <div class="red-string" style="animation-delay: -1s;"></div>
-    </div>
-
-    <!-- Pastas Secretas espalhadas -->
-    <div style="position: absolute; top: 12%; left: 15%; transform: rotate(-12deg) scale(0.9);">
-      <div class="secret-folder"></div>
-    </div>
-    <div style="position: absolute; bottom: 20%; right: 15%; transform: rotate(22deg) scale(1.1);">
-      <div class="secret-folder" style="animation-delay: -5s;"></div>
-    </div>
-    <div style="position: absolute; top: 60%; left: 5%; transform: rotate(-5deg) scale(0.8);">
-      <div class="secret-folder" style="animation-delay: -2s;"></div>
-    </div>
-
-    <!-- Fotos com Sangue espalhadas -->
-    <div style="position: absolute; top: 38%; right: 28%; transform: rotate(14deg) scale(1.2);">
-      <div class="blood-photo" style="animation-delay: -1s;">
-        <div class="img-ph"></div>
-        <div class="blood-stain" style="top: 70%; left: 55%;"></div>
-      </div>
-    </div>
-    <div style="position: absolute; bottom: 25%; left: 18%; transform: rotate(-10deg) scale(0.9);">
-      <div class="blood-photo" style="animation-delay: -4s;">
-        <div class="img-ph"></div>
-        <div class="blood-stain" style="top: -10px; left: 15px;"></div>
-      </div>
-    </div>
-    <div style="position: absolute; top: 10%; right: 10%; transform: rotate(-25deg) scale(0.7);">
-      <div class="blood-photo" style="animation-delay: -7s;">
-        <div class="img-ph"></div>
-        <!-- Variação na mancha de sangue -->
-        <div class="blood-stain" style="top: 40%; left: 10px; width: 45px; height: 45px;"></div>
-      </div>
-    </div>
-    <div style="position: absolute; top: 80%; right: 40%; transform: rotate(35deg) scale(1);">
-      <div class="blood-photo" style="animation-delay: -3s;">
-        <div class="img-ph"></div>
-        <!-- Variação na mancha de sangue -->
-        <div class="blood-stain" style="top: 10%; left: 40%; width: 25px; height: 25px;"></div>
-      </div>
-    </div>
-  </div>
-  <!-- FIM DO FUNDO -->
 
   <header class="nav">
     <a class="brand" href="#top" id="el-brand-name">IGOR-VIDEO EDITOR<span>.</span></a>
@@ -306,7 +217,7 @@
   </header>
 
   <main id="top">
-    <!-- HERO (Topo Agrupado) -->
+    <!-- HERO -->
     <section class="hero">
       <p class="kicker mono">VIDEO EDITOR / MOTION DESIGNER</p>
       <div class="hero-flex">
@@ -372,8 +283,10 @@
     <!-- CONTACT -->
     <section class="contact" id="contact">
       <p class="section-label mono">GET IN TOUCH</p>
-      <h2>START A<br>PROJECT</h2>
-      <div class="contact-links" id="contactLinks"></div>
+      <div class="contact-wrap">
+        <h2>START A<br>PROJECT</h2>
+        <div class="contact-links" id="contactLinks"></div>
+      </div>
     </section>
   </main>
 
@@ -530,13 +443,13 @@ const CONTACT = {
     const emailIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`;
     const instaIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>`;
     
+    // ATUALIZADO: APENAS ÍCONES
     contactLinks.innerHTML = [
-      { label: "EMAIL", value: CONTACT.email, href: `mailto:${CONTACT.email}`, icon: emailIcon },
-      { label: "INSTAGRAM", value: "@igoroeditor", href: CONTACT.instagram, icon: instaIcon }
+      { href: `mailto:${CONTACT.email}`, icon: emailIcon },
+      { href: CONTACT.instagram, icon: instaIcon }
     ].map(l => `
       <a class="contact-link" href="${l.href}" target="_blank" rel="noopener">
-        <div class="contact-left">${l.icon}<span class="mono">${l.label}</span></div>
-        <span class="arrow">${l.value} →</span>
+        ${l.icon}
       </a>
     `).join("");
   </script>
