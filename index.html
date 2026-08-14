@@ -27,55 +27,91 @@
     body { background: var(--bg); color: var(--text); font-family: var(--f-sans); overflow-x: hidden; position: relative; }
 
     /* =======================================================
-       FUNDO: GRADE GIGANTE RÁPIDA + TV ANTIGA
+       FUNDO: INVESTIGAÇÃO / SUSPENSE MULTI-ITENS
     ======================================================== */
     
-    /* Grade (Grid) Gigante com movimento rápido */
-    .giant-grid {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background-image: 
-        linear-gradient(rgba(0, 240, 255, 0.08) 2px, transparent 2px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.08) 2px, transparent 2px);
-      background-size: 120px 120px; /* Grade bem grande */
-      z-index: -2;
-      pointer-events: none;
-      animation: moveGrid 1.2s linear infinite; /* Animação rápida */
-    }
-    @keyframes moveGrid {
-      0% { background-position: 0px 0px; }
-      100% { background-position: 120px 120px; }
-    }
-
-    /* Brilho pulsante no centro da grade */
-    .grid-glow {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.12) 0%, transparent 60%);
-      z-index: -1; pointer-events: none;
-      animation: pulseGlow 1.5s ease-in-out infinite alternate; /* Pulso rápido */
-    }
-    @keyframes pulseGlow {
-      0% { opacity: 0.5; transform: scale(0.9); }
-      100% { opacity: 1; transform: scale(1.1); }
-    }
-
-    /* Efeito de Tela de TV Antiga / Estática (Piscando rápido) */
+    /* Efeito de Tela de TV Antiga / Estática (Piscando) */
     .crt-overlay {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
       background-size: 100% 2px, 3px 100%;
       z-index: 9998; pointer-events: none; opacity: 0.15;
-      animation: tv-flicker 0.08s infinite; /* Estática bem rápida */
+      animation: tv-flicker 0.12s infinite;
     }
     @keyframes tv-flicker {
-      0% { opacity: 0.12; } 50% { opacity: 0.18; } 100% { opacity: 0.13; }
+      0% { opacity: 0.12; } 50% { opacity: 0.16; } 100% { opacity: 0.13; }
     }
-
-    /* Escurecimento das bordas (Vignette) */
+    /* Escurecimento das bordas */
     .vignette {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.9) 120%);
+      background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.95) 120%);
       z-index: 9997; pointer-events: none;
+    }
+
+    /* Quadro de Investigação (Itens Animados) */
+    .investigation-board {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: -1; pointer-events: none; overflow: hidden;
+      opacity: 0.35; /* Fica visível, mas sem roubar atenção do texto */
+    }
+
+    @keyframes floatItem {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(2deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+    @keyframes stringSway {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(8px) rotate(1.5deg); }
+    }
+
+    /* Pastas Secretas */
+    .secret-folder {
+      position: relative; width: 160px; height: 110px;
+      background: #a47b52; border-radius: 2px 5px 5px 5px;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.9), 10px 10px 25px rgba(0,0,0,0.9);
+      border: 1px solid #735333;
+      animation: floatItem 14s ease-in-out infinite;
+    }
+    .secret-folder::before {
+      content: "CONFIDENTIAL";
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-12deg);
+      color: rgba(160, 0, 0, 0.8); font-family: var(--f-mono); font-weight: 900; font-size: 0.9rem;
+      border: 3px solid rgba(160, 0, 0, 0.8); padding: 2px 8px; border-radius: 2px;
+    }
+    .secret-folder::after {
+      content: ""; position: absolute; top: -14px; left: 0; width: 55px; height: 14px;
+      background: #8e6842; border-radius: 6px 6px 0 0;
+    }
+
+    /* Fotos com Sangue */
+    .blood-photo {
+      position: relative; width: 120px; height: 140px;
+      background: #ccc; padding: 6px 6px 30px 6px;
+      box-shadow: 8px 8px 20px rgba(0,0,0,0.9);
+      animation: floatItem 12s ease-in-out infinite alternate;
+    }
+    .blood-photo .img-ph {
+      width: 100%; height: 100%; background: #1a1a1a;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.9);
+    }
+    .blood-stain {
+      position: absolute; width: 35px; height: 35px;
+      background: radial-gradient(circle, rgba(139,0,0,0.9) 10%, transparent 60%);
+      border-radius: 50%; filter: blur(1.5px);
+    }
+    .blood-stain::after {
+      content: ""; position: absolute; top: 15px; left: 14px; width: 6px; height: 40px;
+      background: rgba(139,0,0,0.8); border-radius: 5px; filter: blur(1px);
+    }
+
+    /* Fios Vermelhos (Investigação) */
+    .red-string-wrap { position: absolute; transform-origin: 0 50%; }
+    .red-string {
+      width: 100%; height: 2px; background: rgba(150, 0, 0, 0.7);
+      box-shadow: 0 5px 8px rgba(0,0,0,0.8);
+      animation: stringSway 7s ease-in-out infinite alternate;
     }
 
     /* =======================================================
@@ -112,6 +148,7 @@
     .info-block .label { color: var(--acid); font-size: 0.64rem; margin-bottom: 0.8rem; text-transform: uppercase; }
     .info-block ul { font-size: 0.85rem; color: var(--muted); }
     .info-block li { margin-bottom: 0.4rem; }
+    
     .hero-contact-btn { border: 1px solid var(--acid); color: var(--acid); padding: 1rem 2rem; font-size: 0.8rem; letter-spacing: 0.08em; transition: background 0.25s, color 0.25s; cursor: pointer; display: inline-block; text-transform: uppercase; font-weight: bold; }
     .hero-contact-btn:hover { background: var(--acid); color: #000; }
 
@@ -161,11 +198,33 @@
     .contact-link .arrow { color: var(--muted); font-size: 0.85rem; transition: color 0.25s; }
     .contact-link:hover .arrow { color: var(--acid); }
 
+    /* PROJECT PANEL */
     .project-panel { position: fixed; inset: 0; z-index: 700; background: var(--bg); transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 0.84, 0.44, 1); overflow-y: auto; }
     .project-panel.open { transform: translateX(0); }
     .panel-inner { max-width: var(--container); margin: 0 auto; padding: 5.5rem clamp(1.2rem, 4vw, 3.5rem) 5rem; }
-    .close-btn { font-size: 0.75rem; color: var(--muted); margin-bottom: 2.2rem; cursor: pointer; transition: color 0.2s; }
-    .close-btn:hover { color: var(--acid); }
+    
+    /* NOVO BOTÃO DE BACK */
+    .close-btn { 
+      border: 1px solid #333; 
+      color: var(--text); 
+      background: rgba(0,0,0,0.5);
+      padding: 0.8rem 1.5rem; 
+      border-radius: 4px;
+      font-size: 0.75rem; 
+      margin-bottom: 2.2rem; 
+      cursor: pointer; 
+      transition: all 0.3s ease; 
+      display: inline-block;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+    }
+    .close-btn:hover { 
+      color: var(--acid); 
+      border-color: var(--acid);
+      background: rgba(0, 240, 255, 0.05);
+    }
+    
     .panel-video { width: 100%; aspect-ratio: 16/9; background: #000; border: 1px solid var(--line); margin-bottom: 2.4rem; }
     .panel-video iframe, .panel-video video { width: 100%; height: 100%; display: block; }
     .panel-title { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; text-transform: uppercase; margin-bottom: 2rem; }
@@ -177,11 +236,65 @@
 </head>
 <body>
 
-  <!-- ELEMENTOS DE FUNDO ANIMADOS -->
-  <div class="giant-grid"></div>
-  <div class="grid-glow"></div>
+  <!-- ELEMENTOS DE SUSPENSE E INVESTIGAÇÃO NO FUNDO -->
   <div class="crt-overlay"></div>
   <div class="vignette"></div>
+  
+  <div class="investigation-board">
+    <!-- Fios -->
+    <div class="red-string-wrap" style="top: 15%; left: 10%; transform: rotate(18deg); width: 35vw;">
+      <div class="red-string"></div>
+    </div>
+    <div class="red-string-wrap" style="top: 45%; right: 5%; transform: rotate(-32deg); width: 45vw;">
+      <div class="red-string" style="animation-delay: -2s;"></div>
+    </div>
+    <div class="red-string-wrap" style="top: 75%; left: 25%; transform: rotate(-8deg); width: 30vw;">
+      <div class="red-string" style="animation-delay: -4s;"></div>
+    </div>
+    <div class="red-string-wrap" style="top: 25%; left: 50%; transform: rotate(65deg); width: 40vw;">
+      <div class="red-string" style="animation-delay: -1s;"></div>
+    </div>
+
+    <!-- Pastas Secretas espalhadas -->
+    <div style="position: absolute; top: 12%; left: 15%; transform: rotate(-12deg) scale(0.9);">
+      <div class="secret-folder"></div>
+    </div>
+    <div style="position: absolute; bottom: 20%; right: 15%; transform: rotate(22deg) scale(1.1);">
+      <div class="secret-folder" style="animation-delay: -5s;"></div>
+    </div>
+    <div style="position: absolute; top: 60%; left: 5%; transform: rotate(-5deg) scale(0.8);">
+      <div class="secret-folder" style="animation-delay: -2s;"></div>
+    </div>
+
+    <!-- Fotos com Sangue espalhadas -->
+    <div style="position: absolute; top: 38%; right: 28%; transform: rotate(14deg) scale(1.2);">
+      <div class="blood-photo" style="animation-delay: -1s;">
+        <div class="img-ph"></div>
+        <div class="blood-stain" style="top: 70%; left: 55%;"></div>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 25%; left: 18%; transform: rotate(-10deg) scale(0.9);">
+      <div class="blood-photo" style="animation-delay: -4s;">
+        <div class="img-ph"></div>
+        <div class="blood-stain" style="top: -10px; left: 15px;"></div>
+      </div>
+    </div>
+    <div style="position: absolute; top: 10%; right: 10%; transform: rotate(-25deg) scale(0.7);">
+      <div class="blood-photo" style="animation-delay: -7s;">
+        <div class="img-ph"></div>
+        <!-- Variação na mancha de sangue -->
+        <div class="blood-stain" style="top: 40%; left: 10px; width: 45px; height: 45px;"></div>
+      </div>
+    </div>
+    <div style="position: absolute; top: 80%; right: 40%; transform: rotate(35deg) scale(1);">
+      <div class="blood-photo" style="animation-delay: -3s;">
+        <div class="img-ph"></div>
+        <!-- Variação na mancha de sangue -->
+        <div class="blood-stain" style="top: 10%; left: 40%; width: 25px; height: 25px;"></div>
+      </div>
+    </div>
+  </div>
+  <!-- FIM DO FUNDO -->
 
   <header class="nav">
     <a class="brand" href="#top" id="el-brand-name">IGOR-VIDEO EDITOR<span>.</span></a>
