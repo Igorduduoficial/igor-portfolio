@@ -204,9 +204,7 @@
     @media (max-width: 560px) { .shorts-grid { grid-template-columns: 1fr; } }
     .shorts-grid .card-media { aspect-ratio: 9/16; }
 
-    /* =======================================================
-       CONTATOS
-    ======================================================== */
+    /* CONTATOS */
     .contact { max-width: var(--container); margin: 0 auto; padding: 5rem clamp(1.2rem, 4vw, 3.5rem); border-top: 1px solid var(--line); }
     .contact h2 { font-size: clamp(2.6rem, 6vw, 5rem); font-weight: 900; text-transform: uppercase; margin-top: 0.6rem; line-height: 1.05; }
     
@@ -222,9 +220,7 @@
     .contact-link:hover .contact-left svg, .contact-link:hover .contact-left .mono { color: var(--acid); }
     .contact-link:hover .arrow { color: var(--acid); }
 
-    /* =======================================================
-       PROJECT PANEL 
-    ======================================================== */
+    /* PROJECT PANEL */
     .project-panel { position: fixed; inset: 0; z-index: 700; background: var(--bg); transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 0.84, 0.44, 1); overflow-y: auto; }
     .project-panel.open { transform: translateX(0); }
     .panel-inner { max-width: var(--container); margin: 0 auto; padding: 5.5rem clamp(1.2rem, 4vw, 3.5rem) 5rem; }
@@ -244,7 +240,7 @@
     .panel-meta { max-width: 800px; }
     .panel-meta .label { margin-bottom: 0.7rem; color: var(--acid); }
     .panel-meta p { color: var(--muted); font-size: 1.05rem; line-height: 1.7; }
-    .footer { text-align: center; padding: 2.4rem 1rem 3rem; font-size: 0.62rem; color: #444; position: relative; z-index: 1;}
+    .footer { text-align: center; padding: 2.4rem 1rem 3rem; font-size: 0.62rem; color: #444; }
   </style>
 </head>
 <body>
@@ -254,7 +250,6 @@
     <div class="giant-grid"></div>
     <div class="investigation-board">
       
-      <!-- Pastas Secretas espalhadas -->
       <div style="position: absolute; top: 12%; left: 15%; transform: rotate(-12deg) scale(0.9);">
         <div class="secret-folder"></div>
         <div class="coffee-stain" style="top: 10px; right: -20px;"></div>
@@ -266,7 +261,6 @@
         <div class="secret-folder" style="animation-delay: -2s;"></div>
       </div>
 
-      <!-- Anotações Rasgadas -->
       <div style="position: absolute; top: 18%; left: 45%; transform: rotate(15deg);">
         <div class="torn-note"></div>
         <div class="coffee-stain" style="top: -20px; left: -20px;"></div>
@@ -275,7 +269,6 @@
         <div class="torn-note" style="animation-delay:-4s;"></div>
       </div>
 
-      <!-- Fotos com Sangue Gigantes -->
       <div style="position: absolute; top: 38%; right: 28%; transform: rotate(14deg) scale(1.2);">
         <div class="blood-photo" style="animation-delay: -1s;">
           <div class="img-ph"></div>
@@ -398,50 +391,73 @@
   </div>
 
   <!-- =======================================================
-       DADOS DO SITE E CMS 
+       DADOS DO SITE - MUDE SEUS TEXTOS E VÍDEOS AQUI!
   ======================================================== -->
   <script id="data-script">
-const SITE_CONTENT = {
-  "heroName": "IGOR AUGUSTO",
-  "heroDesc": "I'm Igor, a video editor and motion designer. I don't just cut clips together; I build narratives. Whether it's a suspenseful storytime, a documentary-style breakdown, or a fully 3D-animated intro, my focus is on flow, rhythm, and keeping the audience hooked.",
-  "services": [
-    "Video Editing",
-    "Motion Design"
-  ],
-  "software": [
-    "Premiere Pro",
-    "After Effects",
-    "Blender"
-  ],
-  "footer": "© 2026 IGOR — VIDEO EDITOR / MOTION DESIGNER"
-};
-const SHOWCASE_VIDEO = {
-  "id": "showcase-main",
-  "title": "WHAT I DO IN PRACTICE",
-  "description": "A visual showcase of my motion design, 3D animation and visual effects.",
-  "source": { "type": "youtube", "videoId": "" }
-};
-const WORK = [
-  { "id": "proj-01", "category": "suspense", "placeholder": false, "title": "No Dogs in house.", "description": "Utilizando motion design e uma versão digitalmente recriada do rosto do criador, construí o cenário para estabelecer uma atmosfera tensa e de suspense.", "tag": "CASE_01", "source": { "type": "youtube", "videoId": "z7F1Hm7_4lU" }, "thumbnail": null },
-  { "id": "proj-02", "category": "suspense", "placeholder": true, "title": "Work in progress", "description": "", "tag": "CASE_02", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
-  { "id": "proj-03", "category": "storytelling", "placeholder": true, "title": "Work in progress", "description": "", "tag": "CASE_03", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
-  { "id": "proj-04", "category": "storytelling", "placeholder": true, "title": "Work in progress", "description": "", "tag": "CASE_04", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
-  { "id": "proj-05", "category": "documentary", "placeholder": true, "title": "Work in progress", "description": "", "tag": "CASE_05", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
-  { "id": "proj-06", "category": "documentary", "placeholder": true, "title": "Work in progress", "description": "", "tag": "CASE_06", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null }
-];
-const SHORTS = [
-  { "id": "short-01", "title": "Work in progress", "tag": "CLIP_01", "placeholder": true, "description": "", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
-  { "id": "short-02", "title": "Work in progress", "tag": "CLIP_02", "placeholder": true, "description": "", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
-  { "id": "short-03", "title": "Work in progress", "tag": "CLIP_03", "placeholder": true, "description": "", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
-  { "id": "short-04", "title": "Work in progress", "tag": "CLIP_04", "placeholder": true, "description": "", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null }
-];
-const CONTACT = {
-  "email": "igoreditor.contact@gmail.com",
-  "discord": "igoro_augusto",
-  "x": "https://x.com/Igoroeditor"
-};
+    // 1. TEXTOS PRINCIPAIS DO TOPO E RODAPÉ
+    const SITE_CONTENT = {
+      "heroName": "IGOR AUGUSTO", // Seu nome no topo
+      "heroDesc": "I'm Igor, a video editor and motion designer. I don't just cut clips together; I build narratives. Whether it's a suspenseful storytime, a documentary-style breakdown, or a fully 3D-animated intro, my focus is on flow, rhythm, and keeping the audience hooked.", // Texto de introdução
+      "services": [
+        "Video Editing",
+        "Motion Design"
+      ], // Seus serviços
+      "software": [
+        "Premiere Pro",
+        "After Effects",
+        "Blender"
+      ], // Seus programas
+      "footer": "© 2026 IGOR — VIDEO EDITOR / MOTION DESIGNER" // Texto do rodapé
+    };
+
+    // 2. VÍDEO PRINCIPAL (SHOWCASE)
+    const SHOWCASE_VIDEO = {
+      "id": "showcase-main",
+      "title": "WHAT I DO IN PRACTICE", // Título do showcase
+      "description": "A visual showcase of my motion design, 3D animation and visual effects.", // Descrição
+      "source": { "type": "youtube", "videoId": "" } // Coloque o ID do vídeo do YouTube aqui dentro das aspas (Ex: z7F1Hm7_4lU)
+    };
+
+    /* 3. PROJETOS DAS ABAS (16:9) - 3 POR CATEGORIA
+       Para adicionar um vídeo de verdade: 
+       Mude o "placeholder" para false, adicione um "title" e cole o "videoId".
+    */
+    const WORK = [
+      // --- SUSPENSE ---
+      { "id": "proj-01", "category": "suspense", "placeholder": false, "title": "No Dogs in house.", "description": "Utilizando motion design e uma versão digitalmente recriada do rosto do criador, construí o cenário para estabelecer uma atmosfera tensa e de suspense.", "tag": "CASE_01", "source": { "type": "youtube", "videoId": "z7F1Hm7_4lU" }, "thumbnail": null },
+      { "id": "proj-02", "category": "suspense", "placeholder": true, "title": "Work in progress", "description": "Descrição do vídeo de suspense 2", "tag": "CASE_02", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+      { "id": "proj-03", "category": "suspense", "placeholder": true, "title": "Work in progress", "description": "Descrição do vídeo de suspense 3", "tag": "CASE_03", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+      
+      // --- STORYTELLING ---
+      { "id": "proj-04", "category": "storytelling", "placeholder": true, "title": "Work in progress", "description": "Descrição do vídeo storytelling 1", "tag": "CASE_04", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+      { "id": "proj-05", "category": "storytelling", "placeholder": true, "title": "Work in progress", "description": "Descrição do vídeo storytelling 2", "tag": "CASE_05", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+      { "id": "proj-06", "category": "storytelling", "placeholder": true, "title": "Work in progress", "description": "Descrição do vídeo storytelling 3", "tag": "CASE_06", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+      
+      // --- DOCUMENTARY ---
+      { "id": "proj-07", "category": "documentary", "placeholder": true, "title": "Work in progress", "description": "Descrição do doc 1", "tag": "CASE_07", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+      { "id": "proj-08", "category": "documentary", "placeholder": true, "title": "Work in progress", "description": "Descrição do doc 2", "tag": "CASE_08", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+      { "id": "proj-09", "category": "documentary", "placeholder": true, "title": "Work in progress", "description": "Descrição do doc 3", "tag": "CASE_09", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null }
+    ];
+
+    // 4. SHORTS (VERTICAIS)
+    const SHORTS = [
+      { "id": "short-01", "title": "Work in progress", "tag": "CLIP_01", "placeholder": true, "description": "", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+      { "id": "short-02", "title": "Work in progress", "tag": "CLIP_02", "placeholder": true, "description": "", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+      { "id": "short-03", "title": "Work in progress", "tag": "CLIP_03", "placeholder": true, "description": "", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null },
+      { "id": "short-04", "title": "Work in progress", "tag": "CLIP_04", "placeholder": true, "description": "", "source": { "type": "youtube", "videoId": "" }, "thumbnail": null }
+    ];
+
+    // 5. SEUS CONTATOS
+    const CONTACT = {
+      "email": "igoreditor.contact@gmail.com",
+      "discord": "igoro_augusto",
+      "x": "https://x.com/Igoroeditor"
+    };
   </script>
 
+  <!-- =======================================================
+       LÓGICA DO SITE (NÃO PRECISA MEXER AQUI)
+  ======================================================== -->
   <script id="logic-script">
     document.getElementById("el-hero-name").textContent = SITE_CONTENT.heroName;
     document.getElementById("el-hero-desc").textContent = SITE_CONTENT.heroDesc;
@@ -540,7 +556,6 @@ const CONTACT = {
     const discordIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="1"></circle><circle cx="15" cy="12" r="1"></circle><path d="M7.5 7.5c3.5-1 5.5-1 9 0"></path><path d="M7 16.5c3.5 1 6.5 1 10 0"></path><path d="M15.5 17c0 1 1.5 3 2 3c1.5 0 2.833 -1.667 3.5 -3c.667 -1.667 .5 -5.833 -1.5 -11.5c-1.457 -1.015 -3 -1.34 -4.5 -1.5l-1 2.5"></path><path d="M8.5 17c0 1 -1.5 3 -2 3c-1.5 0 -2.833 -1.667 -3.5 -3c-.667 -1.667 -.5 -5.833 1.5 -11.5c1.457 -1.015 3 -1.34 4.5 -1.5l1 2.5"></path></svg>`;
     const xIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"></path><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path></svg>`;
     
-    // Lista de Contatos com Email, Discord e X
     contactLinks.innerHTML = [
       { label: "EMAIL", value: CONTACT.email, href: `mailto:${CONTACT.email}`, icon: emailIcon },
       { label: "DISCORD", value: CONTACT.discord, href: `https://discord.com/users/${CONTACT.discord}`, icon: discordIcon },
@@ -551,155 +566,6 @@ const CONTACT = {
         <span class="arrow">${l.value} →</span>
       </a>
     `).join("");
-  </script>
-
-  <script id="admin-script">
-    (function() {
-      const btn = document.createElement("button");
-      btn.innerHTML = "⚙️ CONFIGURAR SITE";
-      btn.className = "admin-ui-element";
-      btn.style.cssText = "position:fixed; bottom:20px; left:20px; background:#00f0ff; color:#000; font-family:'DM Mono', monospace; font-size:12px; font-weight:bold; padding:10px 15px; border-radius:5px; z-index:9999; cursor:pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); border:none;";
-      document.body.appendChild(btn);
-
-      const overlay = document.createElement("div");
-      overlay.id = "mega-admin-panel";
-      overlay.className = "admin-ui-element";
-      overlay.style.cssText = "position:fixed; inset:0; background:rgba(0,0,0,0.98); z-index:10000; display:none; padding:40px 20px; overflow-y:auto; color:#fff; font-family:sans-serif;";
-      
-      let html = `<div style="max-width:900px; margin:0 auto; padding-bottom:100px;">`;
-      html += `<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #333; padding-bottom:20px; margin-bottom:20px;">
-                 <h2 style="color:#00f0ff; font-size:24px; text-transform:uppercase; font-weight:900;">⚙️ MEGA BRAIN CMS</h2>
-                 <button id="close-admin" style="background:transparent; color:#fff; border:1px solid #555; padding:8px 12px; cursor:pointer; font-weight:bold;">FECHAR ✕</button>
-               </div>`;
-
-      const inStyle = "width:100%; padding:12px; margin-top:5px; margin-bottom:20px; background:#111; border:1px solid #333; color:#fff; font-family:monospace; border-radius:4px;";
-      const areaStyle = inStyle + " height:80px; resize:vertical;";
-      const sectionH = "margin-top:40px; border-bottom:1px solid #333; padding-bottom:10px; color:#fff; font-size:18px;";
-
-      // 1. HERO
-      html += `<h3 style="${sectionH}">🏠 TOPO DO SITE (HERO)</h3>`;
-      html += `<label style="color:#ccc; font-size:12px;">Seu Nome:</label><input id="adm-g-name" value="${SITE_CONTENT.heroName}" style="${inStyle}">`;
-      html += `<label style="color:#ccc; font-size:12px;">Texto de Introdução:</label><textarea id="adm-g-hd" style="${areaStyle}">${SITE_CONTENT.heroDesc}</textarea>`;
-      html += `<label style="color:#ccc; font-size:12px;">Seus Serviços (Separe usando vírgulas):</label><input id="adm-g-serv" value="${SITE_CONTENT.services.join(', ')}" style="${inStyle}">`;
-      html += `<label style="color:#ccc; font-size:12px;">Seus Softwares (Separe usando vírgulas):</label><input id="adm-g-soft" value="${SITE_CONTENT.software.join(', ')}" style="${inStyle}">`;
-
-      // 2. SHOWCASE
-      html += `<h3 style="${sectionH}">🎬 VÍDEO PRINCIPAL (SHOWCASE)</h3>`;
-      html += `<label style="color:#ccc; font-size:12px;">Título:</label><input id="adm-shw-title" value="${SHOWCASE_VIDEO.title}" style="${inStyle}">`;
-      html += `<label style="color:#ccc; font-size:12px;">Descrição:</label><textarea id="adm-shw-desc" style="${areaStyle}">${SHOWCASE_VIDEO.description}</textarea>`;
-      html += `<label style="color:#ccc; font-size:12px;">ID do YouTube (Ex: kYV3Vl_WXYM):</label><input id="adm-shw-id" value="${SHOWCASE_VIDEO.source.videoId}" style="${inStyle}">`;
-
-      // 3. WORK
-      html += `<h3 style="${sectionH}">📁 PROJETOS DAS ABAS (16:9)</h3>`;
-      WORK.forEach((w, i) => {
-        html += `<div style="background:#111; padding:20px; border:1px solid #222; margin-bottom:20px; border-radius:6px;">
-                   <strong style="color:#00f0ff; text-transform:uppercase; font-size:14px;">${w.category} - Projeto ${i+1}</strong><br><br>
-                   <label style="color:#ccc; font-size:12px;">Título:</label><input id="adm-wk-title-${i}" value="${w.title}" style="${inStyle}">
-                   <label style="color:#ccc; font-size:12px;">Descrição:</label><textarea id="adm-wk-desc-${i}" style="${areaStyle}">${w.description}</textarea>
-                   <label style="color:#ccc; font-size:12px;">ID do YouTube:</label><input id="adm-wk-id-${i}" value="${w.source.videoId}" style="${inStyle}">
-                 </div>`;
-      });
-
-      // 4. SHORTS
-      html += `<h3 style="${sectionH}">📱 SHORTS (VERTICAL 9:16)</h3>`;
-      SHORTS.forEach((s, i) => {
-        html += `<div style="background:#111; padding:20px; border:1px solid #222; margin-bottom:20px; border-radius:6px;">
-                   <strong style="color:#00f0ff; font-size:14px;">Short ${i+1}</strong><br><br>
-                   <label style="color:#ccc; font-size:12px;">Título:</label><input id="adm-sh-title-${i}" value="${s.title}" style="${inStyle}">
-                   <label style="color:#ccc; font-size:12px;">Descrição:</label><textarea id="adm-sh-desc-${i}" style="${areaStyle}">${s.description}</textarea>
-                   <label style="color:#ccc; font-size:12px;">ID do YouTube:</label><input id="adm-sh-id-${i}" value="${s.source.videoId}" style="${inStyle}">
-                 </div>`;
-      });
-
-      // 5. CONTATOS E FOOTER
-      html += `<h3 style="${sectionH}">✉️ CONTATOS & RODAPÉ</h3>`;
-      html += `<label style="color:#ccc; font-size:12px;">E-mail:</label><input id="adm-email" value="${CONTACT.email}" style="${inStyle}">`;
-      html += `<label style="color:#ccc; font-size:12px;">Seu Discord (Usuário):</label><input id="adm-discord" value="${CONTACT.discord}" style="${inStyle}">`;
-      html += `<label style="color:#ccc; font-size:12px;">Link do X (Twitter):</label><input id="adm-x" value="${CONTACT.x}" style="${inStyle}">`;
-      html += `<label style="color:#ccc; font-size:12px;">Texto do Rodapé (Fim da página):</label><input id="adm-g-foot" value="${SITE_CONTENT.footer}" style="${inStyle}">`;
-
-      // GERAR
-      html += `<button id="btn-generate" style="width:100%; padding:20px; background:#00f0ff; color:#000; font-weight:900; font-size:18px; margin-top:40px; border:none; cursor:pointer; border-radius:6px; transition:0.3s;">💾 GERAR CÓDIGO FINAL</button>`;
-      html += `<textarea id="adm-output" readonly style="width:100%; height:300px; margin-top:20px; background:#000; color:#0f0; border:1px solid #333; padding:15px; font-family:monospace; display:none; border-radius:6px;"></textarea>`;
-      html += `<p id="adm-msg" style="color:#00f0ff; text-align:center; margin-top:15px; font-weight:bold; display:none; font-size:16px;">↑ CÓDIGO COPIADO! Agora apague o arquivo antigo no GitHub e cole esse.</p>`;
-
-      html += `</div>`;
-      overlay.innerHTML = html;
-      document.body.appendChild(overlay);
-
-      btn.addEventListener("click", () => overlay.style.display = "block");
-      document.getElementById("close-admin").addEventListener("click", () => overlay.style.display = "none");
-
-      document.getElementById("btn-generate").addEventListener("click", () => {
-        const newSite = {
-          heroName: document.getElementById("adm-g-name").value.trim(),
-          heroDesc: document.getElementById("adm-g-hd").value.trim(),
-          services: document.getElementById("adm-g-serv").value.split(',').map(s=>s.trim()).filter(Boolean),
-          software: document.getElementById("adm-g-soft").value.split(',').map(s=>s.trim()).filter(Boolean),
-          footer: document.getElementById("adm-g-foot").value.trim()
-        };
-        const newShowcase = {
-          ...SHOWCASE_VIDEO,
-          title: document.getElementById("adm-shw-title").value.trim(),
-          description: document.getElementById("adm-shw-desc").value.trim(),
-          source: { type: "youtube", videoId: document.getElementById("adm-shw-id").value.trim() }
-        };
-        const newWork = WORK.map((w, i) => {
-          const id = document.getElementById(`adm-wk-id-${i}`).value.trim();
-          return {
-            ...w,
-            title: document.getElementById(`adm-wk-title-${i}`).value.trim(),
-            description: document.getElementById(`adm-wk-desc-${i}`).value.trim(),
-            source: { type: "youtube", videoId: id },
-            placeholder: id === ""
-          };
-        });
-        const newShorts = SHORTS.map((s, i) => {
-          const id = document.getElementById(`adm-sh-id-${i}`).value.trim();
-          return {
-            ...s,
-            title: document.getElementById(`adm-sh-title-${i}`).value.trim(),
-            description: document.getElementById(`adm-sh-desc-${i}`).value.trim(),
-            source: { type: "youtube", videoId: id },
-            placeholder: id === ""
-          };
-        });
-        const newContact = {
-          email: document.getElementById("adm-email").value.trim(),
-          discord: document.getElementById("adm-discord").value.trim(),
-          x: document.getElementById("adm-x").value.trim()
-        };
-
-        const newDataScript = `\nconst SITE_CONTENT = ${JSON.stringify(newSite, null, 2)};\nconst SHOWCASE_VIDEO = ${JSON.stringify(newShowcase, null, 2)};\nconst WORK = ${JSON.stringify(newWork, null, 2)};\nconst SHORTS = ${JSON.stringify(newShorts, null, 2)};\nconst CONTACT = ${JSON.stringify(newContact, null, 2)};\n`;
-        
-        const clone = document.documentElement.cloneNode(true);
-        clone.querySelector('#grid').innerHTML = "";
-        clone.querySelector('#shortsGrid').innerHTML = "";
-        clone.querySelector('#panelBody').innerHTML = "";
-        clone.querySelector('#contactLinks').innerHTML = "";
-        clone.querySelectorAll('.active, .open').forEach(el => el.classList.remove('active', 'open'));
-        clone.querySelector('body').removeAttribute('style');
-        clone.querySelectorAll('.admin-ui-element').forEach(el => el.remove());
-
-        clone.querySelector('#data-script').textContent = newDataScript;
-        clone.querySelector('#el-hero-name').textContent = "";
-        clone.querySelector('#el-hero-desc').textContent = "";
-        clone.querySelector('#el-footer').textContent = "";
-        clone.querySelector('#el-about-services').innerHTML = "";
-        clone.querySelector('#el-about-software').innerHTML = "";
-
-        const finalHTML = "<!DOCTYPE html>\n<html lang=\"en\">\n" + clone.innerHTML + "\n</html>";
-        
-        const outBox = document.getElementById("adm-output");
-        outBox.value = finalHTML;
-        outBox.style.display = "block";
-        document.getElementById("adm-msg").style.display = "block";
-        outBox.select();
-        document.execCommand('copy');
-        document.getElementById("btn-generate").textContent = "CÓDIGO COPIADO PARA ÁREA DE TRANSFERÊNCIA! 📋";
-        document.getElementById("btn-generate").style.background = "#fff";
-      });
-    })();
   </script>
 </body>
 </html>
